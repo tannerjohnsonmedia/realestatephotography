@@ -291,15 +291,25 @@ em{ font-style:italic; color:var(--gold-soft); }
   color:#fff; background:rgba(12,17,25,.62); backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px); padding:7px 13px; border-radius:100px;
 }
-/* Alternating wide/narrow keeps it editorial instead of a uniform contact sheet */
-.shot-1{ grid-column:1 / 8; }
-.shot-2{ grid-column:8 / 13; }
-.shot-3{ grid-column:1 / 6; }
-.shot-4{ grid-column:6 / 13; }
+/* Alternating widths plus one triple row — editorial, not a uniform contact sheet */
+.g-a{ grid-column:1 / 8; }    /* twilight — the lead image */
+.g-b{ grid-column:8 / 13; }
+.g-c{ grid-column:1 / 6; }
+.g-d{ grid-column:6 / 13; }   /* twilight */
+.g-e{ grid-column:1 / 5; }
+.g-f{ grid-column:5 / 9; }
+.g-g{ grid-column:9 / 13; }
+.g-h{ grid-column:1 / 6; }
+.g-i{ grid-column:6 / 13; }   /* aerial */
 
-@media (max-width:760px){
+@media (max-width:900px){
+  .gallery{ grid-template-columns:1fr 1fr; }
+  .shot{ grid-column:auto; }
+  .g-a, .g-i{ grid-column:1 / -1; }   /* the two that carry the section stay full width */
+}
+@media (max-width:560px){
   .gallery{ grid-template-columns:1fr; }
-  .shot-1,.shot-2,.shot-3,.shot-4{ grid-column:1 / -1; }
+  .shot{ grid-column:1 / -1; }
 }
 
 /* ================= VIDEO ================= */

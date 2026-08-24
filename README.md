@@ -70,34 +70,36 @@ numbers in the Pricing section of `index.html`.
 
 ---
 
-## Adding your photos
+## Photos
 
-The page is already wired to five specific photos. Save each file into `assets/`
-with the **exact filename** below and it drops straight into place — no code changes.
+All nine uploaded photos are in use. Current placement:
 
-| Filename | Which photo | Where it appears |
+| Position | File | Label shown |
 |---|---|---|
-| `assets/hero-twilight.jpg` | White farmhouse at twilight, windows glowing, sunset sky | Full-bleed hero background |
-| `assets/great-room.jpg` | Vaulted great room, stone fireplace, open kitchen | Gallery — large tile, top left |
-| `assets/primary-bath.jpg` | Primary bath, wood vanity, soaking tub, window to the pines | Gallery — top right |
-| `assets/townhomes.jpg` | Modern stone townhomes with rooftop decks | Gallery — bottom left |
-| `assets/aerial-foothills.jpg` | Aerial of the mountain home above the pine valley | Gallery — bottom right |
-| `assets/og-image.jpg` | Any strong shot, cropped to 1200×630 | Link preview when the page is shared |
+| Hero background | `hero-twilight.jpg` | — |
+| Gallery, lead tile | `twilight-backyard.jpg` | Twilight |
+| Gallery | `great-room.jpg` | Interior HDR |
+| Gallery | `primary-bathroom-1.jpg` | — |
+| Gallery | `twilight-front.jpg` | Twilight |
+| Gallery, triple row | `kitchen.jpg`, `living-room.jpg`, `primary-bathroom.jpg` | — |
+| Gallery | `condos.jpg` | Condo & multifamily |
+| Gallery | `aerial-foothills.jpg` | Aerial & drone |
+| Social preview | `og-image.jpg` | generated from `twilight-backyard.jpg` |
 
-The twilight exterior is the hero on purpose: warm windows against a dusk sky is the
-single most stopping image in the set, and it doubles as proof for the $250 twilight
-add-on. The aerial does the same job for the drone claim in the trust bar.
+Only five tiles carry a label, and they're the ones that sell an add-on — twilight,
+aerial, and the condo work. Labelling every interior would just be noise.
 
-**Before you upload:** resize to about 2000px on the long edge and compress (Squoosh,
-ImageOptim, or TinyJPG). Straight-off-the-camera files are 8–15MB each and will make the
-page slow, which costs you conversions — the exact opposite of the point.
+To swap a photo, either overwrite the file or change the `src` in the gallery markup in
+`index.html`. Update the `alt` text at the same time — it's what Google Images reads and
+what a screen reader announces. The hero is a CSS background: its path is the
+`--photo-hero` variable at the top of `styles.css`.
 
-Until the files exist, each tile shows a dark gradient with its caption. No broken image
-icons, no collapsed layout — it just looks unfinished rather than broken.
+Adding more later: each tile is a `<figure class="shot g-x">` with a grid column defined
+in the gallery block of `styles.css`. Keep the alternating wide/narrow rhythm rather than
+making every tile the same size.
 
-To swap a photo later, either overwrite the file or change the `src` in the gallery
-markup in `index.html`. The hero is a CSS background — its path is the `--photo-hero`
-variable at the top of `styles.css`.
+Resize to about 2000px on the long edge and compress before uploading — the current
+batch is 230–400KB each, which is the right range.
 
 ---
 
