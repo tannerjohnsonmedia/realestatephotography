@@ -33,17 +33,14 @@
   --ease: cubic-bezier(.22,.68,.35,1);
 }
 
-/* ---------- PHOTOGRAPHY SLOTS ---------------------------------------------
-   Replace each `none` with url("assets/your-file.jpg"). Until then, a tuned
-   gradient stands in so the layout never looks broken.
+/* ---------- PHOTOGRAPHY SLOT ----------------------------------------------
+   A tuned gradient sits behind the photo, so a missing file degrades to a
+   dark wash rather than a broken layout.
    -------------------------------------------------------------------------- */
 :root{
-  --photo-hero: none;
-  --photo-1: none;   /* gallery — large left */
-  --photo-2: none;
-  --photo-3: none;
-  --photo-4: none;
-  --photo-5: none;
+  /* Hero is a full-bleed cover image, so it stays a CSS background.
+     Gallery photos are real <img> tags in index.html — swap those filenames there. */
+  --photo-hero: url("assets/hero-twilight.jpg");
 }
 
 *,*::before,*::after{ box-sizing:border-box; }
@@ -276,29 +273,33 @@ em{ font-style:italic; color:var(--gold-soft); }
 .card p{ color:var(--muted); font-size:.98rem; }
 
 /* ================= GALLERY ================= */
-.gallery{
-  display:grid; gap:16px;
-  grid-template-columns:repeat(4, 1fr);
-  grid-template-areas:
-    "a a b c"
-    "a a d e";
-}
+.gallery{ display:grid; grid-template-columns:repeat(12,1fr); gap:16px; }
 .shot{
-  margin:0; border-radius:var(--r); min-height:180px;
-  background-size:cover; background-position:center;
-  transition:transform .5s var(--ease), filter .5s var(--ease);
+  position:relative; margin:0; overflow:hidden; border-radius:var(--r);
+  background:linear-gradient(150deg,#41536B,#1D2634);   /* shows through until the photo loads */
   box-shadow:var(--shadow-sm);
 }
-.shot:hover{ transform:scale(1.015); filter:saturate(1.06); }
-.shot-a{ grid-area:a; min-height:400px; background-image:var(--photo-1), linear-gradient(150deg,#4A5C74,#212C3D); }
-.shot-b{ grid-area:b; background-image:var(--photo-2), linear-gradient(150deg,#8A7457,#3A3021); }
-.shot-c{ grid-area:c; background-image:var(--photo-3), linear-gradient(150deg,#5E7288,#28313F); }
-.shot-d{ grid-area:d; background-image:var(--photo-4), linear-gradient(150deg,#C8913C,#6B4B1C); }
-.shot-e{ grid-area:e; background-image:var(--photo-5), linear-gradient(150deg,#3E5169,#171E29); }
+.shot img{
+  width:100%; height:100%; object-fit:cover; aspect-ratio:3/2;
+  transition:transform .6s var(--ease);
+}
+.shot:hover img{ transform:scale(1.04); }
+.shot.is-empty{ min-height:clamp(200px, 24vw, 380px); }  /* stretches with the row, unlike aspect-ratio */
+.shot figcaption{
+  position:absolute; left:14px; bottom:14px; z-index:2;
+  font-size:.68rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase;
+  color:#fff; background:rgba(12,17,25,.62); backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px); padding:7px 13px; border-radius:100px;
+}
+/* Alternating wide/narrow keeps it editorial instead of a uniform contact sheet */
+.shot-1{ grid-column:1 / 8; }
+.shot-2{ grid-column:8 / 13; }
+.shot-3{ grid-column:1 / 6; }
+.shot-4{ grid-column:6 / 13; }
 
 @media (max-width:760px){
-  .gallery{ grid-template-columns:repeat(2,1fr); grid-template-areas:"a a" "b c" "d e"; }
-  .shot-a{ min-height:280px; }
+  .gallery{ grid-template-columns:1fr; }
+  .shot-1,.shot-2,.shot-3,.shot-4{ grid-column:1 / -1; }
 }
 
 /* ================= BUILDER ================= */

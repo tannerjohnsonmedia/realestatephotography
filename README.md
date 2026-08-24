@@ -71,22 +71,32 @@ numbers in the Pricing section of `index.html`.
 
 ## Adding your photos
 
-1. Put your images in `assets/` (JPG, ~2000px wide, compressed).
-2. In `styles.css`, find the **PHOTOGRAPHY SLOTS** block near the top and fill it in:
+The page is already wired to five specific photos. Save each file into `assets/`
+with the **exact filename** below and it drops straight into place — no code changes.
 
-```css
-:root{
-  --photo-hero: url("assets/hero.jpg");   /* the big one — pick your best twilight or living room */
-  --photo-1: url("assets/gallery-1.jpg"); /* large left tile */
-  --photo-2: url("assets/gallery-2.jpg");
-  --photo-3: url("assets/gallery-3.jpg");
-  --photo-4: url("assets/gallery-4.jpg");
-  --photo-5: url("assets/gallery-5.jpg");
-}
-```
+| Filename | Which photo | Where it appears |
+|---|---|---|
+| `assets/hero-twilight.jpg` | White farmhouse at twilight, windows glowing, sunset sky | Full-bleed hero background |
+| `assets/great-room.jpg` | Vaulted great room, stone fireplace, open kitchen | Gallery — large tile, top left |
+| `assets/primary-bath.jpg` | Primary bath, wood vanity, soaking tub, window to the pines | Gallery — top right |
+| `assets/townhomes.jpg` | Modern stone townhomes with rooftop decks | Gallery — bottom left |
+| `assets/aerial-foothills.jpg` | Aerial of the mountain home above the pine valley | Gallery — bottom right |
+| `assets/og-image.jpg` | Any strong shot, cropped to 1200×630 | Link preview when the page is shared |
 
-Until you do, tuned gradients stand in — the page never looks broken, just unfinished.
-Also add `assets/og-image.jpg` (1200×630) for the link preview when the page is shared.
+The twilight exterior is the hero on purpose: warm windows against a dusk sky is the
+single most stopping image in the set, and it doubles as proof for the $250 twilight
+add-on. The aerial does the same job for the drone claim in the trust bar.
+
+**Before you upload:** resize to about 2000px on the long edge and compress (Squoosh,
+ImageOptim, or TinyJPG). Straight-off-the-camera files are 8–15MB each and will make the
+page slow, which costs you conversions — the exact opposite of the point.
+
+Until the files exist, each tile shows a dark gradient with its caption. No broken image
+icons, no collapsed layout — it just looks unfinished rather than broken.
+
+To swap a photo later, either overwrite the file or change the `src` in the gallery
+markup in `index.html`. The hero is a CSS background — its path is the `--photo-hero`
+variable at the top of `styles.css`.
 
 ---
 

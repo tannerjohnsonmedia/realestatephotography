@@ -411,6 +411,17 @@
   });
 
   /* ---------------------------------------------------------------------------
+     MISSING PHOTOS DEGRADE QUIETLY
+     Before the real files land in /assets, hide the broken <img> and let the
+     tile's gradient and caption stand on their own.
+     ------------------------------------------------------------------------ */
+  Array.prototype.forEach.call(document.querySelectorAll('.shot img'), function (img) {
+    function fail() { img.style.display = 'none'; img.closest('.shot').classList.add('is-empty'); }
+    img.addEventListener('error', fail);
+    if (img.complete && img.naturalWidth === 0) fail();
+  });
+
+  /* ---------------------------------------------------------------------------
      MISC
      ------------------------------------------------------------------------ */
   var year = document.getElementById('year');

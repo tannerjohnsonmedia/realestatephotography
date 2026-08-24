@@ -1,0 +1,3 @@
+# Local scratch — real photography lives in assets/ and should be committed
+*.tmp
+.DS_Store
