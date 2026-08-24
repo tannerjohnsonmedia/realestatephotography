@@ -47,7 +47,8 @@
     </a>
 
     <nav class="nav" aria-label="Primary">
-      <a href="#work">Work</a>
+      <a href="#work">Photos</a>
+      <a href="#video">Video</a>
       <a href="#builder">Build Your Shoot</a>
       <a href="#pricing">Pricing</a>
       <a href="#process">How It Works</a>
@@ -68,7 +69,8 @@
   </div>
 
   <div class="mobile-nav" id="mobileNav" hidden>
-    <a href="#work">Work</a>
+    <a href="#work">Photos</a>
+    <a href="#video">Video</a>
     <a href="#builder">Build Your Shoot</a>
     <a href="#pricing">Pricing</a>
     <a href="#process">How It Works</a>
@@ -200,6 +202,58 @@
 
     <div class="center">
       <a class="btn btn-dark btn-lg" href="#builder" data-cta="work-builder">Build your shoot</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VIDEO ============ -->
+<section class="section section-dark" id="video">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Video</p>
+      <h2>Video is what keeps them on the listing.</h2>
+      <p class="lede">
+        A walkthrough for the MLS, a cinematic cut for the property site, and a vertical
+        edit built for Reels and TikTok — so one shoot feeds every place buyers actually look.
+      </p>
+    </div>
+
+    <figure class="vplayer vplayer-feature">
+      <video controls preload="metadata" playsinline poster="assets/video-featured-poster.jpg">
+        <source src="assets/video-featured.mp4" type="video/mp4" />
+        Your browser can't play embedded video.
+        <a href="assets/video-featured.mp4">Download the file</a> instead.
+      </video>
+      <figcaption>Cinematic listing film</figcaption>
+    </figure>
+
+    <div class="video-grid">
+      <figure class="vplayer">
+        <video controls preload="metadata" playsinline poster="assets/video-listing-poster.jpg">
+          <source src="assets/video-listing.mp4" type="video/mp4" />
+          Your browser can't play embedded video.
+          <a href="assets/video-listing.mp4">Download the file</a> instead.
+        </video>
+        <figcaption>Walkthrough video</figcaption>
+      </figure>
+
+      <figure class="vplayer vplayer-vertical">
+        <video muted loop playsinline preload="metadata" data-autoplay
+               poster="assets/video-vertical-poster.jpg">
+          <source src="assets/video-vertical.mp4" type="video/mp4" />
+          Your browser can't play embedded video.
+          <a href="assets/video-vertical.mp4">Download the file</a> instead.
+        </video>
+        <button class="vsound" type="button" aria-label="Unmute video" aria-pressed="false">
+          <svg class="ico-mute" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 6m0-6-5 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <svg class="ico-loud" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <figcaption>Social vertical cut</figcaption>
+      </figure>
+    </div>
+
+    <div class="center">
+      <a class="btn btn-primary btn-lg" href="#builder" data-cta="video-builder">Add video to your shoot</a>
     </div>
   </div>
 </section>

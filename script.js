@@ -354,7 +354,7 @@
     });
     // Resizing past the desktop breakpoint hides the panel in CSS — keep ARIA honest.
     window.addEventListener('resize', function () {
-      if (window.innerWidth > 1000) closeNav();
+      if (window.innerWidth > 1140) closeNav();
     });
   }
 
@@ -407,6 +407,56 @@
     track(type === 'navigate' ? 'cta_click' : 'contact_' + type, {
       location: el.getAttribute('data-cta'),
       label: el.textContent.trim().slice(0, 60)
+    });
+  });
+
+  /* ---------------------------------------------------------------------------
+     VIDEO
+     The vertical social cut loops muted while it's on screen (and only while
+     it's on screen — no point burning a visitor's data on a paused tab), with
+     an unmute button. Horizontal players stay click-to-play.
+     ------------------------------------------------------------------------ */
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  Array.prototype.forEach.call(document.querySelectorAll('.vplayer video'), function (vid) {
+    var frame = vid.closest('.vplayer');
+
+    function markEmpty() { frame.classList.add('is-empty'); }
+    vid.addEventListener('error', markEmpty);
+    // A missing <source> fires on the child, not the <video>, and doesn't bubble
+    Array.prototype.forEach.call(vid.querySelectorAll('source'), function (src) {
+      src.addEventListener('error', markEmpty);
+    });
+    // Loading starts during parse, so the failure can beat this script to it
+    if (vid.networkState === 3 /* NETWORK_NO_SOURCE */) markEmpty();
+
+    if (!vid.hasAttribute('data-autoplay')) return;
+
+    if (reduceMotion) {
+      // Respect the setting: show controls and let the visitor start it themselves.
+      vid.setAttribute('controls', '');
+      frame.classList.add('is-static');
+      return;
+    }
+
+    function play() { var r = vid.play(); if (r && r.catch) r.catch(function () {}); }
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { e.isIntersecting ? play() : vid.pause(); });
+      }, { threshold: 0.35 }).observe(vid);
+    } else {
+      play();
+    }
+
+    var soundBtn = frame.querySelector('.vsound');
+    if (!soundBtn) return;
+    soundBtn.addEventListener('click', function () {
+      vid.muted = !vid.muted;
+      soundBtn.setAttribute('aria-pressed', vid.muted ? 'false' : 'true');
+      soundBtn.setAttribute('aria-label', vid.muted ? 'Unmute video' : 'Mute video');
+      if (!vid.muted) play();
+      track('video_unmute', { muted: vid.muted });
     });
   });
 
