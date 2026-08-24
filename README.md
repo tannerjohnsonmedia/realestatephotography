@@ -30,14 +30,23 @@ Every section has one job: move the visitor toward a phone call.
 | 6 | **Build Your Shoot** | Mid-page conversion engine: self-qualifies the lead and captures contact info |
 | 7 | Pricing | Transparency kills the "request a quote" drop-off |
 | 8 | How it works | Removes friction/uncertainty about the process |
-| 9 | Testimonials | Social proof right before the final ask |
-| 10 | FAQ | Handles the last objections (weather, prep, usage rights) |
-| 11 | Final CTA | Call / text / email |
+| 9 | Book online | Self-serve path for agents who don't want to call |
+| 10 | Testimonials | Social proof right before the final ask |
+| 11 | FAQ | Handles the last objections (weather, prep, usage rights) |
+| 12 | Final CTA | Call / text / email |
 | — | Sticky mobile bar | Call button always one tap away after 560px of scroll |
 
-Phone (`720-587-9516`) and email (`tannerjohnsonmedia@gmail.com`) appear in the header,
-hero, every pricing card, the builder result, the final CTA, the footer, and the sticky
-mobile bar — **17 tap-to-call/text/email links total**.
+Two conversion paths run in parallel:
+
+- **Call / text / email** — header, hero, builder result, booking section, final CTA,
+  footer, and the sticky mobile bar.
+- **Book online** — the portal at `portal.tjohnsonmedia.com/portal`, linked from the
+  header, every pricing card, the builder result, its own section, the final CTA, and the
+  footer (11 links). All open in a new tab so the landing page stays behind them.
+
+Pricing cards point at the portal rather than the phone, since the button says "Book this
+package" — clicking it should book the package. The phone number stays prominent
+everywhere else.
 
 ---
 
@@ -178,9 +187,10 @@ your business, or edit it.** Every item below is a specific promise a client can
 - [ ] **"FAA licensed drone"** — hero trust bar and FAQ. Remove if you aren't Part 107 certified.
 - [ ] **Service area** — "Denver Metro & Front Range" appears in the hero, footer, and schema. Update to your actual market.
 - [ ] **Brokerage logos** (Compass, RE/MAX, etc.) in the proof strip — these are placeholders. Only display brokerages you've actually shot for, and check their brand-usage rules first.
-- [ ] **Testimonials** — the three quotes are placeholder copy. Replace with real, permission-granted reviews before launch. Fabricated reviews are an FTC problem, not just a credibility one.
+- [ ] **More reviews** — the section shows the one real Google review. As you collect more, the layout can go back to a multi-column grid; ask and I'll switch it.
 - [ ] **Basic Photography package contents** — your product list didn't show the image count, so the card says "professionally edited HDR images." Add the number.
 - [ ] **"Unlimited listing-marketing usage" / usage rights FAQ** — confirm this matches your actual license terms.
+- [ ] **Booking portal copy** — the section says agents can choose a package and pick a date. If the portal also takes payment or confirms instantly, tell me and I'll say so; those are strong conversion points I left out because I couldn't verify them.
 - [ ] **Weather reshoot policy** (FAQ) — confirm you offer free rescheduling.
 - [ ] **Video captions** — the player labels ("Cinematic listing film", "Walkthrough video", "Social vertical cut") are guesses. Rename them in the `<figcaption>` tags to match what you actually shot.
 - [ ] **Package tiers vs. your booking platform** — the builder maps small/standard/large homes to Basic/Premium/Ultimate. If you'd route a 3,000 sq ft listing differently than the table above, adjust `recommend()` in `script.js`.
@@ -198,6 +208,7 @@ does nothing harmful if neither is:
 | `contact_call` | Any tap-to-call button |
 | `contact_text` | Any SMS button |
 | `contact_email` | Any mailto button |
+| `contact_booking` | Any link into the booking portal |
 | `cta_click` | In-page CTA (e.g. hero → builder) |
 | `builder_step` | Each builder step completed — shows you where people drop off |
 | `builder_complete` | Builder finished, with package name, value, sq ft, and media type |

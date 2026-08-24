@@ -403,7 +403,8 @@
     var href = el.getAttribute('href') || '';
     var type = href.indexOf('tel:') === 0 ? 'call'
              : href.indexOf('sms:') === 0 ? 'text'
-             : href.indexOf('mailto:') === 0 ? 'email' : 'navigate';
+             : href.indexOf('mailto:') === 0 ? 'email'
+             : href.indexOf('portal.tjohnsonmedia.com') > -1 ? 'booking' : 'navigate';
     track(type === 'navigate' ? 'cta_click' : 'contact_' + type, {
       location: el.getAttribute('data-cta'),
       label: el.textContent.trim().slice(0, 60)
