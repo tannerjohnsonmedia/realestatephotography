@@ -103,70 +103,69 @@ batch is 230–400KB each, which is the right range.
 
 ---
 
-## Adding your videos
+## Videos
 
-Three players are already wired up. Save each file into `assets/` with the exact
-filename below — same as the photos.
+The three videos are hosted on YouTube and embedded click-to-play.
 
-| Filename | What it is | Behavior on the page |
+| Player | Video ID | Source |
 |---|---|---|
-| `assets/video-featured.mp4` | Your best horizontal video | Large player at the top. Click to play, with controls |
-| `assets/video-listing.mp4` | Your second horizontal video | Smaller player below left. Click to play, with controls |
-| `assets/video-vertical.mp4` | The vertical social cut | Phone-shaped player, loops silently while on screen, with an unmute button |
-| `assets/video-featured-poster.jpg` | A still frame from the featured video | The image shown before play is pressed |
-| `assets/video-listing-poster.jpg` | A still frame from the second video | Same |
-| `assets/video-vertical-poster.jpg` | A still frame from the vertical | Same |
+| Featured (large, top) | `BbEcHWOQ2Ws` | youtu.be/BbEcHWOQ2Ws |
+| Walkthrough (below left) | `nl0M-cyh24c` | youtu.be/nl0M-cyh24c |
+| Social vertical cut | `tXBJVYaexcM` | youtube.com/shorts/tXBJVYaexcM |
 
-**Posters matter.** Without them the players sit as black rectangles until someone
-clicks. Export one good frame from each video as a JPG — it's the thumbnail that
-decides whether anyone presses play at all.
+To swap a video, change the `data-yt` attribute on that player in `index.html` to the
+new video's ID — the part after `youtu.be/` or `/shorts/`, not the whole URL.
 
-The captions on each player currently read "Cinematic listing film," "Walkthrough
-video," and "Social vertical cut." Edit them in the `<figcaption>` tags in `index.html`
-so they name what you actually shot.
+### Why click-to-play instead of a normal embed
 
-### Compress before you upload — this one is not optional
+Three live YouTube iframes load well over a megabyte of Google's player JavaScript on
+every single visit, including for the majority of visitors who never press play. That's
+the difference between a landing page that feels instant and one that doesn't, which
+directly affects conversions.
 
-Straight-from-the-editor exports are 200MB–2GB. GitHub **hard-blocks any file over
-100MB**, and even a 60MB video will make the page unusable on an agent's phone.
+So each player shows a thumbnail with a play button, and the real embed loads only when
+someone clicks. Same result, none of the weight.
 
-Target: **under 25MB per video.** Under 10MB for the vertical.
+### How the thumbnails work
 
-Easiest route is [HandBrake](https://handbrake.fr) (free, Mac/Windows):
+Each player tries three sources in order and uses the first that loads:
 
-1. Open your video → Preset: **Web → Vimeo YouTube HQ 1080p60** (or 720p if the file is still large)
-2. Video tab → set **Constant Quality to RF 24** (higher number = smaller file)
-3. Web Optimized → **checked**. This is what lets the video start playing before it fully downloads.
-4. Format: **MP4**
-5. Start Encode, check the output size, raise RF and re-run if it's still over 25MB.
+1. `assets/video-featured-poster.jpg` (or `-listing-`, `-vertical-`) — a still you upload
+2. YouTube's `maxresdefault.jpg`
+3. YouTube's `hqdefault.jpg`
 
-If you're comfortable in a terminal, this does the same thing:
+You don't have to do anything — YouTube's thumbnail will be used automatically. But
+uploading your own still gives you a sharper frame and control over which moment
+represents the video, and it removes an external request. Worth doing for the featured
+player at least.
 
-```
-ffmpeg -i input.mov -c:v libx264 -crf 24 -preset slow -vf "scale=-2:1080" \
-       -c:a aac -b:a 128k -movflags +faststart output.mp4
-```
+### Embed settings applied
 
-Export a poster frame at the same time:
+- `youtube-nocookie.com` — no tracking cookies until someone actually plays a video
+- `rel=0` — end-screen suggestions are limited to your own channel, so competitors' videos
+  don't appear on your landing page when a video finishes
+- `modestbranding=1`, `playsinline=1` — minimal chrome, plays inline on iOS instead of
+  hijacking to fullscreen
+- The vertical Short also gets `loop=1` so it repeats like it would in a social feed
 
-```
-ffmpeg -i output.mp4 -ss 3 -frames:v 1 -q:v 3 output-poster.jpg
-```
+### One tradeoff worth knowing
 
-### If a video won't get under 25MB
+The vertical player originally auto-looped silently as visitors scrolled to it, the way a
+Reel does. That isn't possible with a YouTube embed without loading the player on page
+load, which defeats the point of the facade.
 
-Your Ultimate Cinematic package is a 3–5 minute film — that will not compress to 25MB
-at a quality worth showing. For anything over roughly 90 seconds, host it on **Vimeo**
-rather than in this repo, and embed it.
+If you want that effect back, the vertical is the one video worth self-hosting — a Short
+is under 60 seconds and compresses to a few MB, well within limits. Drop
+`assets/video-vertical.mp4` in and say the word, and I'll switch that one player back to a
+native silent loop while the two long videos stay on YouTube.
 
-Use Vimeo, not YouTube: when a YouTube embed finishes it shows recommended videos,
-including your competitors', on your own landing page. Vimeo's paid tiers let you turn
-branding and suggestions off entirely.
+### Check these render
 
-Ask and the players can be swapped to Vimeo embeds — the layout stays the same.
+I couldn't load YouTube from my environment, so confirm on the live site:
 
-Until the files exist, each player shows its gradient frame and caption. No broken
-controls, no black boxes.
+- [ ] All three videos are set to **Public** or **Unlisted** (Private won't embed, even for you)
+- [ ] Embedding is allowed — YouTube Studio → each video → Advanced → "Allow embedding" ticked
+- [ ] The thumbnails appear and the right video plays in each player
 
 ---
 
@@ -183,7 +182,7 @@ your business, or edit it.** Every item below is a specific promise a client can
 - [ ] **Basic Photography package contents** — your product list didn't show the image count, so the card says "professionally edited HDR images." Add the number.
 - [ ] **"Unlimited listing-marketing usage" / usage rights FAQ** — confirm this matches your actual license terms.
 - [ ] **Weather reshoot policy** (FAQ) — confirm you offer free rescheduling.
-- [ ] **Video captions** — the three player labels are guesses. Rename them to match what you actually shot.
+- [ ] **Video captions** — the player labels ("Cinematic listing film", "Walkthrough video", "Social vertical cut") are guesses. Rename them in the `<figcaption>` tags to match what you actually shot.
 - [ ] **Package tiers vs. your booking platform** — the builder maps small/standard/large homes to Basic/Premium/Ultimate. If you'd route a 3,000 sq ft listing differently than the table above, adjust `recommend()` in `script.js`.
 
 ---

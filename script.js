@@ -411,52 +411,41 @@
   });
 
   /* ---------------------------------------------------------------------------
-     VIDEO
-     The vertical social cut loops muted while it's on screen (and only while
-     it's on screen — no point burning a visitor's data on a paused tab), with
-     an unmute button. Horizontal players stay click-to-play.
+     VIDEO — click-to-load YouTube
+     Each player is a poster image until clicked, then the real embed swaps in.
+     Loading three iframes up front would cost every visitor over a megabyte of
+     player JS, most of whom never press play.
      ------------------------------------------------------------------------ */
-  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  Array.prototype.forEach.call(document.querySelectorAll('.yt-facade'), function (btn) {
+    var img = btn.querySelector('img');
+    var sources = (btn.getAttribute('data-posters') || '').split(',').filter(Boolean);
+    var i = 0;
 
-  Array.prototype.forEach.call(document.querySelectorAll('.vplayer video'), function (vid) {
-    var frame = vid.closest('.vplayer');
-
-    function markEmpty() { frame.classList.add('is-empty'); }
-    vid.addEventListener('error', markEmpty);
-    // A missing <source> fires on the child, not the <video>, and doesn't bubble
-    Array.prototype.forEach.call(vid.querySelectorAll('source'), function (src) {
-      src.addEventListener('error', markEmpty);
-    });
-    // Loading starts during parse, so the failure can beat this script to it
-    if (vid.networkState === 3 /* NETWORK_NO_SOURCE */) markEmpty();
-
-    if (!vid.hasAttribute('data-autoplay')) return;
-
-    if (reduceMotion) {
-      // Respect the setting: show controls and let the visitor start it themselves.
-      vid.setAttribute('controls', '');
-      frame.classList.add('is-static');
-      return;
+    // Walk the list: a local poster if you've added one, else YouTube's own thumbnail
+    function nextPoster() {
+      if (i >= sources.length) { img.removeAttribute('src'); return; }
+      img.src = sources[i++];
     }
+    img.addEventListener('error', nextPoster);
+    nextPoster();
 
-    function play() { var r = vid.play(); if (r && r.catch) r.catch(function () {}); }
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-yt');
+      if (!id) return;
 
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) { e.isIntersecting ? play() : vid.pause(); });
-      }, { threshold: 0.35 }).observe(vid);
-    } else {
-      play();
-    }
+      var params = 'autoplay=1&rel=0&modestbranding=1&playsinline=1&color=white';
+      if (btn.getAttribute('data-yt-loop')) params += '&loop=1&playlist=' + id;
 
-    var soundBtn = frame.querySelector('.vsound');
-    if (!soundBtn) return;
-    soundBtn.addEventListener('click', function () {
-      vid.muted = !vid.muted;
-      soundBtn.setAttribute('aria-pressed', vid.muted ? 'false' : 'true');
-      soundBtn.setAttribute('aria-label', vid.muted ? 'Unmute video' : 'Mute video');
-      if (!vid.muted) play();
-      track('video_unmute', { muted: vid.muted });
+      var iframe = document.createElement('iframe');
+      // nocookie: no tracking cookies until someone actually plays something
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?' + params;
+      iframe.title = btn.getAttribute('aria-label') || 'Video';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+
+      btn.replaceWith(iframe);
+      track('video_play', { id: id, label: btn.getAttribute('aria-label') });
     });
   });
 
