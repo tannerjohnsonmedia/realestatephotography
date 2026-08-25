@@ -77,6 +77,10 @@ the total. **Rush** adds a note rather than a price, so you keep that conversati
 To change pricing, edit the constants at the top of `script.js` **and** the matching
 numbers in the Pricing section of `index.html`.
 
+Package *contents* live in two places too: the `<ul class="ticks">` lists in the Pricing
+section of `index.html`, and the `r.includes` arrays in `recommend()` in `script.js`.
+Change both, or the builder will promise something different from the pricing card.
+
 ---
 
 ## Photos
@@ -188,10 +192,10 @@ your business, or edit it.** Every item below is a specific promise a client can
 - [ ] **Service area** — "Denver Metro & Front Range" appears in the hero, footer, and schema. Update to your actual market.
 - [ ] **Brokerage logos** (Compass, RE/MAX, etc.) in the proof strip — these are placeholders. Only display brokerages you've actually shot for, and check their brand-usage rules first.
 - [ ] **More reviews** — the section shows the one real Google review. As you collect more, the layout can go back to a multi-column grid; ask and I'll switch it.
-- [ ] **Basic Photography package contents** — your product list didn't show the image count, so the card says "professionally edited HDR images." Add the number.
 - [ ] **"Unlimited listing-marketing usage" / usage rights FAQ** — confirm this matches your actual license terms.
 - [ ] **Booking portal copy** — the section says agents can choose a package and pick a date. If the portal also takes payment or confirms instantly, tell me and I'll say so; those are strong conversion points I left out because I couldn't verify them.
 - [ ] **Weather reshoot policy** (FAQ) — confirm you offer free rescheduling.
+- [ ] **Photo & Video package contents** — the three combo packages still describe their photo half generically ("Premium HDR photography"). If Premium Photo & Video now includes the floor plan and property website that Premium Photography does, tell me and I'll spell those out on those cards too.
 - [ ] **Video captions** — the player labels ("Cinematic listing film", "Walkthrough video", "Social vertical cut") are guesses. Rename them in the `<figcaption>` tags to match what you actually shot.
 - [ ] **Package tiers vs. your booking platform** — the builder maps small/standard/large homes to Basic/Premium/Ultimate. If you'd route a 3,000 sq ft listing differently than the table above, adjust `recommend()` in `script.js`.
 

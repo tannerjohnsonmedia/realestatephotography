@@ -61,12 +61,13 @@
         r.name = 'Basic Photography Package';
         r.sub = 'The right fit for condos, townhomes, rentals, and quick property updates.';
         r.price = 245;
-        r.includes = ['Professionally edited HDR images', 'Full interior + exterior coverage'];
+        r.includes = ['20 professionally edited HDR images', '10 aerial photos'];
       } else if (sqft === '2001-4000') {
         r.name = 'Premium Photography Package';
         r.sub = 'The standard-listing workhorse — enough coverage for any typical single-family home.';
         r.price = 325;
-        r.includes = ['35 professionally edited HDR images', 'Full interior + exterior coverage'];
+        r.includes = ['35 professionally edited HDR images', 'Aerial photos',
+                      'Schematic floor plan', 'Property website'];
       } else {
         var up = ULTIMATE_PHOTO[sqft];
         r.name = 'Ultimate Photography Package';
@@ -74,12 +75,10 @@
         r.price = up.price;
         r.mins = up.mins;
         r.custom = up.price === null;
-        r.includes = ['Unlimited HDR images', 'Complete interior, exterior & detail coverage'];
+        r.includes = ['Unlimited HDR images', 'Aerial photos', 'Zillow 3D tour',
+                      'Schematic floor plan', 'Property website'];
       }
       r.includes.push('MLS-sized + full-resolution files', 'Next-business-day delivery');
-      if (wantsAerial) {
-        r.notes.push('Aerial coverage isn\'t bundled into photo-only packages — we\'ll price drone stills for this property on the call.');
-      }
 
     } else if (media === 'video') {
       if (sqft === '0-2000' && !wantsAerial) {
