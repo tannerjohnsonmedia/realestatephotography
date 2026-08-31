@@ -108,7 +108,7 @@
         r.name = 'Basic Photo & Video Package';
         r.sub = 'Professional photos and video coverage in one visit — the efficient starter package.';
         r.price = 500;
-        r.includes = ['HDR photography package', 'Listing video coverage', 'Social-ready vertical cut'];
+        r.includes = ['HDR photography package', 'Listing video coverage'];
       } else if (!LARGE[sqft]) {
         r.name = 'Premium Photo & Video Package';
         r.sub = 'A complete media package for listings that need a stronger, more polished presence online.';
