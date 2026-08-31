@@ -532,6 +532,7 @@ em{ font-style:italic; color:var(--gold-soft); }
 .variants summary{
   cursor:pointer; font-size:.87rem; font-weight:600; color:var(--gold);
   list-style:none; display:flex; align-items:center; gap:7px;
+  padding:11px 0;   /* 23px of text is too small a tap target on a phone */
 }
 .variants summary::-webkit-details-marker{ display:none; }
 .variants summary::after{
@@ -696,6 +697,8 @@ em{ font-style:italic; color:var(--gold-soft); }
   .nav-toggle{ display:flex; }
 }
 @media (max-width:640px){
+  /* 40px of side padding plus an icon leaves too little room for the label */
+  .btn-xl{ padding:17px 22px; font-size:1rem; }
   body{ font-size:16px; }
   .header-cta{ display:none; }
   .hero{ min-height:auto; padding:130px 0 96px; }
