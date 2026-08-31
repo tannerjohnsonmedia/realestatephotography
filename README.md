@@ -23,17 +23,16 @@ Every section has one job: move the visitor toward a phone call.
 | # | Section | Job |
 |---|---------|-----|
 | 1 | Hero | Promise + two CTAs (Build Your Shoot / Call) above the fold |
-| 2 | Proof strip | Instant credibility before the visitor evaluates price |
-| 3 | Why agents rebook | Handle the "is this worth it" objection |
-| 4 | Recent work | Show, don't tell — then push back into the funnel |
-| 5 | Video | Showcases the high-ticket product right before pricing |
-| 6 | **Build Your Shoot** | Mid-page conversion engine: self-qualifies the lead and captures contact info |
-| 7 | Pricing | Transparency kills the "request a quote" drop-off |
-| 8 | How it works | Removes friction/uncertainty about the process |
-| 9 | Book online | Self-serve path for agents who don't want to call |
-| 10 | Testimonials | Social proof right before the final ask |
-| 11 | FAQ | Handles the last objections (weather, prep, usage rights) |
-| 12 | Final CTA | Call / text / email |
+| 2 | Why agents rebook | Handle the "is this worth it" objection |
+| 3 | Recent work | Show, don't tell — then push back into the funnel |
+| 4 | Video | Showcases the high-ticket product right before pricing |
+| 5 | **Build Your Shoot** | Mid-page conversion engine: self-qualifies the lead and captures contact info |
+| 6 | Pricing | Transparency kills the "request a quote" drop-off |
+| 7 | How it works | Removes friction/uncertainty about the process |
+| 8 | Book online | Self-serve path for agents who don't want to call |
+| 9 | Testimonials | Social proof right before the final ask |
+| 10 | FAQ | Handles the last objections (weather, prep, usage rights) |
+| 11 | Final CTA | Call / text / email |
 | — | Sticky mobile bar | Call button always one tap away after 560px of scroll |
 
 Two conversion paths run in parallel:
@@ -190,7 +189,6 @@ your business, or edit it.** Every item below is a specific promise a client can
 - [ ] **"Next-business-day delivery" / "24-hr"** — hero, value props, every package, FAQ. Change if your turnaround differs.
 - [ ] **"FAA licensed drone"** — hero trust bar and FAQ. Remove if you aren't Part 107 certified.
 - [ ] **Service area** — "Denver Metro & Front Range" appears in the hero, footer, and schema. Update to your actual market.
-- [ ] **Brokerage logos** (Compass, RE/MAX, etc.) in the proof strip — these are placeholders. Only display brokerages you've actually shot for, and check their brand-usage rules first.
 - [ ] **More reviews** — the section shows the one real Google review. As you collect more, the layout can go back to a multi-column grid; ask and I'll switch it.
 - [ ] **"Unlimited listing-marketing usage" / usage rights FAQ** — confirm this matches your actual license terms.
 - [ ] **Booking portal copy** — the section says agents can choose a package and pick a date. If the portal also takes payment or confirms instantly, tell me and I'll say so; those are strong conversion points I left out because I couldn't verify them.

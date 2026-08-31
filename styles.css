@@ -232,20 +232,6 @@ em{ font-style:italic; color:var(--gold-soft); }
 .br-lg{ display:none; }
 @media (min-width:820px){ .br-lg{ display:inline; } }
 
-/* ================= PROOF STRIP ================= */
-.proof-strip{ background:var(--ink); color:#fff; padding:30px 0; }
-.proof-inner{ display:flex; flex-wrap:wrap; align-items:center; gap:16px 44px; justify-content:space-between; }
-.proof-inner > p{
-  font-size:.76rem; letter-spacing:.14em; text-transform:uppercase;
-  color:rgba(255,255,255,.5); font-weight:600;
-}
-.proof-marks{ display:flex; flex-wrap:wrap; gap:14px 38px; }
-.proof-marks span{
-  font-size:.86rem; font-weight:700; letter-spacing:.13em;
-  color:rgba(255,255,255,.42); transition:color .25s var(--ease);
-}
-.proof-marks span:hover{ color:rgba(255,255,255,.85); }
-
 /* ================= SECTIONS ================= */
 .section{ padding:var(--sec-y) 0; }
 .section-tint{ background:var(--bg-tint); }
