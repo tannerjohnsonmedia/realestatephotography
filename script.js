@@ -111,7 +111,9 @@
         r.name = 'Premium Photo & Video Package';
         r.sub = 'A complete media package for listings that need a stronger, more polished presence online.';
         r.price = 750;
-        r.includes = ['Premium HDR photography', 'Cinematic video with aerial footage'];
+        r.includes = ['35 professionally edited HDR photos', '10–15 aerial photos',
+                      'Schematic floor plan', 'Property website',
+                      'Premium Cinematic Video — up to 2 minutes'];
       } else {
         var uc = ULTIMATE_COMBO[sqft];
         r.name = 'Ultimate Photo & Video Package';
