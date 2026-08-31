@@ -116,7 +116,8 @@
         r.sub = 'Our most complete listing package — for larger homes, luxury properties, and full high-end marketing.';
         r.price = uc.price;
         r.mins = uc.mins;
-        r.includes = ['Unlimited HDR photography', '3–5 minute cinematic video', 'Full aerial & drone coverage'];
+        r.includes = ['Unlimited HDR photography', '3–5 minute cinematic video',
+                      'Full aerial & drone coverage', 'Zillow 3D tour'];
       }
       r.includes.push('Social-ready vertical cut', 'MLS-sized + full-resolution files', 'Next-business-day delivery');
     }
