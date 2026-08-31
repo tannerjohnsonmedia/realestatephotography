@@ -4,11 +4,17 @@ A single-page, no-build landing page for real estate photography and video, buil
 existing clicks and impressions into booked shoots.
 
 ```
-index.html     markup + copy + pricing tables
-styles.css     design system (colors, type, layout) — photo slots at the top
-script.js      Build Your Shoot recommender, pricing tabs, nav, CTA tracking
-favicon.svg    tab icon
-assets/        drop your photography here
+index.html          markup + copy + pricing tables
+styles.css          design system (colors, type, layout)
+script.js           Build Your Shoot recommender, pricing tabs, nav, CTA tracking
+logo.svg            standalone logo file
+favicon.svg         tab icon (auto-inverts in dark browser themes)
+favicon-32.png      fallback for older browsers
+apple-touch-icon.png  iOS home-screen icon (180px)
+icon-192.png        Android / PWA
+icon-512.png        Android / PWA, also the source for the others
+site.webmanifest    icon + theme metadata
+assets/             photography
 ```
 
 No framework, no build step, no dependencies. Open `index.html` or drop the folder on
@@ -79,6 +85,27 @@ numbers in the Pricing section of `index.html`.
 Package *contents* live in two places too: the `<ul class="ticks">` lists in the Pricing
 section of `index.html`, and the `r.includes` arrays in `recommend()` in `script.js`.
 Change both, or the builder will promise something different from the pricing card.
+
+---
+
+## Logo and icons
+
+The mark is drawn as SVG rather than stored as a bitmap, so it stays sharp at any size
+and weighs under a kilobyte. It's inlined into the header and footer using
+`fill="currentColor"`, which means it inherits the surrounding text colour: **white over
+the dark hero, dark ink once the header turns solid on scroll, white again in the
+footer.** A single PNG couldn't do that — it would need two files and a swap.
+
+`favicon.svg` carries its own `prefers-color-scheme` rule, so it shows dark on a light
+browser chrome and white on a dark one instead of disappearing.
+
+The raster icons are all generated from the same geometry, white on `#141A21`, matching
+your dark version. To regenerate them after a change, re-render `icon-512.png` and
+resize down.
+
+**These were redrawn by eye from the images you sent** — they weren't files I could
+open. If you have the original vector from whoever made the mark, send it and I'll swap
+it in so the geometry is exact rather than matched.
 
 ---
 
