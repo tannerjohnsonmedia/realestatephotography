@@ -90,12 +90,14 @@
         r.name = 'Premium Cinematic Video';
         r.sub = 'A polished listing film with aerial footage for a more complete presentation.';
         r.price = 500;
-        r.includes = ['Cinematic edit with aerial footage', 'Interior + exterior coverage'];
+        r.includes = ['Up to 2 minutes of edited footage', 'Cinematic edit with aerial footage',
+                      'Interior + exterior coverage'];
       } else {
         r.name = 'Ultimate Cinematic Video';
         r.sub = 'Our most complete film — built for maximum exposure and engagement across platforms.';
         r.price = 700;
-        r.includes = ['3–5 minute cinematic film', 'Smooth interior walkthrough footage', 'Full aerial & drone coverage'];
+        r.includes = ['3–5 minute cinematic film', 'Smooth interior walkthrough footage',
+                      'Full aerial & drone coverage', 'Optional agent narration'];
       }
       r.includes.push('Social-ready vertical cut', 'Next-business-day delivery');
 
