@@ -75,7 +75,7 @@
         r.price = up.price;
         r.mins = up.mins;
         r.custom = up.price === null;
-        r.includes = ['Unlimited HDR images', 'Aerial photos', 'Zillow 3D tour',
+        r.includes = ['Unlimited HDR images', '15 aerial photos', 'Zillow 3D tour',
                       'Schematic floor plan', 'Property website'];
       }
       r.includes.push('MLS-sized + full-resolution files', 'Next-business-day delivery');
@@ -85,28 +85,30 @@
         r.name = 'Walkthrough Video';
         r.sub = 'Clean, professional ground-level coverage for a standard listing.';
         r.price = 350;
-        r.includes = ['Up to 90 seconds of edited footage', 'Interior + exterior ground-level coverage'];
+        r.includes = ['Up to 90 seconds of edited footage', 'Interior + exterior ground-level coverage',
+                      'Social-ready vertical cut'];
       } else if (!LARGE[sqft]) {
         r.name = 'Premium Cinematic Video';
         r.sub = 'A polished listing film with aerial footage for a more complete presentation.';
         r.price = 500;
         r.includes = ['Up to 2 minutes of edited footage', 'Cinematic edit with aerial footage',
-                      'Interior + exterior coverage'];
+                      'Interior + exterior coverage', 'Social-ready vertical cut'];
       } else {
         r.name = 'Ultimate Cinematic Video';
         r.sub = 'Our most complete film — built for maximum exposure and engagement across platforms.';
         r.price = 700;
         r.includes = ['3–5 minute cinematic film', 'Smooth interior walkthrough footage',
-                      'Full aerial & drone coverage', 'Optional agent narration'];
+                      'Full aerial & drone coverage', 'Optional agent narration',
+                      '1-minute vertical social media reel'];
       }
-      r.includes.push('Social-ready vertical cut', 'Next-business-day delivery');
+      r.includes.push('Next-business-day delivery');
 
     } else { // photovideo
       if (sqft === '0-2000' && !wantsAerial) {
         r.name = 'Basic Photo & Video Package';
         r.sub = 'Professional photos and video coverage in one visit — the efficient starter package.';
         r.price = 500;
-        r.includes = ['HDR photography package', 'Listing video coverage'];
+        r.includes = ['HDR photography package', 'Listing video coverage', 'Social-ready vertical cut'];
       } else if (!LARGE[sqft]) {
         r.name = 'Premium Photo & Video Package';
         r.sub = 'A complete media package for listings that need a stronger, more polished presence online.';
@@ -121,9 +123,10 @@
         r.price = uc.price;
         r.mins = uc.mins;
         r.includes = ['Unlimited HDR photography', '3–5 minute cinematic video',
-                      'Full aerial & drone coverage', 'Zillow 3D tour'];
+                      'Full aerial & drone coverage', 'Zillow 3D tour',
+                      '1-minute vertical social media reel'];
       }
-      r.includes.push('Social-ready vertical cut', 'MLS-sized + full-resolution files', 'Next-business-day delivery');
+      r.includes.push('MLS-sized + full-resolution files', 'Next-business-day delivery');
     }
 
     // Add-ons
