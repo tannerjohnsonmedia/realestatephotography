@@ -254,8 +254,35 @@ beats the old one.
 
 ### 4. Google Ads
 
-- Change **Final URL** to `https://tannerjmedia.com/` on every ad — copied campaigns keep
-  the old destination, which is the most common way a new landing page never gets traffic.
+**Point each ad group at the matching section and headline.** The hero rewrites itself
+from a `?s=` parameter, so one page can greet six different searches without six copies
+of the pricing table drifting apart.
+
+| Ad group theme | Final URL |
+|---|---|
+| HDR photos, listing photography | `https://tannerjmedia.com/?s=photos#pricing` |
+| Cinematic video, walkthrough, listing video | `https://tannerjmedia.com/?s=video#video` |
+| Drone, aerial | `https://tannerjmedia.com/?s=drone#video` |
+| Twilight | `https://tannerjmedia.com/?s=twilight#work` |
+| Condos, townhomes, rentals | `https://tannerjmedia.com/?s=condo#pricing` |
+| "book a real estate photographer" | `https://tannerjmedia.com/?s=book#book` |
+| Brand / broad | `https://tannerjmedia.com/` |
+
+An unrecognised `?s=` value leaves the default headline, so a typo degrades quietly. The
+parameter only selects from a fixed list — nothing from the URL is ever written into the
+page, so the link can't be used to inject content.
+
+Each variant fires a `hero_variant` event, so in GA4 you can compare conversion rate per
+headline and drop the ones that underperform. To edit the copy, see `HERO_VARIANTS` near
+the top of `script.js`.
+
+Note this changes what the *visitor* sees, not what Google crawls — it lifts conversion
+rate and lowers bounce, but Quality Score still reads the default page.
+
+**The rest of the campaign setup:**
+
+- Change **Final URL** on every ad to the matching row above — copied campaigns keep the
+  old destination, which is the most common way a new landing page never gets traffic.
 - Update the **display path** so the ad shows the new domain.
 - Add `?utm_source=google&utm_medium=cpc&utm_campaign=<name>` to the final URL, or turn on
   auto-tagging, so GA4 attributes conversions correctly.

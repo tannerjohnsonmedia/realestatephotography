@@ -151,6 +151,72 @@
   function money(n) { return '$' + n.toLocaleString('en-US'); }
 
   /* ---------------------------------------------------------------------------
+     HERO MESSAGE MATCH
+     Point each Google Ads ad group at ?s=<key> and the hero speaks to what the
+     visitor actually searched for. Everything below the hero stays put, so
+     there's still only one page and one copy of the pricing.
+
+     The URL only picks a key — nothing from it is ever inserted into the page,
+     so a crafted link can't inject markup. An unknown key leaves the default.
+
+     The headline carries class "reveal" (opacity 0 until the reveal observer
+     runs), so the swap happens before it is ever painted — no flicker.
+     ------------------------------------------------------------------------ */
+  var HERO_VARIANTS = {
+    photos: {
+      eyebrow: 'Denver Metro &amp; Front Range · Real Estate Photography',
+      h1: 'Listing photos that<br class="br-lg" />make buyers <em>stop scrolling.</em>',
+      sub: 'MLS-ready HDR photography, hand-edited and delivered next business day. Packages from $175.'
+    },
+    video: {
+      eyebrow: 'Denver Metro &amp; Front Range · Real Estate Video',
+      h1: 'Video that keeps them<br class="br-lg" /><em>on the listing.</em>',
+      sub: 'Cinematic listing films, walkthrough tours, and vertical cuts built for Reels — one shoot, every platform.'
+    },
+    drone: {
+      eyebrow: 'Denver Metro &amp; Front Range · Aerial &amp; Drone',
+      h1: 'Show the lot, the roof,<br class="br-lg" />the <em>whole neighborhood.</em>',
+      sub: 'Aerial photography and drone video, included in every listing package rather than billed as an extra.'
+    },
+    twilight: {
+      eyebrow: 'Denver Metro &amp; Front Range · Twilight Photography',
+      h1: 'The one shot that makes<br class="br-lg" />a listing <em>stand out.</em>',
+      sub: 'Warm windows, a dusk sky, and a hero image buyers stop for. Add twilight to any shoot for $250.'
+    },
+    condo: {
+      eyebrow: 'Denver Metro &amp; Front Range · Condos &amp; Townhomes',
+      h1: 'Smaller spaces,<br class="br-lg" />shot to <em>feel bigger.</em>',
+      sub: 'Bright, straight-lined HDR photography for condos, townhomes, and rentals. Packages from $175.'
+    },
+    book: {
+      eyebrow: 'Denver Metro &amp; Front Range · Real Estate Media',
+      h1: 'Get your next listing<br class="br-lg" /><em>on the calendar.</em>',
+      sub: 'Photography, video, and drone from a single visit. Book online any hour, or call and we\'ll find a date this week.'
+    }
+  };
+
+  (function applyHeroVariant() {
+    var key;
+    try { key = new URLSearchParams(window.location.search).get('s'); } catch (e) { return; }
+    if (!key) return;
+
+    var v = HERO_VARIANTS[key.toLowerCase()];
+    if (!v) return;   // unknown key — leave the default headline alone
+
+    var hero = document.querySelector('.hero-inner');
+    if (!hero) return;
+    var eyebrow = hero.querySelector('.eyebrow');
+    var h1 = hero.querySelector('h1');
+    var sub = hero.querySelector('.hero-sub');
+    if (eyebrow && v.eyebrow) eyebrow.innerHTML = v.eyebrow;
+    if (h1 && v.h1) h1.innerHTML = v.h1;
+    if (sub && v.sub) sub.textContent = v.sub;
+
+    document.body.setAttribute('data-hero', key.toLowerCase());
+    track('hero_variant', { variant: key.toLowerCase() });
+  })();
+
+  /* ---------------------------------------------------------------------------
      BUILDER
      ------------------------------------------------------------------------ */
   var form = document.getElementById('builderForm');
