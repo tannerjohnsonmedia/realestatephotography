@@ -38,6 +38,8 @@
   // Ultimate Photo & Video Package — priced by square footage
   // Only reached at 4,001+ sq ft — smaller homes get the Basic/Premium combo instead.
   var ULTIMATE_COMBO = {
+    '0-2000':     { price: 1000, mins: 120 },   // your 0–4,000 band
+    '2001-4000':  { price: 1000, mins: 120 },
     '4001-6000':  { price: 1100, mins: 150 },
     '6001-8000':  { price: 1200, mins: 150 },
     '8001-10000': { price: 1300, mins: 180 },
@@ -54,15 +56,18 @@
     var wantsAerial = addons.indexOf('aerial') > -1;
     var wantsTwilight = addons.indexOf('twilight') > -1;
     var wantsRush = addons.indexOf('rush') > -1;
+    var wantsTour = addons.indexOf('tour') > -1;
+    // only the Ultimate tiers include a 3D tour
+    var upgradedForTour = wantsTour && !LARGE[sqft];
     var r = { includes: [], notes: [], mins: null, price: null, custom: false };
 
     if (media === 'photo') {
-      if (sqft === '0-2000') {
+      if (sqft === '0-2000' && !wantsTour) {
         r.name = 'Basic Photography Package';
         r.sub = 'The right fit for condos, townhomes, rentals, and quick property updates.';
         r.price = 245;
         r.includes = ['20 professionally edited HDR images', '10 aerial photos'];
-      } else if (sqft === '2001-4000') {
+      } else if (sqft === '2001-4000' && !wantsTour) {
         r.name = 'Premium Photography Package';
         r.sub = 'The standard-listing workhorse — enough coverage for any typical single-family home.';
         r.price = 325;
@@ -104,12 +109,12 @@
       r.includes.push('Next-business-day delivery');
 
     } else { // photovideo
-      if (sqft === '0-2000' && !wantsAerial) {
+      if (sqft === '0-2000' && !wantsAerial && !wantsTour) {
         r.name = 'Basic Photo & Video Package';
         r.sub = 'Professional photos and video coverage in one visit — the efficient starter package.';
         r.price = 500;
         r.includes = ['HDR photography package', 'Listing video coverage'];
-      } else if (!LARGE[sqft]) {
+      } else if (!LARGE[sqft] && !wantsTour) {
         r.name = 'Premium Photo & Video Package';
         r.sub = 'A complete media package for listings that need a stronger, more polished presence online.';
         r.price = 750;
@@ -135,6 +140,11 @@
       r.includes.push('Twilight photoshoot — warm, glowing hero image');
       if (r.total !== null) r.total += TWILIGHT_PRICE;
       r.twilight = true;
+    }
+    if (wantsTour && media === 'video') {
+      r.notes.push('A 3D tour is captured alongside the photography, so it isn\'t part of a video-only package — say the word on the call and we\'ll fold one in.');
+    } else if (upgradedForTour) {
+      r.notes.push('The Ultimate package is the one that includes a 3D tour, so that\'s what\'s recommended here — the smaller packages don\'t come with one.');
     }
     if (wantsRush) {
       r.notes.push('Rush turnaround is available most weeks — mention your deadline on the call and we\'ll confirm same-day delivery.');

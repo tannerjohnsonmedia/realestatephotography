@@ -79,6 +79,14 @@ phone, email, and address on the way there.
 Selecting **aerial/drone** upgrades to the tier that includes it. **Twilight** adds $250 to
 the total. **Rush** adds a note rather than a price, so you keep that conversation on the call.
 
+**3D tour** works the same way as aerial: only the Ultimate tiers include one, so ticking it
+moves the recommendation up to Ultimate Photography or Ultimate Photo & Video and says why.
+That keeps the quoted price real — no add-on line for something without a published price.
+On a video-only shoot it adds a note instead, since a tour is captured with the photography.
+
+If you'd rather sell a 3D tour as a flat add-on to the cheaper packages, tell me the price
+and I'll switch it to add to the total the way twilight does.
+
 To change pricing, edit the constants at the top of `script.js` **and** the matching
 numbers in the Pricing section of `index.html`.
 
