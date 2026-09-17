@@ -297,6 +297,42 @@ set to `noindex` so it never competes in search.
 
 ---
 
+## 3D tours
+
+The tours section sits between Video and Build Your Shoot, with a tab for each platform
+and one large viewer. Both load only when tapped — these are full 3D applications, several
+megabytes each, and loading two of them on every page view would undo the work done
+everywhere else to keep the page fast.
+
+To swap in a different property, change `data-tour` on the facade button in `index.html`
+and the matching `href` on the "Open in a new tab" link below it.
+
+### If a tour comes up blank
+
+Some hosts refuse to be displayed inside another site's frame, and a browser can't report
+that back across origins — so this can't be detected in code. That's why every tour keeps
+a visible **Open in a new tab** link underneath: if the frame is blank, the visitor still
+gets through.
+
+**Check both tours on the live site.** Matterport documents iframe embedding, so it should
+be fine. Zillow's white-label `view-imx` link is their embed format, but I couldn't verify
+it from here. If Zillow's frame comes up empty, add `data-mode="link"` to that facade:
+
+```html
+<button class="tour-facade" type="button" data-mode="link" data-tour="https://...">
+```
+
+The card then opens the tour in a new tab when tapped instead of embedding it. Same
+layout, nothing else changes.
+
+### Sizing
+
+16:9 on desktop, capped at 620px tall. Below 820px it switches to a 3:4 frame — a 16:9
+tour on a phone is about 220px tall, too short to navigate something you move through.
+Gyroscope and fullscreen are both permitted, so look-around works on a phone.
+
+---
+
 ## Before you launch — verify these
 
 I wrote conversion copy around industry-standard claims. **Confirm each one is true for

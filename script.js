@@ -381,20 +381,59 @@
   }
 
   /* ---------------------------------------------------------------------------
+     3D TOURS
+     Same click-to-load treatment as the videos — these viewers are full 3D apps
+     and cost several megabytes each.
+
+     Some hosts refuse to be framed. That can't be detected reliably across
+     origins, so every tour keeps a visible "Open in a new tab" link beneath it:
+     if the frame comes up blank, the visitor still has a way through. Setting
+     data-mode="link" on a facade skips the embed entirely and just opens the
+     tour, for any host that turns out to block framing.
+     ------------------------------------------------------------------------ */
+  Array.prototype.forEach.call(document.querySelectorAll('.tour-facade'), function (btn) {
+    btn.addEventListener('click', function () {
+      var url = btn.getAttribute('data-tour');
+      var label = btn.getAttribute('data-label') || '3D tour';
+      if (!url) return;
+
+      if (btn.getAttribute('data-mode') === 'link') {
+        window.open(url, '_blank', 'noopener');
+        track('tour_open', { tour: label, mode: 'newtab' });
+        return;
+      }
+
+      var iframe = document.createElement('iframe');
+      iframe.src = url;
+      iframe.title = label;
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.allow = 'fullscreen; xr-spatial-tracking; gyroscope; accelerometer';
+      iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+      btn.replaceWith(iframe);
+      track('tour_open', { tour: label, mode: 'embed' });
+    });
+  });
+
+  /* ---------------------------------------------------------------------------
      PRICING TABS
      ------------------------------------------------------------------------ */
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
-  tabs.forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      tabs.forEach(function (t) {
-        var panel = document.getElementById(t.getAttribute('aria-controls'));
-        var on = t === tab;
-        t.classList.toggle('is-active', on);
-        t.setAttribute('aria-selected', on ? 'true' : 'false');
-        panel.classList.toggle('is-active', on);
-        panel.hidden = !on;
+  /* Scoped per .tabs group — pricing and the 3D tours each have their own set,
+     and a page-wide query would let one group deactivate the other's panels. */
+  Array.prototype.forEach.call(document.querySelectorAll('.tabs'), function (group) {
+    var tabs = Array.prototype.slice.call(group.querySelectorAll('.tab'));
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (t) {
+          var panel = document.getElementById(t.getAttribute('aria-controls'));
+          if (!panel) return;
+          var on = t === tab;
+          t.classList.toggle('is-active', on);
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          panel.classList.toggle('is-active', on);
+          panel.hidden = !on;
+        });
+        track('tab_switch', { group: group.getAttribute('aria-label') || '', tab: tab.textContent.trim() });
       });
-      track('pricing_tab', { tab: tab.textContent.trim() });
     });
   });
 
