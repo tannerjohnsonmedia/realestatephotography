@@ -264,6 +264,7 @@ of the pricing table drifting apart.
 | Cinematic video, walkthrough, listing video | `https://tannerjmedia.com/?s=video#video` |
 | Drone, aerial | `https://tannerjmedia.com/?s=drone#video` |
 | Twilight | `https://tannerjmedia.com/?s=twilight#work` |
+| 3D tours, Matterport, Zillow 3D | `https://tannerjmedia.com/?s=tours#tours` |
 | Condos, townhomes, rentals | `https://tannerjmedia.com/?s=condo#pricing` |
 | "book a real estate photographer" | `https://tannerjmedia.com/?s=book#book` |
 | Brand / broad | `https://tannerjmedia.com/` |

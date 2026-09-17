@@ -139,10 +139,11 @@ em{ font-style:italic; color:var(--gold-soft); }
 }
 .site-header.is-stuck .brand-text{ color:var(--ink); }
 
-.nav{ display:flex; gap:30px; }
+.nav{ display:flex; gap:26px; }
 .nav a{
   font-size:.92rem; font-weight:500; color:rgba(255,255,255,.82); text-decoration:none;
   position:relative; transition:color .2s var(--ease);
+  white-space:nowrap;   /* two-line nav items look broken; collapse to the menu instead */
 }
 .nav a::after{
   content:""; position:absolute; left:0; right:0; bottom:-6px; height:1.5px;

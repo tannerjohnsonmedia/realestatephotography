@@ -188,6 +188,11 @@
       h1: 'Smaller spaces,<br class="br-lg" />shot to <em>feel bigger.</em>',
       sub: 'Bright, straight-lined HDR photography for condos, townhomes, and rentals. Packages from $175.'
     },
+    tours: {
+      eyebrow: 'Denver Metro &amp; Front Range · 3D Tours',
+      h1: 'Let buyers walk the house<br class="br-lg" />before they <em>ever visit.</em>',
+      sub: 'Zillow 3D Home and Matterport tours, captured alongside your photos and live on the listing next business day.'
+    },
     book: {
       eyebrow: 'Denver Metro &amp; Front Range · Real Estate Media',
       h1: 'Get your next listing<br class="br-lg" /><em>on the calendar.</em>',
