@@ -208,6 +208,68 @@ I couldn't load YouTube from my environment, so confirm on the live site:
 
 ---
 
+## Going live
+
+**Domain:** tannerjmedia.com. The canonical URL, Open Graph tags, schema, sitemap, and
+robots.txt all point there already.
+
+### 1. Deploy
+
+[app.netlify.com](https://app.netlify.com) → Add new site → Import an existing project →
+GitHub → this repo. Branch `claude/real-estate-photography-landing-9q8g91`. Leave the build
+command empty and the publish directory as `/` — `netlify.toml` already sets this, along
+with cache and security headers.
+
+### 2. Point the domain
+
+In Netlify: Domain settings → Add custom domain → `tannerjmedia.com`. Netlify shows you the
+records to create at your registrar:
+
+- `A` record for the root → Netlify's load balancer IP, **or** set Netlify's nameservers
+- `CNAME` for `www` → `your-site.netlify.app`
+
+Nameservers are simpler if the domain is new and hosts nothing else. SSL is issued
+automatically once DNS resolves (10–60 minutes).
+
+### 3. Turn on analytics — do this before spending on ads
+
+Open `index.html`, find `window.GA4_ID`, and replace `G-XXXXXXXXXX` with your GA4
+Measurement ID (GA4 → Admin → Data streams). Until you do, the block is inert and sends
+nothing.
+
+Then in GA4 → Admin → Events, mark these as key events, and import them into Google Ads
+(Tools → Conversions → Import → Google Analytics 4):
+
+| Event | What it means |
+|---|---|
+| `contact_call` | Someone tapped a call button |
+| `contact_booking` | Someone opened the booking portal |
+| `contact_text` / `contact_email` | Text or email tapped |
+| `builder_complete` | Finished Build Your Shoot — carries package name and value |
+| `builder_step` | Each step completed; shows where people drop out |
+
+Set **`contact_call`, `contact_booking` and `builder_complete` as your conversion actions.**
+Without this the campaign can't optimise for anything, and you can't tell whether this page
+beats the old one.
+
+### 4. Google Ads
+
+- Change **Final URL** to `https://tannerjmedia.com/` on every ad — copied campaigns keep
+  the old destination, which is the most common way a new landing page never gets traffic.
+- Update the **display path** so the ad shows the new domain.
+- Add `?utm_source=google&utm_medium=cpc&utm_campaign=<name>` to the final URL, or turn on
+  auto-tagging, so GA4 attributes conversions correctly.
+- Point the **conversion action** at the imported GA4 events above.
+- **Pause the old campaign** when this one goes live. Two campaigns bidding on the same
+  keywords in one account compete with each other and split the learning period across
+  both — you pay for two ramp-ups and get one campaign's worth of data.
+
+`privacy.html` exists because the builder collects a name, phone and email; Google expects
+a privacy policy when a landing page collects personal data. It's linked in the footer and
+set to `noindex` so it never competes in search.
+
+---
+
 ## Before you launch — verify these
 
 I wrote conversion copy around industry-standard claims. **Confirm each one is true for
