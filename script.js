@@ -462,7 +462,7 @@
 
   function onScroll() {
     var y = window.scrollY || window.pageYOffset;
-    header.classList.toggle('is-stuck', y > 40);
+    if (header) header.classList.toggle('is-stuck', y > 40);
     if (mobileBar) mobileBar.classList.toggle('is-visible', y > 560);
   }
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -473,7 +473,7 @@
       var open = navToggle.getAttribute('aria-expanded') === 'true';
       navToggle.setAttribute('aria-expanded', open ? 'false' : 'true');
       mobileNav.hidden = open;
-      if (!open) header.classList.add('is-stuck');
+      if (!open && header) header.classList.add('is-stuck');
     });
     mobileNav.addEventListener('click', function (e) {
       if (e.target.tagName !== 'A') return;
@@ -515,12 +515,39 @@
      Every call/email/text button carries data-cta. Events push to dataLayer
      (GTM) and gtag (GA4) if either is installed — nothing breaks if neither is.
      ------------------------------------------------------------------------ */
+  /* Google Ads conversion labels, keyed by the event that earns them. Only real
+     leads are here: contact_booking is deliberately absent because it only means
+     the visitor left for the external portal, which is not a booking. Nor are
+     builder_step, tour_open, video_play or hero_variant, which are diagnostics. */
+  var ADS_CONVERSIONS = {
+    builder_complete: 'AW-18094494567/DqVRCIfJ8oIdEOemkLRD',
+    contact_call:     'AW-18094494567/LJazCP-Q64IdEOemkLRD',
+    contact_text:     'AW-18094494567/SrzxCIKR64IdEOemkLRD',
+    contact_email:    'AW-18094494567/1mdLCIWR64IdEOemkLRD'
+  };
+  /* A listener bound twice would otherwise report two leads for one action.
+     Short window rather than once-per-page-view, so a genuine second enquiry
+     minutes later still counts. */
+  var CONVERSION_DEDUPE_MS = 1000;
+  var conversionSentAt = {};
+
   function track(event, params) {
     var payload = params || {};
     try {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push(Object.assign({ event: event }, payload));
-      if (typeof window.gtag === 'function') window.gtag('event', event, payload);
+      if (typeof window.gtag !== 'function') return;   // ad blocker — page must still work
+      window.gtag('event', event, payload);
+
+      if (!Object.prototype.hasOwnProperty.call(ADS_CONVERSIONS, event)) return;
+      var now = Date.now();
+      if (conversionSentAt[event] && now - conversionSentAt[event] < CONVERSION_DEDUPE_MS) return;
+      conversionSentAt[event] = now;
+      window.gtag('event', 'conversion', {
+        'send_to': ADS_CONVERSIONS[event],
+        'value': 1.0,
+        'currency': 'USD'
+      });
     } catch (err) { /* tracking must never break the page */ }
   }
 

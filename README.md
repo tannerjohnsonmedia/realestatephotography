@@ -265,15 +265,22 @@ Set **`contact_call`, `contact_booking` and `builder_complete` as your conversio
 Without this the campaign can't optimise for anything, and you can't tell whether this page
 beats the old one.
 
-**Installing the tag is not the same as tracking conversions.** The tag now fires every
-event above into the Ads account, but Google won't count any of them until you create
-conversion actions. Either:
+**Conversions are wired.** Four events send a Google Ads conversion, mapped in
+`ADS_CONVERSIONS` at the top of `track()` in `script.js` — one place to change:
 
-- **Import from GA4** (simplest): Tools → Conversions → Import → Google Analytics 4, once
-  the GA4 ID is set; or
-- **Define them in Ads directly**: Tools → Conversions → New → Website. Google gives you a
-  conversion label like `AW-18094494567/AbC-D_efGh`. Send me the labels and I'll fire them
-  on the matching buttons.
+| Event | Conversion |
+|---|---|
+| `builder_complete` | fires only after the form validates and the result renders |
+| `contact_call` | any tap-to-call link |
+| `contact_text` | any SMS link |
+| `contact_email` | any mailto link |
+
+Each sends `value: 1.0, currency: 'USD'`, and repeats within one second are suppressed so
+a double-bound handler can't report two leads for one action.
+
+**Deliberately excluded:** `contact_booking` (the visitor only left for the portal — that
+is not a booking), plus `builder_step`, `tour_open`, `video_play` and `hero_variant`, which
+are diagnostics. To add or remove one, edit the map; nothing else needs touching.
 
 ### 4. Google Ads
 

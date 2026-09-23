@@ -39,14 +39,14 @@
 </head>
 <body>
 
-<header class="site-header is-stuck">
+<header class="site-header is-stuck" id="siteHeader">
   <div class="wrap header-inner">
     <a class="brand" href="index.html">
       <svg class="brand-mark" viewBox="0 0 512 512" aria-hidden="true"><rect x="64" y="64" width="384" height="384" rx="26" fill="none" stroke="currentColor" stroke-width="34"/><path d="M168 136h64l88 240h-64z" fill="currentColor"/><path d="M262 136h46l88 240h-46z" fill="currentColor"/></svg>
       <span class="brand-text">Tanner&nbsp;Johnson<span class="brand-sub">Media</span></span>
     </a>
     <div class="header-cta" style="margin-left:auto">
-      <a class="btn btn-primary btn-sm" href="tel:+17205879516">(720) 587-9516</a>
+      <a class="btn btn-primary btn-sm" href="tel:+17205879516" data-cta="privacy-header-call">(720) 587-9516</a>
     </div>
   </div>
 </header>
@@ -149,6 +149,6 @@
     <p>&copy; <span id="year">2026</span> Tanner Johnson Media. All rights reserved.</p>
   </div>
 </footer>
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="script.js"></script>
 </body>
 </html>
