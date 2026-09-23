@@ -239,11 +239,16 @@ records to create at your registrar:
 Nameservers are simpler if the domain is new and hosts nothing else. SSL is issued
 automatically once DNS resolves (10–60 minutes).
 
-### 3. Turn on analytics — do this before spending on ads
+### 3. Analytics and conversion tracking
 
-Open `index.html`, find `window.GA4_ID`, and replace `G-XXXXXXXXXX` with your GA4
-Measurement ID (GA4 → Admin → Data streams). Until you do, the block is inert and sends
-nothing.
+**Google Ads tag: installed.** `AW-18094494567` is in the `<head>` of both `index.html`
+and `privacy.html`. There's no shared layout to put it in — a tag pulled from a shared JS
+file loads too late to be reliable — so it's inlined in each page. If you add a page,
+copy both `<script>` blocks from the top of `index.html`.
+
+**GA4: still needs your ID.** Find `window.GA4_ID` and replace `G-XXXXXXXXXX` with your
+Measurement ID (GA4 → Admin → Data streams). gtag.js is already loaded by the Ads tag, so
+this block only adds the `config` call — the library is never loaded twice.
 
 Then in GA4 → Admin → Events, mark these as key events, and import them into Google Ads
 (Tools → Conversions → Import → Google Analytics 4):
@@ -259,6 +264,16 @@ Then in GA4 → Admin → Events, mark these as key events, and import them into
 Set **`contact_call`, `contact_booking` and `builder_complete` as your conversion actions.**
 Without this the campaign can't optimise for anything, and you can't tell whether this page
 beats the old one.
+
+**Installing the tag is not the same as tracking conversions.** The tag now fires every
+event above into the Ads account, but Google won't count any of them until you create
+conversion actions. Either:
+
+- **Import from GA4** (simplest): Tools → Conversions → Import → Google Analytics 4, once
+  the GA4 ID is set; or
+- **Define them in Ads directly**: Tools → Conversions → New → Website. Google gives you a
+  conversion label like `AW-18094494567/AbC-D_efGh`. Send me the labels and I'll fire them
+  on the matching buttons.
 
 ### 4. Google Ads
 
