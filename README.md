@@ -392,6 +392,47 @@ once the site is live — it can only read a public URL.
 
 ---
 
+## Lead notifications
+
+The builder posts every completed quote to **Netlify Forms** under the form name
+`builder-shoot`. Nothing is sent until validation passes and the result is on screen, and
+the POST runs in the background — if it fails, the visitor still gets their quote and
+nothing is surfaced.
+
+Each submission carries the visitor's name, phone, email and property address, the square
+footage and media type they chose, any add-ons, plus three fields built from the
+recommendation so the notification reads as a quote rather than raw answers:
+
+- `package` — e.g. Ultimate Photo & Video Package
+- `estimate` — e.g. $1,450
+- `summary` — the whole thing as readable lines
+
+### Turn the email on — this is the one step I can't do for you
+
+Submissions are collected automatically, but Netlify does not email them until you ask:
+
+**Netlify → your site → Forms → `builder-shoot` → Settings and usage → Form
+notifications → Add notification → Email notification**, and enter
+`tannerjohnsonmedia@gmail.com`.
+
+Until then submissions still arrive and are stored — you just have to open the dashboard
+to see them.
+
+### Worth knowing
+
+- The free tier covers **100 submissions a month**. Above that Netlify stops accepting
+  them, so keep an eye on it if the ads work.
+- A honeypot field named `bot-field` sits off-screen in the form. Bots that fill every
+  input get silently discarded. It is positioned off-screen rather than `display:none`
+  because some bots skip hidden fields.
+- Netlify detects the form by parsing the deployed HTML, so the form must stay in
+  `index.html` as plain markup. If it is ever moved into JavaScript, detection breaks.
+- Test it on the live site once: complete the builder and confirm a submission appears
+  under Forms. It cannot be tested locally — Netlify's form handling only exists on their
+  servers.
+
+---
+
 ## Before you launch — verify these
 
 I wrote conversion copy around industry-standard claims. **Confirm each one is true for

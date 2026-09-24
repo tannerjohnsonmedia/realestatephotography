@@ -391,7 +391,19 @@
       </div>
       <p class="builder-step-label" id="stepLabel">Step 1 of 4</p>
 
-      <form id="builderForm" novalidate>
+      <!-- Netlify detects this form at deploy time and collects submissions.
+           It is posted by fetch() once the builder completes, not by the browser. -->
+      <form id="builderForm" name="builder-shoot" method="POST"
+            data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="builder-shoot" />
+        <p class="hp" aria-hidden="true">
+          <label>Leave this empty if you're human <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+        </p>
+        <!-- filled in from the recommendation before posting, so the notification
+             reads as a quote rather than raw form answers -->
+        <input type="hidden" name="package" />
+        <input type="hidden" name="estimate" />
+        <input type="hidden" name="summary" />
 
         <!-- STEP 1 -->
         <fieldset class="step is-active" data-step="1">

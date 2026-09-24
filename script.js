@@ -310,6 +310,35 @@
       return lines.join('\n');
     }
 
+    /* Posts the completed quote to Netlify Forms, which emails it on and keeps a
+       copy in the dashboard. Runs only after validation has passed and the result
+       is on screen, in the background — the visitor already has what they came
+       for, so a failure here must never surface or block anything. */
+    var lastLeadSent = '';
+
+    function sendLead(a, r) {
+      try {
+        var set = function (name, value) {
+          var el = form.querySelector('[name="' + name + '"]');
+          if (el) el.value = value;
+        };
+        // so the notification reads as a quote rather than raw form answers
+        set('package', r.name);
+        set('estimate', r.total === null ? 'Custom quote' : money(r.total));
+        set('summary', summaryText(a, r));
+
+        var body = new URLSearchParams(new FormData(form)).toString();
+        if (body === lastLeadSent) return;   // identical answers already sent
+        lastLeadSent = body;
+
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body
+        }).catch(function () { /* silent — never block the result */ });
+      } catch (err) { /* silent */ }
+    }
+
     function renderResult() {
       var a = collect();
       var r = recommend(a);
@@ -356,6 +385,7 @@
       stepLabel.hidden = true;
       resultEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       track('builder_complete', { package: r.name, value: r.total, sqft: a.sqft, media: a.media });
+      sendLead(a, r);
     }
 
     nextBtn.addEventListener('click', function () {

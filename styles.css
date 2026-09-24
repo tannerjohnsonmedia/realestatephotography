@@ -489,6 +489,9 @@ em{ font-style:italic; color:var(--gold-soft); }
 .field-note{ font-size:.85rem; color:var(--muted); margin-top:16px; }
 @media (max-width:560px){ .fields{ grid-template-columns:1fr; } }
 
+/* Netlify honeypot — must exist in the DOM but never be seen or focusable */
+.hp{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+
 .builder-nav{ display:flex; gap:12px; align-items:center; margin-top:32px; }
 .builder-nav #nextBtn{ margin-left:auto; }
 .builder-error{
