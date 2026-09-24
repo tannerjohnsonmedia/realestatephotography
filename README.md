@@ -364,6 +364,30 @@ Gyroscope and fullscreen are both permitted, so look-around works on a phone.
 
 ---
 
+## Structured data
+
+`index.html` carries one `ProfessionalService` block in `<head>` — a LocalBusiness
+subtype, so Google treats it as a local business while being more specific. It declares
+the name, URL, phone, email, price range, logo, image, and a structured `areaServed`
+(Denver Metro → Colorado → US) rather than a plain string.
+
+**Two things still to add, both needing information only you have:**
+
+- **`sameAs`** — your Google Business Profile, Instagram, and any other profiles. There's
+  a comment above the block showing exactly where to paste them. This is what tells Google
+  the website and the Google Business Profile are the same business, which is worth real
+  local-ranking weight. Only list profiles you control: a wrong URL points Google at
+  someone else.
+- **`address`** — omitted because I don't have one. Google treats it as recommended, so
+  the Rich Results Test will flag it. If you have an address on your Google Business
+  Profile, add a matching `PostalAddress` here; if you run as a service-area business with
+  no public address, leaving it out is correct and the warning is expected.
+
+Validate at [search.google.com/test/rich-results](https://search.google.com/test/rich-results)
+once the site is live — it can only read a public URL.
+
+---
+
 ## Before you launch — verify these
 
 I wrote conversion copy around industry-standard claims. **Confirm each one is true for

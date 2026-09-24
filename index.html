@@ -39,19 +39,36 @@
   if (window.GA4_ID.indexOf('XXXX') === -1) { gtag('config', window.GA4_ID); }
 </script>
 
+<!-- Business schema. To add your profiles, paste a "sameAs" array of full URLs
+     after "logo" below, e.g.
+       "sameAs": [
+         "https://www.google.com/maps/place/...",
+         "https://www.instagram.com/yourhandle/"
+       ],
+     Only list profiles you actually control — a wrong URL here tells Google the
+     wrong business is you. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "@id": "#business",
+  "@type": "ProfessionalService",
+  "@id": "https://tannerjmedia.com/#business",
   "name": "Tanner Johnson Media",
-  "description": "Real estate photography, cinematic video, and drone media for listing agents.",
+  "description": "Real estate photography, cinematic video, drone, floor plans and 3D tours for listing agents.",
+  "url": "https://tannerjmedia.com/",
   "telephone": "+1-720-587-9516",
   "email": "tannerjohnsonmedia@gmail.com",
   "priceRange": "$175-$1500",
-  "url": "https://tannerjmedia.com/",
   "image": "https://tannerjmedia.com/assets/og-image.jpg",
-  "areaServed": "Denver Metro, Colorado"
+  "logo": "https://tannerjmedia.com/icon-512.png",
+  "areaServed": {
+    "@type": "AdministrativeArea",
+    "name": "Denver Metro",
+    "containedInPlace": {
+      "@type": "State",
+      "name": "Colorado",
+      "containedInPlace": { "@type": "Country", "name": "US" }
+    }
+  }
 }
 </script>
 </head>
