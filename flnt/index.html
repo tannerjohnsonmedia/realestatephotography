@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>FLNT Films — Films that strike</title>
+<meta name="description" content="FLNT Films (pronounced “flint”) is a cinematic video studio making brand films, commercials, weddings, documentaries and music videos." />
+<meta name="theme-color" content="#0a0908" />
+<meta name="color-scheme" content="dark" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="FLNT Films — Films that strike" />
+<meta property="og:description" content="Cinematic brand films, commercials, weddings and music videos. Pronounced “flint.”" />
+<meta property="og:site_name" content="FLNT Films" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body class="is-loading">
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Film-leader countdown. Removed by JS; never shown with reduced motion. -->
+<div class="leader" id="leader" aria-hidden="true">
+  <div class="leader-cross"></div>
+  <div class="leader-ring"><span class="leader-num" id="leaderNum">3</span></div>
+  <p class="leader-cap">FLNT FILMS · REEL 01 · CLICK TO SKIP</p>
+</div>
+
+<canvas class="sparks" id="sparks" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor-label" id="cursorLabel"></span></div>
+
+<!-- Viewfinder HUD -->
+<header class="hud-top">
+  <a class="brand" href="#top" aria-label="FLNT Films, back to top">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 1l3.2 11.8L31 16l-11.8 3.2L16 31l-3.2-11.8L1 16l11.8-3.2z"/></svg>
+    <span>FLNT</span>
+  </a>
+  <div class="rec" aria-hidden="true"><i></i><span class="rec-word">REC</span> <span class="tc" id="tc">00:00:00:00</span></div>
+  <nav class="nav" aria-label="Primary">
+    <a href="#work">Work</a>
+    <a href="#craft">Craft</a>
+    <a href="#process">Process</a>
+    <a class="nav-cta" href="#contact"><span class="cta-long">Start a project</span><span class="cta-short">Let’s talk</span></a>
+  </nav>
+</header>
+<div class="hud-fade hud-fade-top" aria-hidden="true"></div><div class="hud-fade hud-fade-bottom" aria-hidden="true"></div>
+<div class="hud-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<div class="hud-bottom" aria-hidden="true">
+  <span class="hud-exp">ISO 800 · 1/48 · <b id="fstop">f/1.4</b> · 24 FPS</span>
+  <span class="scrub"><span id="scrubFill"></span></span>
+  <span class="hud-scene" id="scene">SC 01 — STRIKE</span>
+</div>
+
+<main id="main">
+
+  <!-- 01 · HERO -->
+  <section class="hero" id="top" data-scene="SC 01 — STRIKE" data-fstop="f/1.4" data-cursor="Strike">
+    <!-- Drop a showreel loop here and it plays behind the wordmark:
+    <video class="hero-reel" src="media/reel-loop.mp4" autoplay muted loop playsinline></video> -->
+    <div class="hero-glow" aria-hidden="true"></div>
+    <h1 class="hero-word litword" aria-label="FLNT Films">
+      <span class="word word-ghost" aria-hidden="true">FL<span class="br"></span>NT</span>
+      <span class="word word-lit" aria-hidden="true">FL<span class="br"></span>NT</span>
+    </h1>
+    <div class="hero-meta">
+      <p class="define"><b>flint</b> <span class="ipa">/flɪnt/</span> <i>noun</i> — a hard stone that throws a spark when struck.</p>
+      <p class="hero-tag">We make films <em>that strike.</em></p>
+    </div>
+    <p class="hero-hint"><span class="hint-dot"></span><span class="hint-fine">Click anywhere to strike</span><span class="hint-touch">Tap anywhere to strike</span></p>
+    <a class="hero-scroll" href="#manifesto">Scroll to roll<span aria-hidden="true">↓</span></a>
+  </section>
+
+  <!-- Film edge-print ticker -->
+  <div class="edge" aria-hidden="true">
+    <div class="edge-track">
+      <span>FLNT 5219 ▸ 24 ▸ BRAND FILMS ✦ COMMERCIALS ✦ WEDDINGS ✦ MUSIC VIDEOS ✦ DOCUMENTARY ✦ SOCIAL CUTDOWNS ✦ FLNT 5219 ▸ 25 ▸ BRAND FILMS ✦ COMMERCIALS ✦ WEDDINGS ✦ MUSIC VIDEOS ✦ DOCUMENTARY ✦ SOCIAL CUTDOWNS ✦&nbsp;</span>
+      <span>FLNT 5219 ▸ 24 ▸ BRAND FILMS ✦ COMMERCIALS ✦ WEDDINGS ✦ MUSIC VIDEOS ✦ DOCUMENTARY ✦ SOCIAL CUTDOWNS ✦ FLNT 5219 ▸ 25 ▸ BRAND FILMS ✦ COMMERCIALS ✦ WEDDINGS ✦ MUSIC VIDEOS ✦ DOCUMENTARY ✦ SOCIAL CUTDOWNS ✦&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- 02 · MANIFESTO (rack focus) -->
+  <section class="focus" id="manifesto" data-scene="SC 02 — RACK FOCUS" data-fstop="f/2">
+    <div class="focus-sticky">
+      <p class="eyebrow"><span>02</span> Rack focus</p>
+      <p class="focus-text" id="focusText">Most video gets watched. Ours gets <em>felt.</em> We’re FLNT — a small, obsessive crew that treats every frame like it’s the only one that matters. Light. Sound. Rhythm. Silence. <em>One strike is all it takes.</em></p>
+      <div class="focus-readout" aria-hidden="true">
+        <span>FOCUS</span>
+        <span class="focus-bar"><span id="focusFill"></span></span>
+        <b id="focusDist">0.6 m</b>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · WORK (horizontal film strip) -->
+  <section class="reel" id="work" data-scene="SC 03 — THE WORK" data-fstop="f/2.8">
+    <div class="reel-sticky">
+      <div class="letterbox lb-top" aria-hidden="true"></div>
+      <div class="letterbox lb-bottom" aria-hidden="true"></div>
+
+      <div class="reel-head">
+        <p class="eyebrow"><span>03</span> Selected work</p>
+        <h2>The <em>reel.</em></h2>
+        <p class="reel-ratio" aria-hidden="true">ASPECT <b>2.39 : 1</b></p>
+      </div>
+
+      <div class="strip-wrap">
+        <!-- Each .frame is a project. To use real footage, put a <video> inside .frame-art
+             (muted loop playsinline preload="none") — it plays on hover. -->
+        <div class="strip" id="strip">
+          <article class="frame" data-cursor="Play">
+            <div class="frame-art art-1"><span class="mtn" aria-hidden="true"></span><span class="frame-title">Ember Hour</span></div>
+            <footer class="frame-meta"><span>01A</span><span>Brand film</span><span>2026</span><span>02:14</span></footer>
+          </article>
+          <article class="frame" data-cursor="Play">
+            <div class="frame-art art-2"><span class="frame-title">Salt &amp; Iron</span></div>
+            <footer class="frame-meta"><span>02A</span><span>Documentary</span><span>2026</span><span>11:40</span></footer>
+          </article>
+          <article class="frame" data-cursor="Play">
+            <div class="frame-art art-3"><span class="mtn" aria-hidden="true"></span><span class="frame-title">Vows at Altitude</span></div>
+            <footer class="frame-meta"><span>03A</span><span>Wedding film</span><span>2025</span><span>06:02</span></footer>
+          </article>
+          <article class="frame" data-cursor="Play">
+            <div class="frame-art art-4"><span class="frame-title">Neon Parish</span></div>
+            <footer class="frame-meta"><span>04A</span><span>Music video</span><span>2025</span><span>03:48</span></footer>
+          </article>
+          <article class="frame" data-cursor="Play">
+            <div class="frame-art art-5"><span class="frame-title">Cold Open</span></div>
+            <footer class="frame-meta"><span>05A</span><span>Commercial</span><span>2025</span><span>00:30</span></footer>
+          </article>
+        </div>
+      </div>
+
+      <p class="reel-count" aria-hidden="true"><b id="reelIdx">01</b> / 05</p>
+    </div>
+  </section>
+
+  <!-- 04 · SERVICES (lens dial) -->
+  <section class="lens" id="craft" data-scene="SC 04 — GLASS" data-fstop="f/4">
+    <div class="lens-sticky">
+      <div class="lens-dial" aria-hidden="true">
+        <svg viewBox="0 0 600 600" id="dial"></svg>
+        <div class="lens-mark"></div>
+        <div class="lens-center"><b id="lensMm">24</b><span>mm</span></div>
+      </div>
+
+      <div class="lens-copy">
+        <p class="eyebrow"><span>04</span> What we shoot — pick your lens</p>
+        <div class="lens-cards" id="lensCards">
+          <article class="lens-card is-active" data-mm="24">
+            <p class="lens-kicker">24mm · Wide</p>
+            <h3>Brand Films</h3>
+            <p>The whole story in one frame. Who you are, why it matters, and why anyone should care — told with the scale it deserves.</p>
+            <ul><li>Hero films</li><li>About-us stories</li><li>Launch campaigns</li></ul>
+          </article>
+          <article class="lens-card" data-mm="35">
+            <p class="lens-kicker">35mm · Natural</p>
+            <h3>Commercials &amp; Social</h3>
+            <p>How people actually see. Spots and cutdowns built to stop a thumb in half a second and still hold up on a cinema screen.</p>
+            <ul><li>15 / 30 / 60s spots</li><li>Vertical cutdowns</li><li>Paid social</li></ul>
+          </article>
+          <article class="lens-card" data-mm="50">
+            <p class="lens-kicker">50mm · Honest</p>
+            <h3>Documentary</h3>
+            <p>No tricks, no distortion. Real people, real places, and the patience to wait for the moment that says everything.</p>
+            <ul><li>Mini-docs</li><li>Founder stories</li><li>Nonprofit films</li></ul>
+          </article>
+          <article class="lens-card" data-mm="85">
+            <p class="lens-kicker">85mm · Intimate</p>
+            <h3>Weddings</h3>
+            <p>Close enough to feel the shaking hands. Far enough to never be in the way. Your day, cut like a feature.</p>
+            <ul><li>Feature films</li><li>Highlight trailers</li><li>Full ceremony</li></ul>
+          </article>
+          <article class="lens-card" data-mm="135">
+            <p class="lens-kicker">135mm · Compressed</p>
+            <h3>Music Videos</h3>
+            <p>Backgrounds melt, subjects pop, everything feels bigger than life. Pure drama, cut on the beat.</p>
+            <ul><li>Narrative videos</li><li>Performance</li><li>Visualizers</li></ul>
+          </article>
+        </div>
+        <ol class="lens-index" id="lensIndex" aria-hidden="true">
+          <li class="is-active">24</li><li>35</li><li>50</li><li>85</li><li>135</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 · PROCESS (the fuse) -->
+  <section class="process" id="process" data-scene="SC 05 — THE BURN" data-fstop="f/5.6">
+    <p class="eyebrow"><span>05</span> How it goes</p>
+    <h2>From first spark <em>to final cut.</em></h2>
+    <div class="fuse" aria-hidden="true"><span class="fuse-fill" id="fuseFill"><i></i></span></div>
+    <ol class="steps" id="steps">
+      <li>
+        <span class="step-no">01</span>
+        <h3>Strike</h3>
+        <p>A call and a real conversation. We dig until we find the one idea your film is actually about.</p>
+      </li>
+      <li>
+        <span class="step-no">02</span>
+        <h3>Kindle</h3>
+        <p>Pre-production. Treatment, script, shot list, locations, crew and a schedule you can hold us to.</p>
+      </li>
+      <li>
+        <span class="step-no">03</span>
+        <h3>Burn</h3>
+        <p>Shoot day. Cinema cameras, real lighting, clean sound, and a crew that moves fast without rushing you.</p>
+      </li>
+      <li>
+        <span class="step-no">04</span>
+        <h3>Glow</h3>
+        <p>Edit, color grade, sound design and delivery in every size you need — from the big screen to the story.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- 06 · CREDITS -->
+  <section class="credits" aria-labelledby="creditsTitle" data-scene="SC 06 — CREDITS" data-fstop="f/8">
+    <h2 class="sr-only" id="creditsTitle">About FLNT Films</h2>
+    <div class="credits-window">
+      <div class="credits-roll">
+        <dl class="credits-list">
+          <div><dt>A film by</dt><dd>FLNT Films</dd></div>
+          <div><dt>Pronounced</dt><dd>“Flint”</dd></div>
+          <div><dt>Shot on</dt><dd>Cinema cameras &amp; fast glass</dd></div>
+          <div><dt>Crew size</dt><dd>Small, on purpose</dd></div>
+          <div><dt>Turnaround</dt><dd>Faster than you think</dd></div>
+          <div><dt>Delivered in</dt><dd>16:9 · 9:16 · 1:1 · 2.39:1</dd></div>
+          <div><dt>Available</dt><dd>Anywhere there’s a story</dd></div>
+          <div><dt>Catering</dt><dd>Coffee. So much coffee.</dd></div>
+          <div><dt>No frames were harmed</dt><dd>in the making of this website</dd></div>
+        </dl>
+        <dl class="credits-list" aria-hidden="true">
+          <div><dt>A film by</dt><dd>FLNT Films</dd></div>
+          <div><dt>Pronounced</dt><dd>“Flint”</dd></div>
+          <div><dt>Shot on</dt><dd>Cinema cameras &amp; fast glass</dd></div>
+          <div><dt>Crew size</dt><dd>Small, on purpose</dd></div>
+          <div><dt>Turnaround</dt><dd>Faster than you think</dd></div>
+          <div><dt>Delivered in</dt><dd>16:9 · 9:16 · 1:1 · 2.39:1</dd></div>
+          <div><dt>Available</dt><dd>Anywhere there’s a story</dd></div>
+          <div><dt>Catering</dt><dd>Coffee. So much coffee.</dd></div>
+          <div><dt>No frames were harmed</dt><dd>in the making of this website</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 · CONTACT (the slate) -->
+  <section class="contact" id="contact" data-scene="SC 07 — ACTION" data-fstop="f/1.4">
+    <div class="contact-head">
+      <p class="eyebrow"><span>07</span> Roll camera</p>
+      <h2>Got a story? <em>Let’s strike.</em></h2>
+      <p class="contact-sub">Fill in the slate and call action. We reply within one business day with ideas, not a sales pitch.</p>
+      <!-- TODO: replace with the real FLNT inbox -->
+      <a class="contact-mail" href="mailto:hello@flntfilms.com">hello@flntfilms.com</a>
+    </div>
+
+    <form class="slate" id="slate" name="flnt-inquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <input type="hidden" name="form-name" value="flnt-inquiry" />
+      <p class="sr-only"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+
+      <div class="clapper" id="clapper" aria-hidden="true">
+        <div class="clap-stick clap-top"></div>
+        <div class="clap-stick clap-bottom"></div>
+      </div>
+
+      <div class="slate-body">
+        <div class="slate-row slate-prod"><span class="lbl">Prod.</span><span class="val">FLNT FILMS</span></div>
+        <div class="slate-row slate-3" aria-hidden="true">
+          <div><span class="lbl">Roll</span><span class="val">A001</span></div>
+          <div><span class="lbl">Scene</span><span class="val">07</span></div>
+          <div><span class="lbl">Take</span><span class="val" id="take">01</span></div>
+        </div>
+
+        <label class="field">
+          <span class="lbl">Director <small>(that’s you)</small></span>
+          <input name="name" required autocomplete="name" placeholder="Your name" />
+        </label>
+        <label class="field">
+          <span class="lbl">Email</span>
+          <input name="email" type="email" required autocomplete="email" placeholder="you@company.com" />
+        </label>
+        <div class="slate-2">
+          <label class="field">
+            <span class="lbl">Project</span>
+            <select name="project" required>
+              <option value="">Choose…</option>
+              <option>Brand film</option>
+              <option>Commercial / social</option>
+              <option>Documentary</option>
+              <option>Wedding</option>
+              <option>Music video</option>
+              <option>Something else</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="lbl">Shoot date</span>
+            <input name="date" placeholder="Flexible" />
+          </label>
+        </div>
+        <label class="field">
+          <span class="lbl">The idea</span>
+          <textarea name="message" rows="3" placeholder="What’s the story? Rough budget?"></textarea>
+        </label>
+
+        <button class="action" type="submit" data-cursor="Action">
+          <span>Call “Action”</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <p class="slate-status" id="slateStatus" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+  </section>
+</main>
+
+<footer class="foot" data-scene="SC 08 — FADE OUT" data-fstop="f/16">
+  <p class="foot-word litword" aria-hidden="true">
+    <span class="word word-ghost">FLNT</span>
+    <span class="word word-lit">FLNT</span>
+  </p>
+  <div class="foot-row">
+    <p>© <span id="year">2026</span> FLNT Films · <span class="ipa">/flɪnt/</span></p>
+    <!-- TODO: point these at the real profiles -->
+    <nav class="foot-links" aria-label="Social">
+      <a href="#">Instagram</a>
+      <a href="#">Vimeo</a>
+      <a href="#">YouTube</a>
+    </nav>
+    <a class="foot-top" href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="main.js" defer></script>
+</body>
+</html>

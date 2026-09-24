@@ -1,0 +1,16 @@
+# Deploy FLNT as its own Netlify site: set "Base directory" to flnt/ in the site settings.
+[build]
+  publish = "."
+  command = ""
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+[[redirects]]
+  from = "/README.md"
+  to = "/"
+  status = 301
