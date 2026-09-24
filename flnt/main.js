@@ -500,11 +500,11 @@
       });
       if (!res.ok) throw new Error(res.status);
       status.className = 'slate-status is-ok';
-      status.textContent = "Thanks! We'll reply within one business day.";
+      status.textContent = "Thanks! I'll reply within one business day.";
       slate.reset();
     } catch (err) {
       status.className = 'slate-status is-err';
-      status.textContent = "That didn't send. Please email us at " + $('.contact-mail').textContent;
+      status.textContent = "That didn't send. Please email me at " + $('.contact-mail').textContent;
     } finally {
       btn.disabled = false;
     }

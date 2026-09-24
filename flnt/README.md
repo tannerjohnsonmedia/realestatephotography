@@ -44,7 +44,7 @@ scene, a scrubber, and the scene name.
 ## Form
 
 The slate posts to Netlify Forms as `flnt-inquiry`. Submissions show up under **Forms** in the Netlify
-dashboard once the site is deployed. Served locally, the form shows its fallback "email us" message.
+dashboard once the site is deployed. Served locally, the form shows its fallback "email me" message.
 
 ## Accessibility
 
