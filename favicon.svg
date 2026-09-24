@@ -1,9 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <style>
-    :root{ --m:#171C21; }
-    @media (prefers-color-scheme: dark){ :root{ --m:#FFFFFF; } }
-  </style>
-  <rect x="64" y="64" width="384" height="384" rx="26" fill="none" stroke="var(--m)" stroke-width="34"/>
-  <path d="M168 136h64l88 240h-64z" fill="var(--m)"/>
-  <path d="M262 136h46l88 240h-46z" fill="var(--m)"/>
+  <rect width="512" height="512" fill="#15181A"/>
+  <rect x="94" y="94" width="324" height="324" rx="22" fill="none" stroke="#fff" stroke-width="29"/>
+  <path d="M182 155h54l75 202h-54z" fill="#fff"/>
+  <path d="M262 155h39l75 202h-39z" fill="#fff"/>
 </svg>
