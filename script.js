@@ -564,6 +564,19 @@
   var CONVERSION_DEDUPE_MS = 1000;
   var conversionSentAt = {};
 
+  /* Conversion value. The builder knows the real quote, so Ads gets the actual
+     dollar figure and can learn which clicks bring the bigger jobs rather than
+     just the most jobs. A call, text or email has no knowable value at the
+     moment it happens, so nothing is sent and Ads falls back to whatever
+     default value that conversion action is configured with in the account.
+     A placeholder would be worse than silence: it would tell the bidder a
+     phone call is worth a dollar next to a four-figure shoot. The 10,000+ sqft
+     tier quotes custom, so it has no number either and takes the same path. */
+  function conversionValue(payload) {
+    var v = payload.value;
+    return typeof v === 'number' && isFinite(v) && v > 0 ? v : null;
+  }
+
   function track(event, params) {
     var payload = params || {};
     try {
@@ -576,11 +589,13 @@
       var now = Date.now();
       if (conversionSentAt[event] && now - conversionSentAt[event] < CONVERSION_DEDUPE_MS) return;
       conversionSentAt[event] = now;
-      window.gtag('event', 'conversion', {
-        'send_to': ADS_CONVERSIONS[event],
-        'value': 1.0,
-        'currency': 'USD'
-      });
+      var conversion = { 'send_to': ADS_CONVERSIONS[event] };
+      var value = conversionValue(payload);
+      if (value !== null) {
+        conversion.value = value;
+        conversion.currency = 'USD';
+      }
+      window.gtag('event', 'conversion', conversion);
     } catch (err) { /* tracking must never break the page */ }
   }
 

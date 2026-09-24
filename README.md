@@ -275,8 +275,24 @@ beats the old one.
 | `contact_text` | any SMS link |
 | `contact_email` | any mailto link |
 
-Each sends `value: 1.0, currency: 'USD'`, and repeats within one second are suppressed so
-a double-bound handler can't report two leads for one action.
+Repeats within one second are suppressed so a double-bound handler can't report two leads
+for one action.
+
+**Conversion value.** `builder_complete` sends the real quote — the same figure the visitor
+sees on screen, add-ons included — so Ads can learn which keywords bring the $1,200 jobs
+rather than just the most form fills. The 10,000+ sqft tier quotes custom, so it has no
+number and sends none.
+
+A call, text or email has no knowable value at the moment it happens, so those send no
+value at all and Ads applies the **default value** set on that conversion action in the
+account. Set those defaults yourself in **Goals → Conversions → click the action → Value
+→ "Use the same value for each conversion"** — put in what an average job is worth to you.
+A hardcoded placeholder would be worse than silence: it would tell the bidder a phone call
+is worth $1 beside a four-figure shoot.
+
+Values only affect bidding once you switch to Maximize Conversion Value or tROAS, which
+wants roughly 15–30 conversions in 30 days first. Until then it is reporting only, and
+the numbers are accumulating for when you make the switch.
 
 **Deliberately excluded:** `contact_booking` (the visitor only left for the portal — that
 is not a booking), plus `builder_step`, `tour_open`, `video_play` and `hero_variant`, which
