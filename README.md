@@ -45,7 +45,7 @@ Two conversion paths run in parallel:
 
 - **Call / text / email** — header, hero, builder result, booking section, final CTA,
   footer, and the sticky mobile bar.
-- **Book online** — the portal at `portal.tjohnsonmedia.com/portal`, linked from the
+- **Book online** — the portal at `portal.tannerjmedia.com`, linked from the
   header, every pricing card, the builder result, its own section, the final CTA, and the
   footer (11 links). All open in a new tab so the landing page stays behind them.
 

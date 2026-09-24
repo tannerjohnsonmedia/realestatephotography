@@ -8,6 +8,9 @@
   var PHONE_DISPLAY = '(720) 587-9516';
   var PHONE_TEL = '+17205879516';
   var EMAIL = 'tannerjohnsonmedia@gmail.com';
+  // Booking portal host. Used to classify portal clicks as contact_booking —
+  // keep in step with the href on the Book online links in index.html.
+  var PORTAL_HOST = 'portal.tannerjmedia.com';
 
   /* ---------------------------------------------------------------------------
      PRICING DATA — single source of truth for the Build Your Shoot recommender.
@@ -558,7 +561,7 @@
     var type = href.indexOf('tel:') === 0 ? 'call'
              : href.indexOf('sms:') === 0 ? 'text'
              : href.indexOf('mailto:') === 0 ? 'email'
-             : href.indexOf('portal.tjohnsonmedia.com') > -1 ? 'booking' : 'navigate';
+             : href.indexOf(PORTAL_HOST) > -1 ? 'booking' : 'navigate';
     track(type === 'navigate' ? 'cta_click' : 'contact_' + type, {
       location: el.getAttribute('data-cta'),
       label: el.textContent.trim().slice(0, 60)
