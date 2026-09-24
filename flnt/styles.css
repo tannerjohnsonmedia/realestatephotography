@@ -14,7 +14,6 @@
   --rec: #ff3b30;
 
   --display: "Archivo", "Arial Black", system-ui, sans-serif;
-  --serif: "Instrument Serif", Georgia, serif;
   --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   --gut: clamp(16px, 4vw, 56px);
@@ -39,7 +38,8 @@ body {
 }
 body.is-loading { overflow: hidden; }
 a { color: inherit; text-decoration: none; }
-em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: 0; }
+/* Accent words: the same sans at a light weight, set apart by color instead of an italic serif */
+em { font-style: normal; font-weight: 300; }
 h1, h2, h3 { margin: 0; font-weight: 800; }
 p { margin: 0; }
 ::selection { background: var(--ember); color: var(--ink); }
@@ -305,12 +305,12 @@ body.is-rolling .hero-meta { opacity: 1; transform: none; }
 .define { font: 400 13px/1.6 var(--mono); color: var(--dim); max-width: 36ch; }
 .define b { color: var(--bone); font-weight: 500; }
 .define i { color: var(--spark); }
-.ipa { font-family: var(--serif); font-size: 1.2em; font-style: italic; color: var(--bone); }
+.ipa { font-family: var(--display); font-weight: 400; color: var(--bone); }
 .hero-tag {
   font-size: clamp(1.6rem, 3.6vw, 3.4rem); line-height: 1; font-weight: 700; font-stretch: 100%;
   letter-spacing: -0.02em; text-align: right;
 }
-.hero-tag em { color: var(--spark); font-size: 1.12em; }
+.hero-tag em { color: var(--spark); }
 
 .hero-hint {
   position: absolute; left: 50%; top: 128px; transform: translateX(-50%);
@@ -364,7 +364,7 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
   font-stretch: 88%;
   letter-spacing: -0.025em;
 }
-.focus-text em { color: var(--spark); font-size: 1.1em; }
+.focus-text em { color: var(--spark); }
 .focus-text .w { display: inline-block; will-change: filter, opacity; }
 .focus-readout {
   display: flex; align-items: center; gap: 16px;
@@ -636,7 +636,7 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
 .contact-head h2 em { display: block; color: var(--spark); }
 .contact-sub { color: var(--dim); font-size: 1.1rem; max-width: 40ch; margin-bottom: 26px; }
 .contact-mail {
-  font-family: var(--serif); font-style: italic; font-size: clamp(1.4rem, 2.4vw, 2rem);
+  font-family: var(--display); font-weight: 300; font-size: clamp(1.3rem, 2.2vw, 1.8rem); letter-spacing: -0.01em;
   border-bottom: 1px solid var(--faint); transition: color 0.25s, border-color 0.25s;
 }
 .contact-mail:hover { color: var(--spark); border-color: var(--spark); }
@@ -682,7 +682,7 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
   background: transparent;
   border: 0; border-bottom: 1px solid rgba(236, 230, 218, 0.22);
   color: var(--bone);
-  font: 400 1.25rem/1.3 var(--serif);
+  font: 400 1.1rem/1.4 var(--display);
   padding: 6px 0 8px;
   border-radius: 0;
   transition: border-color 0.25s;
