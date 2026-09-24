@@ -371,13 +371,17 @@ subtype, so Google treats it as a local business while being more specific. It d
 the name, URL, phone, email, price range, logo, image, and a structured `areaServed`
 (Denver Metro → Colorado → US) rather than a plain string.
 
-**Two things still to add, both needing information only you have:**
+`sameAs` links the site to the Google Business Profile, which is what tells Google the
+two are one business — worth real local-ranking weight given the review already on that
+profile. The URL is stored without its `entry=` / `g_ep=` session parameters, which are
+analytics tokens that go stale; the place path and CID that identify the business are kept.
 
-- **`sameAs`** — your Google Business Profile, Instagram, and any other profiles. There's
-  a comment above the block showing exactly where to paste them. This is what tells Google
-  the website and the Google Business Profile are the same business, which is worth real
-  local-ranking weight. Only list profiles you control: a wrong URL points Google at
-  someone else.
+`geo` holds the pin coordinates from that same profile (39.6961295, -104.7000285).
+
+**Still to add:**
+
+- **Instagram and any other profiles** — append them to the `sameAs` array. Only profiles
+  you control: a wrong URL points Google at someone else.
 - **`address`** — omitted because I don't have one. Google treats it as recommended, so
   the Rich Results Test will flag it. If you have an address on your Google Business
   Profile, add a matching `PostalAddress` here; if you run as a service-area business with

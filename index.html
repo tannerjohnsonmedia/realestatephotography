@@ -39,14 +39,9 @@
   if (window.GA4_ID.indexOf('XXXX') === -1) { gtag('config', window.GA4_ID); }
 </script>
 
-<!-- Business schema. To add your profiles, paste a "sameAs" array of full URLs
-     after "logo" below, e.g.
-       "sameAs": [
-         "https://www.google.com/maps/place/...",
-         "https://www.instagram.com/yourhandle/"
-       ],
-     Only list profiles you actually control — a wrong URL here tells Google the
-     wrong business is you. -->
+<!-- Business schema. "sameAs" links this site to the profiles that are also this
+     business. Instagram and any other profiles go in that array — only ones you
+     control, since a wrong URL points Google at someone else. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -66,8 +61,19 @@
     "containedInPlace": {
       "@type": "State",
       "name": "Colorado",
-      "containedInPlace": { "@type": "Country", "name": "US" }
+      "containedInPlace": {
+        "@type": "Country",
+        "name": "US"
+      }
     }
+  },
+  "sameAs": [
+    "https://www.google.com/maps/place/Tanner+Johnson+Media/@39.8610468,-105.3339379,10z/data=!4m6!3m5!1s0x26f01cc6d47d0d89:0x52a160fff9d8e201!8m2!3d39.6961295!4d-104.7000285!16s%2Fg%2F11z50pn_ln"
+  ],
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 39.6961295,
+    "longitude": -104.7000285
   }
 }
 </script>
