@@ -1,7 +1,7 @@
 # FLNT Films — landing page
 
-**Concept: "Strike."** Flint throws a spark when struck, so the visitor does the striking. Every click
-throws physics-driven sparks, and those sparks are the light source that reveals the wordmark. The whole
+**Concept: "Strike."** Flint throws a spark when struck, so the visitor does the striking. Clicks in the hero
+throw physics-driven sparks, and those sparks are the light source that reveals the wordmark. The whole
 site is framed as a camera viewfinder, and scrolling is the playhead.
 
 ```
@@ -19,13 +19,13 @@ No framework, no build step. Open `index.html` through any static server.
 | # | Section | The idea |
 |---|---------|----------|
 | — | Film leader | 3-2-1 countdown, then a flash. Click or any key skips it. |
-| 01 | Hero | Giant FLNT, dark until light hits it. Click to strike, swipe fast to throw sparks. The wordmark "desqueezes" from 62% to 125% width like anamorphic footage. |
+| 01 | Hero | Giant FLNT, dark until light hits it. Click to throw a small burst of sparks (hero only; the rest of the page stays calm). The wordmark "desqueezes" from 62% to 125% width like anamorphic footage. |
 | 02 | Rack focus | The manifesto starts out of focus and pulls sharp word by word as you scroll. |
 | 03 | The reel | Pinned film strip with sprocket holes that scrolls sideways. Letterbox bars close in to 2.39:1. |
 | 04 | Lens dial | Scroll turns a lens barrel: 24 / 35 / 50 / 85 / 135mm, one service per focal length. |
 | 05 | Process | Strike → Kindle → Burn → Glow, lit by a burning fuse. |
 | 06 | Credits | End credits, rolling. |
-| 07 | The slate | The contact form is a clapperboard. "Call Action" snaps the clapper shut and throws sparks. |
+| 07 | The slate | The contact form is a clapperboard. "Send" snaps the clapper shut with a clap and a few sparks. |
 
 The HUD runs the whole time: REC light, timecode tied to scroll position, f-stop that changes per
 scene, a scrubber, and the scene name.

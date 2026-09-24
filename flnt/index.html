@@ -72,7 +72,7 @@
       <p class="define"><b>flint</b> <span class="ipa">/flɪnt/</span> <i>noun</i> — a hard stone that throws a spark when struck.</p>
       <p class="hero-tag">We make films <em>that strike.</em></p>
     </div>
-    <p class="hero-hint"><span class="hint-dot"></span><span class="hint-fine">Click anywhere to strike</span><span class="hint-touch">Tap anywhere to strike</span></p>
+    <p class="hero-hint"><span class="hint-dot"></span><span class="hint-fine">Click to strike</span><span class="hint-touch">Tap to strike</span></p>
     <a class="hero-scroll" href="#manifesto">Scroll to roll<span aria-hidden="true">↓</span></a>
   </section>
 
@@ -255,7 +255,7 @@
     <div class="contact-head">
       <p class="eyebrow"><span>07</span> Roll camera</p>
       <h2>Got a story? <em>Let’s strike.</em></h2>
-      <p class="contact-sub">Fill in the slate and call action. We reply within one business day with ideas, not a sales pitch.</p>
+      <p class="contact-sub">Tell us about your project. We reply within one business day.</p>
       <!-- TODO: replace with the real FLNT inbox -->
       <a class="contact-mail" href="mailto:hello@flntfilms.com">hello@flntfilms.com</a>
     </div>
@@ -270,24 +270,19 @@
       </div>
 
       <div class="slate-body">
-        <div class="slate-row slate-prod"><span class="lbl">Prod.</span><span class="val">FLNT FILMS</span></div>
-        <div class="slate-row slate-3" aria-hidden="true">
-          <div><span class="lbl">Roll</span><span class="val">A001</span></div>
-          <div><span class="lbl">Scene</span><span class="val">07</span></div>
-          <div><span class="lbl">Take</span><span class="val" id="take">01</span></div>
-        </div>
+        <div class="slate-row slate-prod"><span class="val">FLNT FILMS</span><span class="lbl">New project</span></div>
 
         <label class="field">
-          <span class="lbl">Director <small>(that’s you)</small></span>
-          <input name="name" required autocomplete="name" placeholder="Your name" />
+          <span class="lbl">Name</span>
+          <input name="name" required autocomplete="name" />
         </label>
         <label class="field">
           <span class="lbl">Email</span>
-          <input name="email" type="email" required autocomplete="email" placeholder="you@company.com" />
+          <input name="email" type="email" required autocomplete="email" />
         </label>
         <div class="slate-2">
           <label class="field">
-            <span class="lbl">Project</span>
+            <span class="lbl">Project type</span>
             <select name="project" required>
               <option value="">Choose…</option>
               <option>Brand film</option>
@@ -299,17 +294,17 @@
             </select>
           </label>
           <label class="field">
-            <span class="lbl">Shoot date</span>
-            <input name="date" placeholder="Flexible" />
+            <span class="lbl">Date</span>
+            <input name="date" placeholder="Optional" />
           </label>
         </div>
         <label class="field">
-          <span class="lbl">The idea</span>
-          <textarea name="message" rows="3" placeholder="What’s the story? Rough budget?"></textarea>
+          <span class="lbl">Message</span>
+          <textarea name="message" rows="3"></textarea>
         </label>
 
-        <button class="action" type="submit" data-cursor="Action">
-          <span>Call “Action”</span>
+        <button class="action" type="submit" data-cursor="Send">
+          <span>Send</span>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
         <p class="slate-status" id="slateStatus" role="status" aria-live="polite"></p>

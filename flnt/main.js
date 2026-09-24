@@ -11,10 +11,6 @@
   const lerp = (a, b, t) => a + (b - a) * t;
   const ease = (t) => 1 - Math.pow(1 - t, 3);
   const pad = (n, l = 2) => String(n).padStart(l, '0');
-  const store = {
-    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
-    set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* private mode */ } },
-  };
 
   const body = document.body;
   let W = innerWidth, H = innerHeight;
@@ -56,16 +52,16 @@
   // A strike: a fan of sparks, biased upward like a real flint strike.
   function strike(x, y, power = 1, dir = null) {
     if (reduce) return;
-    const n = Math.round(46 * power);
+    const n = Math.round(16 * power);
     for (let i = 0; i < n; i++) {
       const a = dir == null
-        ? -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.7
+        ? -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.3
         : dir + (Math.random() - 0.5) * 1.1;
-      spawn(x, y, a, (2 + Math.random() * 11) * (0.6 + power * 0.4),
-        0.5 + Math.random() * 1.6, 0.009 + Math.random() * 0.024);
+      spawn(x, y, a, (1.5 + Math.random() * 5) * (0.7 + power * 0.3),
+        0.4 + Math.random() * 0.8, 0.02 + Math.random() * 0.025);
     }
-    flashes.push({ x, y, r: 60 + 140 * power, life: 1 });
-    heat = clamp(heat + 0.55 * power, 0, 1);
+    flashes.push({ x, y, r: 30 + 60 * power, life: 0.5 });
+    heat = clamp(heat + 0.35 * power, 0, 1);
     light.x = x; light.y = y;
     if (!body.classList.contains('has-struck')) body.classList.add('has-struck');
   }
@@ -189,26 +185,13 @@
     pointer.active = true;
     pointer.last = performance.now();
     cursor.classList.remove('is-hidden');
-    if (e.pointerType !== 'mouse' || reduce) return;
-
-    // Fast swipes across the hero throw sparks along the stroke.
-    const dx = pointer.x - pointer.px, dy = pointer.y - pointer.py;
-    const speed = Math.hypot(dx, dy);
     pointer.px = pointer.x; pointer.py = pointer.y;
-    if (speed > 38 && hero && inView(hero) && e.clientY < hero.getBoundingClientRect().bottom) {
-      const dir = Math.atan2(dy, dx);
-      const n = Math.min(8, Math.floor(speed / 14));
-      for (let i = 0; i < n; i++) {
-        spawn(pointer.x, pointer.y, dir + (Math.random() - 0.5) * 0.9, 2 + Math.random() * speed * 0.18,
-          0.4 + Math.random(), 0.02 + Math.random() * 0.03);
-      }
-      heat = clamp(heat + 0.03, 0, 1);
-    }
   }, { passive: true });
 
   addEventListener('pointerdown', (e) => {
     cursor.classList.add('is-down');
-    if (e.target.closest('input, textarea, select, .leader')) return;
+    // Strikes stay in the hero so the rest of the page reads calmly.
+    if (!hero || !e.target.closest('.hero') || e.target.closest('a, button')) return;
     strike(e.clientX, e.clientY, 1);
   });
   addEventListener('pointerup', () => cursor.classList.remove('is-down'));
@@ -223,7 +206,7 @@
   function roll() {
     body.classList.remove('is-loading');
     requestAnimationFrame(() => body.classList.add('is-rolling'));
-    if (!reduce) setTimeout(() => strike(W / 2, H * 0.52, 1.6), 250);
+    if (!reduce) setTimeout(() => strike(W / 2, H * 0.52, 1.2), 250);
   }
 
   function runLeader() {
@@ -453,10 +436,6 @@
 
   const slate = $('#slate');
   const status = $('#slateStatus');
-  const takeEl = $('#take');
-  const visits = (parseInt(store.get('flnt-take'), 10) || 0) + 1;
-  store.set('flnt-take', String(visits));
-  takeEl.textContent = pad(Math.min(visits, 99));
 
   let audio;
   function clapSound() {
@@ -482,9 +461,7 @@
     setTimeout(() => {
       clapSound();
       const r = $('.clap-bottom', slate).getBoundingClientRect();
-      strike(r.left + r.width * 0.5, r.top, 1.2);
-      strike(r.left + 20, r.top, 0.6);
-      strike(r.right - 20, r.top, 0.6);
+      strike(r.left + r.width * 0.5, r.top, 0.8);
     }, 80);
     setTimeout(() => slate.classList.remove('is-clapped'), 900);
   }
@@ -501,14 +478,14 @@
     });
     if (!ok) {
       status.className = 'slate-status is-err';
-      status.textContent = 'Cut! We need your name, email and project type.';
+      status.textContent = 'Please add your name, email and project type.';
       return;
     }
     clap();
     const btn = $('.action', slate);
     btn.disabled = true;
     status.className = 'slate-status';
-    status.textContent = 'Rolling…';
+    status.textContent = 'Sending…';
     try {
       const res = await fetch('/', {
         method: 'POST',
@@ -517,11 +494,11 @@
       });
       if (!res.ok) throw new Error(res.status);
       status.className = 'slate-status is-ok';
-      status.textContent = "That's a take. We'll be in touch within one business day.";
+      status.textContent = "Thanks! We'll reply within one business day.";
       slate.reset();
     } catch (err) {
       status.className = 'slate-status is-err';
-      status.textContent = "The take didn't save. Email us instead: " + $('.contact-mail').textContent;
+      status.textContent = "That didn't send. Please email us at " + $('.contact-mail').textContent;
     } finally {
       btn.disabled = false;
     }
