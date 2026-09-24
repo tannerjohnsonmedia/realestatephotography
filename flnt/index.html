@@ -97,16 +97,21 @@
     </div>
   </section>
 
-  <!-- 03 · WORK (horizontal film strip) -->
+  <!-- 03 · WORK (one project at a time, centered like a screen) -->
   <section class="reel" id="work" data-scene="SC 03 — THE WORK" data-fstop="f/2.8">
     <div class="reel-sticky">
       <div class="letterbox lb-top" aria-hidden="true"></div>
       <div class="letterbox lb-bottom" aria-hidden="true"></div>
 
       <div class="reel-head">
-        <p class="eyebrow"><span>03</span> Selected work</p>
-        <h2>The <em>reel.</em></h2>
-        <p class="reel-ratio" aria-hidden="true">ASPECT <b>2.39 : 1</b></p>
+        <div>
+          <p class="eyebrow"><span>03</span> Selected work</p>
+          <h2>The <em>reel.</em></h2>
+        </div>
+        <div class="reel-nav" aria-hidden="true">
+          <p class="reel-count"><b id="reelIdx">01</b> / 05</p>
+          <ol class="reel-ticks" id="reelTicks"><li class="is-active"></li><li></li><li></li><li></li><li></li></ol>
+        </div>
       </div>
 
       <div class="strip-wrap">
@@ -114,29 +119,27 @@
              (muted loop playsinline preload="none") — it plays on hover. -->
         <div class="strip" id="strip">
           <article class="frame" data-cursor="Play">
-            <div class="frame-art art-1"><span class="mtn" aria-hidden="true"></span><span class="frame-title">Ember Hour</span></div>
-            <footer class="frame-meta"><span>01A</span><span>Brand film</span><span>2026</span><span>02:14</span></footer>
+            <div class="frame-art art-1"><span class="mtn" aria-hidden="true"></span></div>
+            <div class="frame-cap"><h3>Ember Hour</h3><p>Brand film <i>·</i> 2026</p></div>
           </article>
           <article class="frame" data-cursor="Play">
-            <div class="frame-art art-2"><span class="frame-title">Salt &amp; Iron</span></div>
-            <footer class="frame-meta"><span>02A</span><span>Documentary</span><span>2026</span><span>11:40</span></footer>
+            <div class="frame-art art-2"></div>
+            <div class="frame-cap"><h3>Salt &amp; Iron</h3><p>Documentary <i>·</i> 2026</p></div>
           </article>
           <article class="frame" data-cursor="Play">
-            <div class="frame-art art-3"><span class="mtn" aria-hidden="true"></span><span class="frame-title">Vows at Altitude</span></div>
-            <footer class="frame-meta"><span>03A</span><span>Wedding film</span><span>2025</span><span>06:02</span></footer>
+            <div class="frame-art art-3"><span class="mtn" aria-hidden="true"></span></div>
+            <div class="frame-cap"><h3>Vows at Altitude</h3><p>Wedding film <i>·</i> 2025</p></div>
           </article>
           <article class="frame" data-cursor="Play">
-            <div class="frame-art art-4"><span class="frame-title">Neon Parish</span></div>
-            <footer class="frame-meta"><span>04A</span><span>Music video</span><span>2025</span><span>03:48</span></footer>
+            <div class="frame-art art-4"></div>
+            <div class="frame-cap"><h3>Neon Parish</h3><p>Music video <i>·</i> 2025</p></div>
           </article>
           <article class="frame" data-cursor="Play">
-            <div class="frame-art art-5"><span class="frame-title">Cold Open</span></div>
-            <footer class="frame-meta"><span>05A</span><span>Commercial</span><span>2025</span><span>00:30</span></footer>
+            <div class="frame-art art-5"></div>
+            <div class="frame-cap"><h3>Cold Open</h3><p>Commercial <i>·</i> 2025</p></div>
           </article>
         </div>
       </div>
-
-      <p class="reel-count" aria-hidden="true"><b id="reelIdx">01</b> / 05</p>
     </div>
   </section>
 

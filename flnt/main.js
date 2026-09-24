@@ -286,26 +286,32 @@
   const frames = $$('.frame');
   const reelIdx = $('#reelIdx');
 
+  const reelTicks = $$('#reelTicks li');
+  let reelActive = 0;
+
   function updateReel(p) {
-    if (!strip) return;
-    const travel = Math.max(0, strip.scrollWidth - W + 2 * parseFloat(getComputedStyle(strip).marginLeft));
-    const mp = clamp((p - 0.06) / 0.88, 0, 1);
-    strip.style.transform = `translate3d(${(-travel * mp).toFixed(1)}px,0,0)`;
+    if (!strip || !frames.length) return;
+    const n = frames.length;
+    const step = n > 1 ? frames[1].offsetLeft - frames[0].offsetLeft : 0;
+    // Each project holds center for a beat, then glides to the next.
+    const pos = clamp((p - 0.05) / 0.9, 0, 1) * (n - 1);
+    const i = Math.max(0, Math.min(n - 2, Math.floor(pos)));
+    const t = clamp((pos - i - 0.25) / 0.5, 0, 1);
+    const at = n > 1 ? i + t * t * (3 - 2 * t) : 0;
+    strip.style.transform = `translate3d(${(-at * step).toFixed(1)}px,0,0)`;
+    frames.forEach((f, k) => f.style.setProperty('--focus', clamp(1 - Math.abs(k - at), 0, 1).toFixed(3)));
+
+    const active = Math.round(at);
+    if (active !== reelActive) {
+      reelActive = active;
+      reelIdx.textContent = pad(active + 1);
+      reelTicks.forEach((el, k) => el.classList.toggle('is-active', k === active));
+    }
 
     // Letterbox in to scope as the reel starts, back out as it ends.
     const maxLb = Math.max(0, Math.min((H - W / 2.39) / 2, H * 0.09));
     const inAmt = ease(clamp(p / 0.08, 0, 1)) * (1 - ease(clamp((p - 0.94) / 0.06, 0, 1)));
     reelSticky.style.setProperty('--lb', (maxLb * inAmt).toFixed(1) + 'px');
-
-    let best = 0, bestD = Infinity;
-    frames.forEach((f, i) => {
-      const r = f.getBoundingClientRect();
-      const d = Math.abs(r.left + r.width / 2 - W / 2);
-      const focus = clamp(1 - d / (W * 0.55), 0, 1);
-      f.style.setProperty('--focus', focus.toFixed(3));
-      if (d < bestD) { bestD = d; best = i; }
-    });
-    reelIdx.textContent = pad(best + 1);
   }
 
   frames.forEach((f) => {
