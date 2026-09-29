@@ -190,8 +190,8 @@
 
   addEventListener('pointerdown', (e) => {
     cursor.classList.add('is-down');
-    // Strikes stay in the hero so the rest of the page reads calmly.
-    if (!hero || !e.target.closest('.hero') || e.target.closest('a, button')) return;
+    // Strike anywhere, except while typing in the form.
+    if (e.target.closest('input, textarea, select, .leader')) return;
     strike(e.clientX, e.clientY, 1);
   });
   addEventListener('pointerup', () => cursor.classList.remove('is-down'));
@@ -460,19 +460,42 @@
     } catch (e) { /* no audio, no problem */ }
   }
 
-  function clap() {
-    slate.classList.remove('is-clapped');
+  const slateBody = $('.slate-body', slate);
+  const takePanel = $('#takePanel');
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  function impact() {
+    clapSound();
+    slate.classList.remove('is-impact');
     void slate.offsetWidth;
-    slate.classList.add('is-clapped');
-    setTimeout(() => {
-      clapSound();
-      const r = $('.clap-bottom', slate).getBoundingClientRect();
-      strike(r.left + r.width * 0.5, r.top, 0.8);
-    }, 80);
-    setTimeout(() => slate.classList.remove('is-clapped'), 900);
+    slate.classList.add('is-impact');
+    const r = $('.clap-bottom', slate).getBoundingClientRect();
+    strike(r.left + r.width * 0.5, r.top, 0.9);
+    strike(r.left + r.width * 0.15, r.top, 0.5);
+    strike(r.left + r.width * 0.85, r.top, 0.5);
   }
 
-  $('#clapper').addEventListener('click', clap);
+  // Swing the clapper open, then snap it shut on the take.
+  async function clap() {
+    slate.classList.remove('is-clapped', 'is-cut');
+    slate.classList.add('is-opening');
+    await wait(reduce ? 0 : 320);
+    slate.classList.remove('is-opening');
+    slate.classList.add('is-clapped');
+    await wait(reduce ? 0 : 90);
+    impact();
+  }
+
+  function cut() {
+    slate.classList.remove('is-cut');
+    void slate.offsetWidth;
+    slate.classList.add('is-cut');
+  }
+
+  $('#clapper').addEventListener('click', async () => {
+    await clap();
+    setTimeout(() => slate.classList.remove('is-clapped'), 700);
+  });
 
   slate.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -483,32 +506,45 @@
       if (bad && ok) { f.focus(); ok = false; }
     });
     if (!ok) {
+      cut();
       status.className = 'slate-status is-err';
       status.textContent = 'Please add your name, email and project type.';
       return;
     }
-    clap();
     const btn = $('.action', slate);
     btn.disabled = true;
     status.className = 'slate-status';
     status.textContent = 'Sending…';
-    try {
-      const res = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(new FormData(slate)).toString(),
-      });
-      if (!res.ok) throw new Error(res.status);
-      status.className = 'slate-status is-ok';
-      status.textContent = "Thanks! I'll reply within one business day.";
+    const firstName = (slate.elements.name.value.trim().split(/\s+/)[0] || '');
+    const send = fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(slate)).toString(),
+    }).then((res) => { if (!res.ok) throw new Error(res.status); });
+    const [result] = await Promise.allSettled([send, clap()]);
+    btn.disabled = false;
+    if (result.status === 'fulfilled') {
+      slateBody.style.minHeight = slateBody.offsetHeight + 'px';
+      $('#takeSub').textContent = (firstName ? `Thanks, ${firstName}! ` : 'Thanks! ') +
+        "I'll get back to you within one business day.";
+      takePanel.hidden = false;
+      slate.classList.add('is-done');
+      status.textContent = '';
       slate.reset();
-    } catch (err) {
+    } else {
+      slate.classList.remove('is-clapped');
       status.className = 'slate-status is-err';
       status.textContent = "That didn't send. Please email me at " + $('.contact-mail').textContent;
-    } finally {
-      btn.disabled = false;
     }
   });
+
+  $('#takeAgain').addEventListener('click', () => {
+    slate.classList.remove('is-done', 'is-clapped', 'is-impact');
+    takePanel.hidden = true;
+    slateBody.style.minHeight = '';
+    slate.elements.name.focus();
+  });
+
   slate.addEventListener('input', (e) => {
     const f = e.target.closest('.field');
     if (f && e.target.checkValidity()) f.classList.remove('is-invalid');

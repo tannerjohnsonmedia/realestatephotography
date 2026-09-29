@@ -647,9 +647,42 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
   background: #6b635a; z-index: 2; box-shadow: inset 0 0 0 3px #2b2723;
 }
 .slate:hover .clap-top, .slate:focus-within .clap-top { transform: rotate(-11deg); }
-.slate.is-clapped .clap-top { transform: rotate(0deg); transition: transform 0.08s cubic-bezier(0.6, 0, 1, 0.8); }
+/* Send: swing open, snap shut, jolt and flash on impact */
+.slate.is-opening .clap-top { transform: rotate(-20deg); transition: transform 0.24s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.slate.is-clapped .clap-top, .slate.is-done .clap-top { transform: rotate(0deg); transition: transform 0.09s cubic-bezier(0.6, 0, 1, 0.8); }
+.slate.is-impact .slate-body { animation: jolt 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.slate.is-impact .clapper { animation: jolt 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+@keyframes jolt { 25% { transform: translateY(6px); } 55% { transform: translateY(-2px); } }
+.slate-body::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: radial-gradient(120% 80% at 50% 0%, rgba(255, 246, 226, 0.9), rgba(255, 150, 60, 0.35) 45%, transparent 75%);
+}
+.slate.is-impact .slate-body::after { animation: frameflash 0.5s ease-out; }
+@keyframes frameflash { 0% { opacity: 1; } 100% { opacity: 0; } }
+.slate.is-cut .slate-body, .slate.is-cut .clapper { animation: cut 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97); }
+@keyframes cut { 20%, 60% { transform: translateX(-9px); } 40%, 80% { transform: translateX(9px); } }
+
+/* After a successful send the slate shows the take instead of the form */
+.slate.is-done .slate-body > :not(.slate-prod):not(.take) { display: none; }
+.slate.is-done .slate-body { grid-template-rows: auto 1fr; }
+.take[hidden] { display: none; }
+.take { display: grid; gap: 14px; align-content: center; justify-items: start; padding: 12px 0 6px; }
+.take-title {
+  font-size: clamp(2.4rem, 5vw, 4.4rem); font-weight: 900; font-stretch: 115%; line-height: 0.9; letter-spacing: -0.03em;
+  color: var(--spark);
+}
+.take-sub { color: var(--dim); font-size: 1.1rem; max-width: 36ch; }
+.take-again {
+  margin-top: 8px; background: none; border: 1px solid var(--faint); color: var(--bone);
+  font: 500 11px var(--mono); letter-spacing: 0.16em; text-transform: uppercase; padding: 10px 14px; cursor: pointer;
+  transition: border-color 0.25s, color 0.25s;
+}
+.take-again:hover { border-color: var(--spark); color: var(--spark); }
+.slate.is-done .take { animation: take-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@keyframes take-in { from { opacity: 0; transform: translateY(12px); } }
 
 .slate-body {
+  position: relative;
   background: linear-gradient(180deg, #1a1816, #121110);
   border: 2px solid #2a2622;
   padding: clamp(18px, 2.6vw, 30px);
@@ -768,6 +801,7 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
 /* ---------- Reduced motion: everything readable, nothing moves ---------- */
 
 @media (prefers-reduced-motion: reduce) {
+  .slate *, .slate-body::after { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
   .cursor { display: none !important; }
   .grain, .edge-track, .credits-roll, .rec i, .hint-dot, .hero-scroll span, .fuse-fill i { animation: none; }
