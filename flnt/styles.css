@@ -245,11 +245,10 @@ p { margin: 0; }
 
 .hero {
   position: relative;
-  min-height: var(--vh);
   display: grid;
-  grid-template-rows: 1fr auto auto;
-  align-items: center;
-  padding: 110px var(--gut) calc(var(--hud) + 60px);
+  grid-template-rows: auto;
+  align-content: start;
+  padding: 96px var(--gut) 40px;
   overflow: hidden;
   isolation: isolate;
   --lx: 50%; --ly: 50%; --heat: 0;
@@ -290,7 +289,7 @@ p { margin: 0; }
   -webkit-background-clip: text;
   background-clip: text;
 }
-.hero-word { font-size: clamp(5.4rem, 25.5vw, 34rem); align-self: end; }
+.hero-word { font-size: clamp(5.4rem, 24vw, 30rem); }
 /* Anamorphic desqueeze: the wordmark opens from 62% to 125% width once the leader clears */
 .hero-word .word { font-stretch: 62%; transition: font-stretch 1.8s var(--ease), letter-spacing 1.8s var(--ease); letter-spacing: 0.04em; }
 body.is-rolling .hero-word .word { font-stretch: 125%; letter-spacing: -0.03em; }
@@ -313,7 +312,7 @@ body.is-rolling .hero-meta { opacity: 1; transform: none; }
 .hero-tag em { color: var(--spark); }
 
 .hero-hint {
-  position: absolute; left: 50%; top: 128px; transform: translateX(-50%);
+  order: -1; justify-self: center; margin-bottom: clamp(14px, 2.4vw, 28px);
   display: flex; align-items: center; gap: 10px;
   font: 500 11px var(--mono); letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim);
   opacity: 0; transition: opacity 0.8s ease 1.6s;
@@ -327,7 +326,7 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
 @media (hover: none) { .hint-fine { display: none; } .hint-touch { display: inline; } }
 
 .hero-scroll {
-  justify-self: center; margin-top: clamp(24px, 4vw, 48px);
+  justify-self: center; margin-top: clamp(20px, 3vw, 32px);
   display: inline-flex; gap: 10px; align-items: center;
   font: 500 11px var(--mono); letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim);
 }
@@ -350,11 +349,11 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
 
 /* ---------- 02 Rack focus ---------- */
 
-.focus { position: relative; height: 260vh; }
+.focus { position: relative; height: 170vh; }
 .focus-sticky {
   position: sticky; top: 0; height: var(--vh);
-  display: grid; align-content: center; gap: clamp(28px, 4vw, 48px);
-  padding: 90px var(--gut);
+  display: grid; align-content: start; gap: clamp(24px, 3.5vw, 44px);
+  padding: clamp(84px, 13vh, 132px) var(--gut) 60px;
   max-width: 1500px; margin: 0 auto;
 }
 .focus-text {
@@ -377,7 +376,7 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
 
 /* ---------- 03 Reel / film strip ---------- */
 
-.reel { position: relative; height: 520vh; background: #070605; }
+.reel { position: relative; height: 330vh; background: #070605; }
 .reel-sticky {
   /* Frame width: as wide as the screen allows while the frame, header and caption still fit */
   --fw: clamp(280px, min(66vw, calc((var(--vh) - 390px) * 2.39)), 1080px);
@@ -500,7 +499,7 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
 
 /* ---------- 04 Lens dial ---------- */
 
-.lens { position: relative; height: 420vh; }
+.lens { position: relative; height: 270vh; }
 .lens-sticky {
   position: sticky; top: 0; height: var(--vh); overflow: hidden;
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center;
@@ -567,12 +566,12 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
 
 .process {
   position: relative;
-  padding: clamp(100px, 16vh, 180px) var(--gut) clamp(100px, 14vh, 160px);
+  padding: clamp(56px, 9vh, 104px) var(--gut) clamp(40px, 7vh, 80px);
   max-width: 1600px; margin: 0 auto;
 }
 .process h2 {
-  margin: 22px 0 clamp(50px, 8vw, 100px);
-  font-size: clamp(2.6rem, 7vw, 7rem); line-height: 0.9; letter-spacing: -0.04em; font-stretch: 105%;
+  margin: 18px 0 clamp(32px, 4.5vw, 60px);
+  font-size: clamp(2.4rem, 6vw, 6rem); line-height: 0.9; letter-spacing: -0.04em; font-stretch: 105%;
   max-width: 14ch;
 }
 .process h2 em { color: var(--spark); }
@@ -598,16 +597,16 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
 
 /* ---------- 06 Credits ---------- */
 
-.credits { padding: 40px var(--gut) 80px; }
+.credits { padding: 0 var(--gut) 16px; }
 .credits-window {
-  height: min(70vh, 620px); overflow: hidden;
+  height: min(46vh, 420px); overflow: hidden;
   -webkit-mask: linear-gradient(transparent, #000 22%, #000 78%, transparent);
   mask: linear-gradient(transparent, #000 22%, #000 78%, transparent);
 }
 .credits-roll { animation: roll 34s linear infinite; }
 .credits-window:hover .credits-roll { animation-play-state: paused; }
 @keyframes roll { to { transform: translateY(-50%); } }
-.credits-list { margin: 0; padding-bottom: 60px; display: grid; gap: 44px; }
+.credits-list { margin: 0; padding-bottom: 36px; display: grid; gap: 36px; }
 .credits-list div { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: baseline; }
 .credits-list dt { text-align: right; font: 500 12px var(--mono); letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); }
 .credits-list dd { margin: 0; font-size: clamp(1.4rem, 3vw, 2.6rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; font-stretch: 105%; }
@@ -616,7 +615,7 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
 
 .contact {
   display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(40px, 6vw, 100px); align-items: center;
-  padding: clamp(80px, 14vh, 160px) var(--gut);
+  padding: clamp(48px, 8vh, 100px) var(--gut);
   max-width: 1500px; margin: 0 auto;
 }
 .contact-head h2 { margin: 22px 0 24px; font-size: clamp(2.8rem, 6.4vw, 6.4rem); line-height: 0.9; letter-spacing: -0.04em; font-stretch: 105%; }
@@ -628,7 +627,7 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
 }
 .contact-mail:hover { color: var(--spark); border-color: var(--spark); }
 
-.slate { position: relative; padding-top: 70px; margin-top: 60px; }
+.slate { position: relative; padding-top: 70px; margin-top: 24px; }
 .clapper { position: absolute; left: 0; right: 0; top: 0; height: 70px; }
 .clap-stick {
   position: absolute; left: 0; right: 0; height: 30px;
@@ -712,8 +711,8 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
 
 /* ---------- Footer ---------- */
 
-.foot { position: relative; padding: 40px var(--gut) calc(var(--hud) + 60px); overflow: hidden; border-top: 1px solid var(--hair); }
-.foot-word { font-size: clamp(5rem, 27vw, 36rem); margin: 0 0 20px; }
+.foot { position: relative; padding: 32px var(--gut) calc(var(--hud) + 52px); overflow: hidden; border-top: 1px solid var(--hair); }
+.foot-word { font-size: clamp(4rem, 18vw, 24rem); margin: 0 0 20px; }
 .foot-row {
   display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px 28px;
   font: 500 12px var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim);
@@ -749,15 +748,14 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
   .cta-long { display: none; }
   .cta-short { display: inline; }
   .nav-cta { padding: 8px 10px; font-size: 11px; white-space: nowrap; }
-  .hero-word { font-size: min(46vw, 36vh); align-self: center; line-height: 0.8; }
+  .hero-word { font-size: min(44vw, 30vh); line-height: 0.8; }
   .hero-word .br { display: block; }
   .reel-sticky { --fw: min(78vw, calc((var(--vh) - 360px) * 0.8)); padding-top: 92px; }
   .frame-art { aspect-ratio: 4 / 5; }
   .reel-ticks li { width: 16px; }
   .frame-cap { padding-top: 14px; }
   .brand { font-size: 16px; }
-  .hero { padding-top: 96px; }
-  .hero-hint { top: 112px; }
+  .hero { padding-top: 88px; }
   .hero-meta { flex-direction: column; align-items: start; }
   .hero-tag { text-align: left; }
   .steps { grid-template-columns: 1fr; }
