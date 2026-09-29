@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>FLNT Films | Films that strike</title>
 <meta name="description" content="FLNT Films (pronounced “flint”) is a one-person cinematic video studio making brand films, commercials, weddings, documentaries and music videos." />
-<meta name="theme-color" content="#0a0908" />
+<meta name="theme-color" content="#0c0c0c" />
 <meta name="color-scheme" content="dark" />
-<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="favicon-48.png" sizes="48x48" type="image/png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
 <meta property="og:type" content="website" />
 <meta property="og:title" content="FLNT Films | Films that strike" />
@@ -38,7 +40,7 @@
 <!-- Viewfinder HUD -->
 <header class="hud-top">
   <a class="brand" href="#top" aria-label="FLNT Films, back to top">
-    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 1l3.2 11.8L31 16l-11.8 3.2L16 31l-3.2-11.8L1 16l11.8-3.2z"/></svg>
+    <img class="brand-mark" src="logo-mark.png" alt="" width="30" height="30" />
     <span>FLNT</span>
   </a>
   <div class="rec" aria-hidden="true"><i></i><span class="rec-word">REC</span> <span class="tc" id="tc">00:00:00:00</span></div>
@@ -271,7 +273,11 @@
       </div>
 
       <div class="slate-body">
-        <div class="slate-row slate-prod"><span class="val">FLNT FILMS</span><span class="lbl">New project</span></div>
+        <div class="slate-row slate-prod"><span class="lockup" aria-label="FLNT Films" role="img">
+          <img class="lockup-mark" src="logo-mark.png" alt="" />
+          <span class="lockup-rule"></span>
+          <span class="lockup-text"><span class="lockup-flnt">FLNT</span><span class="lockup-films"><i>F</i><i>I</i><i>L</i><i>M</i><i>S</i></span></span>
+        </span><span class="lbl">New project</span></div>
 
         <label class="field">
           <span class="lbl">Name</span>
@@ -322,12 +328,12 @@
 </main>
 
 <footer class="foot" data-scene="SC 08 · FADE OUT" data-fstop="f/16">
-  <p class="foot-word litword" aria-hidden="true">
-    <span class="word word-ghost">FLNT</span>
-    <span class="word word-lit">FLNT</span>
-  </p>
   <div class="foot-row">
-    <p>© <span id="year">2026</span> FLNT Films · <span class="ipa">/flɪnt/</span></p>
+    <span class="lockup" aria-label="FLNT Films" role="img">
+      <img class="lockup-mark" src="logo-mark.png" alt="" />
+      <span class="lockup-rule"></span>
+      <span class="lockup-text"><span class="lockup-flnt">FLNT</span><span class="lockup-films"><i>F</i><i>I</i><i>L</i><i>M</i><i>S</i></span></span>
+    </span>
     <!-- TODO: point these at the real profiles -->
     <nav class="foot-links" aria-label="Social">
       <a href="#">Instagram</a>
@@ -336,6 +342,7 @@
     </nav>
     <a class="foot-top" href="#top">Back to top ↑</a>
   </div>
+  <p class="foot-copy">© <span id="year">2026</span> FLNT Films · Pronounced <span class="ipa">/flɪnt/</span></p>
 </footer>
 
 <script src="main.js" defer></script>
