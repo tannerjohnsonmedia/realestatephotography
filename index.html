@@ -774,6 +774,38 @@
     <p class="final-alt">
       Prefer to text? <a href="sms:+17205879516?&amp;body=Hi%20Tanner%20%E2%80%94%20I%27d%20like%20to%20book%20a%20listing%20shoot." data-cta="final-text">(720) 587-9516</a> · <a data-cta="final-email" href="mailto:tannerjohnsonmedia@gmail.com?subject=Listing%20shoot%20inquiry&amp;body=Property%20address%3A%0ASquare%20footage%3A%0AWhat%20I%20need%3A%0APreferred%20shoot%20date%3A">tannerjohnsonmedia@gmail.com</a>
     </p>
+
+    <!-- The call, text and mailto links above all hand off to an app the visitor
+         may not have: a phone with no mail client does nothing with mailto:, and
+         that visitor simply leaves. This is the fallback that always works. It
+         posts to Netlify Forms exactly like the builder, so it reaches the inbox
+         without the visitor needing anything installed. -->
+    <div class="cta-form-wrap">
+      <p class="cta-form-lead">Or send a message right here — I'll reply today.</p>
+
+      <form id="contactForm" name="contact-message" method="POST"
+            data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="contact-message" />
+        <p class="hp" aria-hidden="true">
+          <label>Leave this empty if you're human <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+        </p>
+
+        <div class="cta-fields">
+          <label class="cta-field"><span>Your name</span>
+            <input type="text" name="name" autocomplete="name" placeholder="Jane Doe" required /></label>
+          <label class="cta-field"><span>Email</span>
+            <input type="email" name="email" autocomplete="email" placeholder="you@brokerage.com" required /></label>
+          <label class="cta-field cta-field-full"><span>Phone <em>(optional)</em></span>
+            <input type="tel" name="phone" autocomplete="tel" placeholder="(720) 555-0134" /></label>
+          <label class="cta-field cta-field-full"><span>What do you need?</span>
+            <textarea name="message" rows="3" required
+                      placeholder="Property address, square footage, and what you're looking for."></textarea></label>
+        </div>
+
+        <button class="btn btn-primary btn-xl" id="contactSubmit" type="submit">Send message</button>
+        <p class="cta-status" id="contactStatus" role="status" hidden></p>
+      </form>
+    </div>
   </div>
 </section>
 

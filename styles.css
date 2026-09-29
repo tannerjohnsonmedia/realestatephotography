@@ -709,6 +709,39 @@ em{ font-style:italic; color:var(--gold-soft); }
 .final-alt{ font-size:.95rem; color:rgba(255,255,255,.6); }
 .final-alt a{ color:var(--gold-soft); font-weight:600; text-decoration:underline; text-underline-offset:3px; }
 
+/* Contact form. Deliberately quieter than the call button above it -- the phone
+   still converts best, so this reads as the fallback it is, not a rival CTA. */
+.cta-form-wrap{
+  max-width:620px; margin:40px auto 0; padding-top:32px;
+  border-top:1px solid rgba(255,255,255,.14);
+}
+.cta-form-lead{ font-size:1rem; color:rgba(255,255,255,.72); margin-bottom:20px; }
+.cta-fields{
+  display:grid; grid-template-columns:1fr 1fr; gap:14px;
+  text-align:left; margin-bottom:20px;
+}
+.cta-field{ display:flex; flex-direction:column; gap:7px; }
+.cta-field-full{ grid-column:1 / -1; }
+.cta-field span{ font-size:.85rem; font-weight:600; color:rgba(255,255,255,.9); }
+.cta-field em{ color:rgba(255,255,255,.5); font-weight:400; font-style:normal; }
+.cta-field input,
+.cta-field textarea{
+  font:inherit; font-size:1rem; color:#fff; width:100%;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.22);
+  border-radius:10px; padding:12px 14px;
+}
+.cta-field textarea{ resize:vertical; min-height:88px; }
+.cta-field input::placeholder,
+.cta-field textarea::placeholder{ color:rgba(255,255,255,.42); }
+.cta-field input:focus,
+.cta-field textarea:focus{
+  outline:0; border-color:var(--gold); box-shadow:0 0 0 4px rgba(200,145,60,.2);
+}
+.cta-status{ margin-top:16px; font-size:.95rem; color:var(--gold-soft); }
+.cta-status.is-error{ color:#FFB4A8; }
+.btn:disabled{ opacity:.6; cursor:default; }
+@media (max-width:560px){ .cta-fields{ grid-template-columns:1fr; } }
+
 /* ================= FOOTER ================= */
 .site-footer{ background:#080C12; color:rgba(255,255,255,.62); padding:56px 0 0; }
 .footer-inner{
@@ -761,6 +794,10 @@ em{ font-style:italic; color:var(--gold-soft); }
   .hero-trust{ gap:12px 26px; }
   .mobile-bar{ display:flex; }
   .site-footer{ padding-bottom:78px; }
+  /* the bar is fixed over the last 77px of the viewport, which is taller than
+     half the message box -- without this, scrolling or tapping into a field
+     can land it underneath the bar */
+  .cta-field{ scroll-margin-bottom:96px; }
   .result-actions .btn{ width:100%; }
   .builder-nav{ flex-direction:column-reverse; }
   .builder-nav .btn{ width:100%; margin-left:0 !important; }

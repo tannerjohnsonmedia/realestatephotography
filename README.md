@@ -294,9 +294,31 @@ Values only affect bidding once you switch to Maximize Conversion Value or tROAS
 wants roughly 15–30 conversions in 30 days first. Until then it is reporting only, and
 the numbers are accumulating for when you make the switch.
 
+`contact_form` fires when the contact form in the final CTA sends successfully.
+It has no Ads conversion label yet — create a conversion action in Ads and add it to
+`ADS_CONVERSIONS` to count it, or leave it as a GA4-only signal.
+
 **Deliberately excluded:** `contact_booking` (the visitor only left for the portal — that
 is not a booking), plus `builder_step`, `tour_open`, `video_play` and `hero_variant`, which
 are diagnostics. To add or remove one, edit the map; nothing else needs touching.
+
+### 3b. Where leads arrive
+
+Two forms post to **Netlify Forms**, which emails `tannerjohnsonmedia@gmail.com` on every
+submission (Netlify → Forms → Form notifications):
+
+| Form | `name` | Sends |
+|---|---|---|
+| Build Your Shoot | `builder-shoot` | contact details, property, package, price, readable summary |
+| Contact form (final CTA) | `contact-message` | name, email, phone, message |
+
+Netlify only discovers a form by **parsing the HTML at deploy time**. Add a form, or turn
+form detection on after a deploy, and it stays invisible until the next deploy. Both carry
+a `bot-field` honeypot; Akismet-flagged submissions land in **Forms → Spam** and send no
+email, which is the usual reason a test "vanishes".
+
+Calls, texts and `mailto:` links reach you directly and never touch Netlify. **Bookings on
+the portal are Aryeo's** — set that notification email inside Aryeo, not here.
 
 ### 4. Google Ads
 

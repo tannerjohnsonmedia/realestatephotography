@@ -493,10 +493,20 @@
   var navToggle = document.getElementById('navToggle');
   var mobileNav = document.getElementById('mobileNav');
 
+  var finalCta = document.getElementById('contact');
+
   function onScroll() {
     var y = window.scrollY || window.pageYOffset;
     if (header) header.classList.toggle('is-stuck', y > 40);
-    if (mobileBar) mobileBar.classList.toggle('is-visible', y > 560);
+    if (mobileBar) {
+      /* The bar exists to keep a call button on screen while the visitor reads.
+         Once the final CTA is up, that job is done -- it has its own call button
+         and the message form -- and a bar fixed over the bottom 77px would sit
+         on top of the message box, swallowing taps meant for it. */
+      var rect = finalCta ? finalCta.getBoundingClientRect() : null;
+      var atContact = rect && rect.top < window.innerHeight * 0.6;
+      mobileBar.classList.toggle('is-visible', y > 560 && !atContact);
+    }
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
@@ -541,6 +551,70 @@
     revealables.forEach(function (el) { io.observe(el); });
   } else {
     revealables.forEach(function (el) { el.classList.add('is-in'); });
+  }
+
+  /* ---------------------------------------------------------------------------
+     CONTACT FORM
+     Everything else in the final CTA hands off to an app the visitor may not
+     have. This posts to Netlify Forms the same way the builder does, so the
+     message reaches the inbox with nothing installed on their end.
+     ------------------------------------------------------------------------ */
+  var contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    var contactStatus = document.getElementById('contactStatus');
+    var contactBtn = document.getElementById('contactSubmit');
+    var contactSending = false;
+
+    var contactField = function (name) {
+      var el = contactForm.querySelector('[name="' + name + '"]');
+      return el ? el.value.trim() : '';
+    };
+
+    var setContactStatus = function (msg, isError) {
+      contactStatus.textContent = msg;
+      contactStatus.className = 'cta-status' + (isError ? ' is-error' : '');
+      contactStatus.hidden = !msg;
+    };
+
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (contactSending) return;   // no double-send while one is in flight
+
+      var name = contactField('name');
+      var email = contactField('email');
+      var message = contactField('message');
+
+      if (!name || !email || !message) {
+        setContactStatus('Please add your name, email, and a short message.', true);
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setContactStatus('That email address doesn\'t look right.', true);
+        return;
+      }
+
+      contactSending = true;
+      contactBtn.disabled = true;
+      setContactStatus('Sending\u2026');
+
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(contactForm)).toString()
+      }).then(function (res) {
+        if (!res.ok) throw new Error(res.status);
+        contactForm.reset();
+        contactSending = false;
+        contactBtn.disabled = false;
+        setContactStatus('Thanks \u2014 message sent. I\'ll get back to you today.');
+        track('contact_form', { location: 'final-cta' });
+      }).catch(function () {
+        /* the visitor still has a working phone number in front of them */
+        contactSending = false;
+        contactBtn.disabled = false;
+        setContactStatus('That didn\'t send. Call or text ' + PHONE_DISPLAY + ' and I\'ll pick up.', true);
+      });
+    });
   }
 
   /* ---------------------------------------------------------------------------
