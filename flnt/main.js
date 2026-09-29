@@ -1,4 +1,4 @@
-/* FLNT Films — "Strike"
+/* FLNT Films: "Strike"
    One rAF loop drives everything: sparks, light, cursor and the scroll-scrubbed scenes. */
 (() => {
   'use strict';
@@ -94,7 +94,7 @@
       p.x += p.vx; p.y += p.vy;
       p.life -= p.decay;
 
-      // Real flint sparks fork as the iron burns — split occasionally.
+      // Real flint sparks fork as the iron burns, so split occasionally.
       if (p.w > 0.9 && p.life < 0.7 && Math.random() < 0.012) {
         for (let k = 0; k < 3; k++) {
           spawn(p.x, p.y, Math.random() * Math.PI * 2, 1 + Math.random() * 3, p.w * 0.45, 0.04 + Math.random() * 0.03);
