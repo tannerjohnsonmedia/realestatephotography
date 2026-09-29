@@ -274,6 +274,7 @@ beats the old one.
 | `contact_call` | any tap-to-call link |
 | `contact_text` | any SMS link |
 | `contact_email` | any mailto link |
+| `contact_form` | the contact form sent successfully |
 
 Repeats within one second are suppressed so a double-bound handler can't report two leads
 for one action.
@@ -293,10 +294,6 @@ is worth $1 beside a four-figure shoot.
 Values only affect bidding once you switch to Maximize Conversion Value or tROAS, which
 wants roughly 15–30 conversions in 30 days first. Until then it is reporting only, and
 the numbers are accumulating for when you make the switch.
-
-`contact_form` fires when the contact form in the final CTA sends successfully.
-It has no Ads conversion label yet — create a conversion action in Ads and add it to
-`ADS_CONVERSIONS` to count it, or leave it as a GA4-only signal.
 
 **Deliberately excluded:** `contact_booking` (the visitor only left for the portal — that
 is not a booking), plus `builder_step`, `tour_open`, `video_play` and `hero_variant`, which
