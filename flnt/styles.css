@@ -310,6 +310,10 @@ body.is-rolling .hero-meta { opacity: 1; transform: none; }
   letter-spacing: -0.02em; text-align: right;
 }
 .hero-tag em { color: var(--ember); }
+.hero-pitch { display: grid; gap: 14px; justify-items: end; }
+.hero-loc { font: 500 12px var(--mono); letter-spacing: 0.18em; text-transform: uppercase; color: var(--bone); }
+.hero-loc span { color: var(--ember); padding: 0 4px; }
+.hero-loc b { font-weight: 500; white-space: nowrap; }
 
 .hero-hint {
   order: -1; justify-self: center; margin-bottom: clamp(14px, 2.4vw, 28px);
@@ -811,6 +815,9 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
   .hero { padding-top: 120px; }
   .hero-meta { flex-direction: column; align-items: start; }
   .hero-tag { text-align: left; }
+  .hero-pitch { justify-items: start; gap: 10px; }
+  .hero-loc { font-size: 11px; letter-spacing: 0.14em; display: grid; gap: 6px; }
+  .hero-loc span { display: none; }
   .steps { grid-template-columns: 1fr; }
   .credits-list div { grid-template-columns: 1fr; gap: 6px; text-align: center; }
   .credits-list dt { text-align: center; }
