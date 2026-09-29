@@ -32,7 +32,6 @@ scene, a scrubber, and the scene name.
 
 ## Before launch — replace the placeholders
 
-- **Email:** `hello@flntfilms.com` in `index.html` (contact section).
 - **Social links:** the `href="#"` Instagram / Vimeo / YouTube links in the footer.
 - **Projects:** the five reel frames (Ember Hour, Salt & Iron, …) are placeholder titles over
   CSS-painted plates. Replace them with real projects. To use real footage, add a
@@ -43,8 +42,11 @@ scene, a scrubber, and the scene name.
 
 ## Form
 
-The slate posts to Netlify Forms as `flnt-inquiry`. Submissions show up under **Forms** in the Netlify
-dashboard once the site is deployed. Served locally, the form shows its fallback "email me" message.
+The slate posts to Netlify Forms as `flnt-inquiry`. It is the only contact route on the page: no email
+address is published. Submissions show up under **Forms** in the Netlify dashboard, and an email
+notification set up there forwards each one to the inbox. The notification's subject line comes from the
+hidden `subject` field ("New FLNT Films inquiry: <project> from <name>"). Served locally, the form shows
+its "didn't send" message because there is no Netlify to receive it.
 
 ## Accessibility
 

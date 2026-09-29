@@ -515,7 +515,9 @@
     btn.disabled = true;
     status.className = 'slate-status';
     status.textContent = 'Sending…';
-    const firstName = (slate.elements.name.value.trim().split(/\s+/)[0] || '');
+    const fullName = slate.elements.name.value.trim();
+    const firstName = fullName.split(/\s+/)[0] || '';
+    slate.elements.subject.value = `New FLNT Films inquiry: ${slate.elements.project.value} from ${fullName}`;
     const send = fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -534,7 +536,7 @@
     } else {
       slate.classList.remove('is-clapped');
       status.className = 'slate-status is-err';
-      status.textContent = "That didn't send. Please email me at " + $('.contact-mail').textContent;
+      status.textContent = "That didn't send. Please check your connection and try again.";
     }
   });
 

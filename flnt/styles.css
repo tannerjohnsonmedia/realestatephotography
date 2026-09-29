@@ -625,11 +625,6 @@ body.has-struck .hero-hint { opacity: 0; transition-delay: 0s; }
 .contact-head h2 { margin: 22px 0 24px; font-size: clamp(2.8rem, 6.4vw, 6.4rem); line-height: 0.9; letter-spacing: -0.04em; font-stretch: 105%; }
 .contact-head h2 em { display: block; color: var(--ember); }
 .contact-sub { color: var(--dim); font-size: 1.1rem; max-width: 40ch; margin-bottom: 26px; }
-.contact-mail {
-  font-family: var(--display); font-weight: 300; font-size: clamp(1.3rem, 2.2vw, 1.8rem); letter-spacing: -0.01em;
-  border-bottom: 1px solid var(--faint); transition: color 0.25s, border-color 0.25s;
-}
-.contact-mail:hover { color: var(--ember); border-color: var(--ember); }
 
 .slate { position: relative; padding-top: 70px; margin-top: 24px; }
 .clapper { position: absolute; left: 0; right: 0; top: 0; height: 70px; }
