@@ -392,68 +392,64 @@
   .monthly-foot p { color: var(--ink-muted); max-width: 56ch; }
   .monthly .btn-primary:focus-visible, .monthly :focus-visible { outline-color: var(--ink); }
 
-  /* Build your shoot */
-  .builder { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
-  .step { padding-block: 28px; border-top: 1px solid var(--line); }
-  .step:first-child { border-top: 0; padding-top: 0; }
-  .step legend, .step-title {
-    display: flex; gap: 14px; align-items: baseline;
-    font: 700 1.125rem/1.2 var(--font-display); font-stretch: 110%; text-transform: uppercase; letter-spacing: 0.02em;
-    margin-bottom: 18px; padding: 0;
+  /* Build your shoot: three compact rows and one estimate bar */
+  .builder { border-top: 1px solid var(--line); }
+  .b-row {
+    display: grid; grid-template-columns: 180px minmax(0, 1fr);
+    align-items: center; gap: 12px var(--grid-gap);
+    padding-block: 18px;
+    border-bottom: 1px solid var(--line);
   }
-  .step-num { font: 500 0.75rem var(--font-mono); color: var(--ember); letter-spacing: 0.1em; }
-  .choices { display: grid; gap: 8px; }
-  .choice {
-    position: relative;
-    display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px;
-    padding: 16px 18px;
-    border: 1px solid var(--line);
-    cursor: pointer;
+  .b-label { font: 500 var(--text-label)/1.4 var(--font-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--subtle); }
+
+  /* Segmented options: hairlines come from the 1px gap over the line colour */
+  .seg { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .seg-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .seg-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .opt { position: relative; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 14px 16px; background: var(--bg); cursor: pointer; transition: background-color 0.2s ease; }
+  .opt:hover { background: var(--bg-raised); }
+  .opt input, .chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .opt strong { font-weight: 600; font-size: 0.9375rem; }
+  .opt em, .chip em { font: 500 0.8125rem var(--font-mono); font-style: normal; color: var(--muted); white-space: nowrap; }
+  .opt:has(input:checked) { background: rgba(255, 90, 31, 0.08); box-shadow: inset 0 -2px 0 var(--ember); }
+  .opt:has(input:checked) em { color: var(--ember); }
+  .opt:has(input:focus-visible), .chip:has(input:focus-visible) { outline: 2px solid var(--ember); outline-offset: 2px; z-index: 1; }
+
+  /* Add-on chips */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    position: relative; display: inline-flex; align-items: center; gap: 10px;
+    min-height: 44px; padding: 0 14px;
+    border: 1px solid var(--line-strong); cursor: pointer;
+    font-size: 0.9375rem;
     transition: border-color 0.2s ease, background-color 0.2s ease;
   }
-  .choice:hover { border-color: var(--line-strong); }
-  .choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-  .choice .mark {
-    width: 18px; height: 18px; border: 1.5px solid var(--line-strong);
-    display: grid; place-items: center;
-  }
-  .choice input[type="radio"] + .mark { border-radius: 50%; }
-  .choice .mark::after { content: ""; width: 8px; height: 8px; background: var(--ember); opacity: 0; transition: opacity 0.15s ease; }
-  .choice input[type="radio"] + .mark::after { border-radius: 50%; }
-  .choice input:checked + .mark { border-color: var(--ember); }
-  .choice input:checked + .mark::after { opacity: 1; }
-  .choice:has(input:checked) { border-color: var(--ember); background: rgba(255, 90, 31, 0.05); }
-  .choice input:focus-visible + .mark { outline: 2px solid var(--ember); outline-offset: 3px; }
-  .choice-text strong { display: block; font-weight: 600; }
-  .choice-text span { display: block; color: var(--muted); font-size: 0.875rem; line-height: 1.45; margin-top: 2px; }
-  .choice-price { font: 500 0.875rem var(--font-mono); color: var(--text); white-space: nowrap; }
+  .chip:hover { border-color: var(--subtle); }
+  .chip .box { width: 12px; height: 12px; border: 1.5px solid var(--line-strong); flex: none; transition: background-color 0.15s ease, border-color 0.15s ease; }
+  .chip:has(input:checked) { border-color: var(--ember); background: rgba(255, 90, 31, 0.08); }
+  .chip:has(input:checked) .box { background: var(--ember); border-color: var(--ember); }
+  .chip:has(input:checked) em { color: var(--ember); }
+  .chip-stepper { cursor: default; padding-right: 4px; }
+  .chip-stepper button { width: 36px; height: 36px; background: none; border: 0; cursor: pointer; font-size: 1.125rem; line-height: 1; }
+  .chip-stepper button:hover:not(:disabled) { color: var(--ember); }
+  .chip-stepper button:disabled { color: var(--line-strong); cursor: default; }
+  .chip-stepper output { min-width: 2ch; text-align: center; font: 600 0.9375rem var(--font-mono); }
 
-  .stepper { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 18px; border: 1px solid var(--line); }
-  .stepper-controls { display: inline-flex; align-items: center; border: 1px solid var(--line-strong); }
-  .stepper-controls button { width: 44px; height: 44px; background: none; border: 0; cursor: pointer; font-size: 1.25rem; line-height: 1; }
-  .stepper-controls button:hover { color: var(--ember); }
-  .stepper-controls output { min-width: 3ch; text-align: center; font: 600 1rem var(--font-mono); }
-
-  .summary {
-    position: sticky; top: 24px;
+  /* Estimate bar */
+  .b-total {
+    display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px clamp(20px, 3vw, 40px);
+    margin-top: 20px; padding: 18px 22px;
     background: var(--paper); color: var(--ink);
-    padding: clamp(24px, 2.6vw, 36px);
   }
-  .summary .label { color: var(--ink-muted); }
-  .summary-lines { margin-top: 18px; display: grid; gap: 10px; font-size: 0.9375rem; }
-  .summary-lines li { display: flex; justify-content: space-between; gap: 16px; }
-  .summary-lines li span:last-child { font-family: var(--font-mono); font-size: 0.875rem; white-space: nowrap; }
-  .summary-total { margin-top: 22px; padding-top: 18px; border-top: 2px solid var(--ink); display: grid; gap: 6px; }
-  .summary-total .row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
-  .summary-total .big { font: 800 clamp(2rem, 3.4vw, 2.75rem)/1 var(--font-display); font-stretch: 110%; color: var(--ember-deep); }
-  .summary-total .monthly-line { font: 600 1rem var(--font-body); color: var(--ink); }
-  .summary .btn { width: 100%; margin-top: 24px; }
-  .summary .btn-primary { background: var(--ink); color: var(--paper); }
-  .summary .btn-primary:hover { background: var(--ember-deep); }
-  .summary .fine { margin-top: 14px; color: var(--ink-muted); font-size: 0.8125rem; line-height: 1.5; }
-  .summary :focus-visible { outline-color: var(--ink); }
-
-  .builder-bar { display: none; }
+  .b-total .label { color: var(--ink-muted); }
+  .b-big { font: 800 clamp(1.75rem, 2.6vw, 2.25rem)/1 var(--font-display); font-stretch: 110%; color: var(--ember-deep); margin-top: 4px; }
+  .b-big small { font: 500 0.8125rem var(--font-body); color: var(--ink-muted); margin-left: 6px; white-space: nowrap; }
+  .b-monthly { font: 600 0.875rem var(--font-body); margin-top: 6px; }
+  .b-lines { color: var(--ink-muted); font-size: 0.875rem; line-height: 1.5; }
+  .b-total .btn-primary { background: var(--ink); color: var(--paper); }
+  .b-total .btn-primary:hover { background: var(--ember-deep); }
+  .b-total :focus-visible { outline-color: var(--ink); }
+  .builder .fine { margin-top: 12px; color: var(--subtle); font-size: 0.8125rem; }
 
   /* Contact */
   .contact h2 { font-size: var(--text-h2); max-width: 15ch; margin-top: 18px; }
@@ -567,16 +563,10 @@
     .packages { grid-template-columns: 1fr; border-bottom: 0; }
     .package, .package:first-child, .package:last-child { border-left: 0; padding-inline: 0; border-bottom: 1px solid var(--line); }
     .package.is-featured { padding-inline: 20px; }
-    .builder { grid-template-columns: 1fr; }
-    .summary { position: static; }
-    .builder-bar {
-      position: sticky; bottom: 0; z-index: 5;
-      display: flex; justify-content: space-between; align-items: center; gap: 12px;
-      margin-top: 8px; padding: 12px 16px;
-      background: var(--paper); color: var(--ink);
-      font: 600 0.9375rem var(--font-body);
-    }
-    .builder-bar a { font: 500 0.75rem var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); }
+    .b-row { grid-template-columns: 1fr; }
+    .seg-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .b-total { grid-template-columns: minmax(0, 1fr) auto; position: sticky; bottom: 0; z-index: 5; box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.45); }
+    .b-lines { display: none; }
     .contact-grid > div { grid-column: 1 / -1; }
     .hero-art { height: 420px; right: -120px; top: 38%; opacity: 0.3; }
   }
@@ -588,8 +578,19 @@
     .nav .btn-small { display: none; }
     .display { font-stretch: 108%; }
     .actions .btn { flex: 1 1 100%; }
-    .choice { grid-template-columns: auto 1fr; }
-    .choice-price { grid-column: 2; }
+    .seg-3 { grid-template-columns: 1fr; }
+    .opt { padding: 13px 14px; }
+    .seg-4 .opt { flex-direction: column; align-items: flex-start; gap: 2px; }
+    .chips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+    .chip { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; row-gap: 2px; padding: 10px 12px; font-size: 0.875rem; line-height: 1.25; }
+    .chip em { grid-column: 2; }
+    .chip-stepper { grid-column: 1 / -1; display: flex; justify-content: space-between; padding: 0 4px 0 12px; }
+    .b-total { gap: 12px; padding: 12px 14px; margin-inline: calc(var(--gutter) * -1); }
+    .b-total .label { display: none; }
+    .b-big { font-size: 1.625rem; margin-top: 0; }
+    .b-big small { margin-left: 4px; }
+    .b-monthly { margin-top: 2px; font-size: 0.8125rem; }
+    .b-total .btn { padding: 0 16px; min-height: 46px; }
     .menu li { grid-template-columns: 1fr; grid-template-areas: "name" "price" "desc"; row-gap: 8px; }
     .menu .dots { display: none; }
     .menu .tag { display: block; margin: 8px 0 0; }
@@ -806,92 +807,56 @@
       <div class="section-head reveal">
         <p class="label">Estimate</p>
         <h2 class="display" id="build-title">Build your shoot.</h2>
-        <p class="section-intro">Pick a starting point and add what you need. The estimate updates as you go, and you can email it straight to us.</p>
+        <p class="section-intro">Choose a package, add what you need and send us the estimate.</p>
       </div>
 
       <form class="builder reveal" id="builder" novalidate>
-        <div class="builder-steps">
-          <fieldset class="step">
-            <legend><span class="step-num">01</span>Start with</legend>
-            <div class="choices">
-              <label class="choice"><input type="radio" name="base" value="social" /><span class="mark"></span>
-                <span class="choice-text"><strong>Social cuts</strong><span>Half-day shoot, six vertical edits</span></span>
-                <span class="choice-price">$900</span></label>
-              <label class="choice"><input type="radio" name="base" value="signature" checked /><span class="mark"></span>
-                <span class="choice-text"><strong>Signature video</strong><span>Full-day shoot, one 60 to 90 second film</span></span>
-                <span class="choice-price">$1,800</span></label>
-              <label class="choice"><input type="radio" name="base" value="bundle" /><span class="mark"></span>
-                <span class="choice-text"><strong>Signature + social</strong><span>The film plus six vertical edits</span></span>
-                <span class="choice-price">$2,500</span></label>
-            </div>
-          </fieldset>
-
-          <div class="step">
-            <p class="step-title" id="extra-label"><span class="step-num">02</span>Extra vertical edits</p>
-            <div class="stepper">
-              <span class="choice-text"><strong>Additional social cuts</strong><span>$120 each, from the same shoot</span></span>
-              <span class="stepper-controls" role="group" aria-labelledby="extra-label">
-                <button type="button" id="extra-minus" aria-label="One fewer edit">−</button>
-                <output id="extra-count" aria-live="polite">0</output>
-                <button type="button" id="extra-plus" aria-label="One more edit">+</button>
-              </span>
-            </div>
-          </div>
-
-          <fieldset class="step">
-            <legend><span class="step-num">03</span>Add-ons</legend>
-            <div class="choices">
-              <label class="choice"><input type="checkbox" name="addon" value="photos" /><span class="mark"></span>
-                <span class="choice-text"><strong>Still photography</strong><span>20 edited photos of dishes, drinks and the room</span></span>
-                <span class="choice-price">+$450</span></label>
-              <label class="choice"><input type="checkbox" name="addon" value="interview" /><span class="mark"></span>
-                <span class="choice-text"><strong>Chef or owner interview</strong><span>A short on-camera conversation, cut into the film</span></span>
-                <span class="choice-price">+$300</span></label>
-              <label class="choice"><input type="checkbox" name="addon" value="location" /><span class="mark"></span>
-                <span class="choice-text"><strong>Second location</strong><span>A second restaurant or venue on the same day</span></span>
-                <span class="choice-price">+$350</span></label>
-              <label class="choice"><input type="checkbox" name="addon" value="rush" /><span class="mark"></span>
-                <span class="choice-text"><strong>Rush delivery</strong><span>Final files within five business days</span></span>
-                <span class="choice-price">+$400</span></label>
-            </div>
-          </fieldset>
-
-          <fieldset class="step">
-            <legend><span class="step-num">04</span>Monthly content</legend>
-            <div class="choices">
-              <label class="choice"><input type="radio" name="monthly" value="0" checked /><span class="mark"></span>
-                <span class="choice-text"><strong>No monthly plan</strong><span>You can add one later</span></span>
-                <span class="choice-price">$0</span></label>
-              <label class="choice"><input type="radio" name="monthly" value="4" /><span class="mark"></span>
-                <span class="choice-text"><strong>Four reels</strong><span>One half-day shoot a month</span></span>
-                <span class="choice-price">$750/mo</span></label>
-              <label class="choice"><input type="radio" name="monthly" value="8" /><span class="mark"></span>
-                <span class="choice-text"><strong>Eight reels</strong><span>One half-day shoot and a planning call</span></span>
-                <span class="choice-price">$1,300/mo</span></label>
-              <label class="choice"><input type="radio" name="monthly" value="12" /><span class="mark"></span>
-                <span class="choice-text"><strong>Twelve reels</strong><span>Two half-day shoots a month</span></span>
-                <span class="choice-price">$1,800/mo</span></label>
-            </div>
-          </fieldset>
-
-          <!-- Phone only: keeps the running total in view while choosing -->
-          <div class="builder-bar">
-            <span>Estimate <strong id="bar-total">$1,800</strong></span>
-            <a href="#summary">View estimate</a>
+        <div class="b-row">
+          <p class="b-label" id="pkg-label">Package</p>
+          <div class="seg seg-3" role="radiogroup" aria-labelledby="pkg-label">
+            <label class="opt"><input type="radio" name="base" value="social" /><strong>Social cuts</strong><em>$900</em></label>
+            <label class="opt"><input type="radio" name="base" value="signature" checked /><strong>Signature video</strong><em>$1,800</em></label>
+            <label class="opt"><input type="radio" name="base" value="bundle" /><strong>Signature + social</strong><em>$2,500</em></label>
           </div>
         </div>
 
-        <aside class="summary" id="summary" aria-labelledby="summary-title">
-          <p class="label" id="summary-title">Your estimate</p>
-          <ul class="summary-lines" id="summary-lines"></ul>
-          <div class="summary-total">
-            <div class="row"><span>One-time</span><span class="big" id="total-once">$1,800</span></div>
-            <div class="row" id="monthly-row" hidden><span>Monthly plan</span><span class="monthly-line" id="total-monthly"></span></div>
+        <div class="b-row">
+          <p class="b-label" id="addon-label">Add-ons</p>
+          <div class="chips" role="group" aria-labelledby="addon-label">
+            <label class="chip"><input type="checkbox" name="addon" value="photos" /><span class="box"></span>Still photos <em>+$450</em></label>
+            <label class="chip"><input type="checkbox" name="addon" value="interview" /><span class="box"></span>Chef interview <em>+$300</em></label>
+            <label class="chip"><input type="checkbox" name="addon" value="location" /><span class="box"></span>Second location <em>+$350</em></label>
+            <label class="chip"><input type="checkbox" name="addon" value="rush" /><span class="box"></span>Rush delivery <em>+$400</em></label>
+            <div class="chip chip-stepper" role="group" aria-label="Extra vertical edits, $120 each">
+              <span>Extra edits <em>$120 ea</em></span>
+              <button type="button" id="extra-minus" aria-label="One fewer extra edit">−</button>
+              <output id="extra-count">0</output>
+              <button type="button" id="extra-plus" aria-label="One more extra edit">+</button>
+            </div>
           </div>
-          <a class="btn btn-primary" id="send-estimate" href="#">Email this estimate</a>
-          <p class="fine">Estimates only. We confirm the final price after a short call about your restaurant.</p>
+        </div>
+
+        <div class="b-row">
+          <p class="b-label" id="monthly-label">Monthly plan</p>
+          <div class="seg seg-4" role="radiogroup" aria-labelledby="monthly-label">
+            <label class="opt"><input type="radio" name="monthly" value="0" checked /><strong>None</strong><em>$0</em></label>
+            <label class="opt"><input type="radio" name="monthly" value="4" /><strong>4 reels</strong><em>$750/mo</em></label>
+            <label class="opt"><input type="radio" name="monthly" value="8" /><strong>8 reels</strong><em>$1,300/mo</em></label>
+            <label class="opt"><input type="radio" name="monthly" value="12" /><strong>12 reels</strong><em>$1,800/mo</em></label>
+          </div>
+        </div>
+
+        <div class="b-total" id="summary">
+          <div>
+            <p class="label">Your estimate</p>
+            <p class="b-big"><span id="total-once">$1,800</span><small>one-time</small></p>
+            <p class="b-monthly" id="monthly-row" hidden>+ <span id="total-monthly"></span></p>
+          </div>
+          <p class="b-lines" id="summary-lines">Signature video</p>
+          <a class="btn btn-primary" id="send-estimate" href="#">Email estimate</a>
           <p class="sr-only" role="status" aria-live="polite" id="estimate-status"></p>
-        </aside>
+        </div>
+        <p class="fine">Estimates only. We confirm the final price after a short call about your restaurant.</p>
       </form>
     </div>
   </section>
@@ -1051,16 +1016,13 @@
       if (extra > 0) { lines.push([extra + ' extra vertical edit' + (extra > 1 ? 's' : ''), extra * PRICES.extraEdit]); once += extra * PRICES.extraEdit; }
       st.addons.forEach(function (k) { var a = PRICES.addon[k]; lines.push([a.name, a.price]); once += a.price; });
 
-      $('#summary-lines').innerHTML = lines.map(function (l) {
-        return '<li><span>' + l[0] + '</span><span>' + money(l[1]) + '</span></li>';
-      }).join('');
       $('#total-once').textContent = money(once);
-      $('#bar-total').textContent = money(once);
 
       var m = PRICES.monthly[st.monthly];
+      $('#summary-lines').textContent = lines.map(function (l) { return l[0]; }).concat(m ? [m.name] : []).join(' · ');
       var mRow = $('#monthly-row');
       mRow.hidden = !m;
-      if (m) $('#total-monthly').textContent = m.name + ', ' + money(m.price) + '/mo';
+      if (m) $('#total-monthly').textContent = money(m.price) + ' a month';
 
       $('#extra-count').textContent = extra;
       $('#extra-minus').disabled = extra === 0;
