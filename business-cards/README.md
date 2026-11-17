@@ -3,6 +3,7 @@
 | File | Use |
 |------|-----|
 | `flnt-business-card-print.pdf` | **Send this to the printer.** Page 1 is the front, page 2 the back. |
+| `flnt-business-card-front.pdf`, `flnt-business-card-back.pdf` | The same print file split into one PDF per side, for printers that ask for separate uploads |
 | `flnt-business-card-front.png`, `flnt-business-card-back.png` | 300 dpi images of each side, for printers that ask for images instead of a PDF |
 | `preview.png` | What the trimmed cards look like |
 | `card.html` | Source. Edit it, then re-export the PDF (below). |
