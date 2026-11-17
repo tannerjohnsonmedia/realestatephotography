@@ -817,3 +817,92 @@ em{ font-style:italic; color:var(--gold-soft); }
   .site-header,.mobile-bar,.hero-scroll{ display:none; }
   .panel{ display:block !important; }
 }
+
+/* ==========================================================================
+   CONTRACTOR WEBSITES PAGE (websites-for-contractors.html)
+   Page-specific rules only. Everything that already exists on the site --
+   .section, .section-tint, .section-head, .lede, .grid-3, .card, .steps,
+   .price-card, .faq, .final-cta and every .btn variant -- is reused as is.
+   All selectors below are scoped to .contractors (or prefixed .cx-) so this
+   block cannot reach the homepage or the privacy page.
+   ========================================================================== */
+
+/* ---------- Hero ----------
+   The site header is fixed and transparent until it sticks, so the hero owns
+   the clearance beneath it, same as the homepage hero. */
+.cx-hero{
+  background:
+    radial-gradient(1100px 520px at 85% -10%, rgba(200,145,60,.20), transparent 62%),
+    var(--ink);
+  color:#fff;
+  padding:calc(76px + clamp(56px, 7vw, 92px)) 0 clamp(64px, 8vw, 104px);
+}
+.cx-hero h1{
+  color:#fff; font-size:clamp(2.5rem, 6vw, 4.1rem); line-height:1.04;
+  margin:0 0 22px; text-wrap:balance;
+}
+.cx-hero h1 em{ font-style:normal; color:var(--gold); }
+.cx-hero-sub{ color:rgba(255,255,255,.72); max-width:60ch; }
+.cx-actions{ display:flex; flex-wrap:wrap; gap:14px; margin-top:34px; }
+
+.cx-trust{
+  list-style:none; margin:40px 0 0; padding:0;
+  display:flex; flex-wrap:wrap; gap:12px 30px;
+  color:rgba(255,255,255,.62); font-size:.93rem;
+}
+.cx-trust li{ position:relative; padding-left:26px; }
+.cx-trust li::before{
+  content:""; position:absolute; left:0; top:.42em; width:14px; height:7px;
+  border-left:2px solid var(--gold); border-bottom:2px solid var(--gold);
+  transform:rotate(-45deg);
+}
+
+/* ---------- Problem list ---------- */
+.cx-problems{ list-style:none; margin:0; padding:0; display:grid; gap:14px; }
+.cx-problems li{
+  display:flex; gap:16px; align-items:flex-start;
+  background:#fff; border:1px solid var(--line); border-radius:var(--r);
+  padding:20px 22px;
+}
+.cx-problems b{ display:block; margin-bottom:4px; }
+.cx-problems span{ color:var(--muted); font-size:.97rem; }
+.cx-x{
+  flex:none; width:28px; height:28px; border-radius:50%;
+  background:#FDECEC; color:#C0392B; display:grid; place-items:center; margin-top:2px;
+}
+.cx-x svg{ width:15px; height:15px; }
+
+/* ---------- Edge: copy beside a pair of photos ---------- */
+.cx-edge{ display:grid; grid-template-columns:1.05fr 1fr; gap:clamp(32px, 5vw, 60px); align-items:center; }
+.cx-checks{ list-style:none; margin:26px 0 0; padding:0; display:grid; gap:13px; }
+.cx-checks li{ position:relative; padding-left:28px; color:var(--ink-3); font-size:.98rem; }
+.cx-checks li::before{
+  content:""; position:absolute; left:0; top:.42em; width:15px; height:8px;
+  border-left:2px solid var(--gold); border-bottom:2px solid var(--gold);
+  transform:rotate(-45deg);
+}
+.cx-photos{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.cx-photos img{
+  width:100%; height:100%; aspect-ratio:4/5; object-fit:cover;
+  border-radius:var(--r-lg); box-shadow:var(--shadow-md); display:block;
+}
+/* offsetting the first photo breaks the pair out of a flat grid */
+.cx-photos img:first-child{ margin-top:30px; }
+
+/* ---------- Pricing note ---------- */
+.cx-note{
+  margin-top:28px; color:var(--muted); font-size:.95rem;
+  max-width:76ch; text-wrap:pretty;
+}
+.cx-note b{ color:var(--ink); }
+
+/* ---------- Responsive ---------- */
+@media (max-width:860px){
+  .cx-edge{ grid-template-columns:1fr; }
+  /* the offset reads as a mistake once the photos sit under the copy */
+  .cx-photos img:first-child{ margin-top:0; }
+}
+@media (max-width:560px){
+  .cx-actions .btn{ width:100%; }
+  .cx-trust{ gap:10px 22px; }
+}

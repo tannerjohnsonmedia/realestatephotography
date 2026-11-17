@@ -493,7 +493,9 @@
   var navToggle = document.getElementById('navToggle');
   var mobileNav = document.getElementById('mobileNav');
 
-  var finalCta = document.getElementById('contact');
+  /* The final CTA is #contact on the homepage and #start on the contractors
+     page; whichever exists is the section the bar should get out of the way of. */
+  var finalCta = document.getElementById('contact') || document.getElementById('start');
 
   function onScroll() {
     var y = window.scrollY || window.pageYOffset;
