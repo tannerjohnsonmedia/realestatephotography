@@ -581,10 +581,11 @@
     .seg-3 { grid-template-columns: 1fr; }
     .opt { padding: 13px 14px; }
     .seg-4 .opt { flex-direction: column; align-items: flex-start; gap: 2px; }
-    .chips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
-    .chip { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; row-gap: 2px; padding: 10px 12px; font-size: 0.875rem; line-height: 1.25; }
-    .chip em { grid-column: 2; }
-    .chip-stepper { grid-column: 1 / -1; display: flex; justify-content: space-between; padding: 0 4px 0 12px; }
+    .chips { display: grid; grid-template-columns: 1fr; gap: 6px; }
+    .chip { display: flex; min-height: 46px; padding: 0 14px; }
+    .chip em { margin-left: auto; }
+    .chip-stepper { justify-content: space-between; padding: 0 4px 0 14px; }
+    .chip-stepper em { margin-left: 6px; }
     .b-total { gap: 12px; padding: 12px 14px; margin-inline: calc(var(--gutter) * -1); }
     .b-total .label { display: none; }
     .b-big { font-size: 1.625rem; margin-top: 0; }
@@ -823,7 +824,6 @@
         <div class="b-row">
           <p class="b-label" id="addon-label">Add-ons</p>
           <div class="chips" role="group" aria-labelledby="addon-label">
-            <label class="chip"><input type="checkbox" name="addon" value="photos" /><span class="box"></span>Still photos <em>+$450</em></label>
             <label class="chip"><input type="checkbox" name="addon" value="interview" /><span class="box"></span>Chef interview <em>+$300</em></label>
             <label class="chip"><input type="checkbox" name="addon" value="location" /><span class="box"></span>Second location <em>+$350</em></label>
             <label class="chip"><input type="checkbox" name="addon" value="rush" /><span class="box"></span>Rush delivery <em>+$400</em></label>
@@ -983,7 +983,6 @@
       },
       extraEdit: 120,
       addon: {
-        photos:    { name: 'Still photography', price: 450 },
         interview: { name: 'Chef or owner interview', price: 300 },
         location:  { name: 'Second location', price: 350 },
         rush:      { name: 'Rush delivery', price: 400 }
