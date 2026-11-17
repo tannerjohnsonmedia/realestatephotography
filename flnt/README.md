@@ -1,55 +1,43 @@
-# FLNT Films — landing page
+# FLNT Films: flntfilms.com
 
-**Concept: "Strike."** Flint throws a spark when struck, so the visitor does the striking. Clicks in the hero
-throw physics-driven sparks, and those sparks are the light source that reveals the wordmark. The whole
-site is framed as a camera viewfinder, and scrolling is the playhead.
+Cinematic promo video for independent restaurants in Denver, Colorado.
+Plain HTML, CSS and JavaScript. No framework, no build step, no dependencies.
 
 ```
-index.html    markup + copy
-styles.css    design system + every section
-main.js       sparks, light, cursor, scroll-scrubbed scenes, slate form
-favicon.svg   spark mark
-netlify.toml  deploy settings (base directory: flnt/)
+index.html     markup, copy, intro gate (inline in <head>), business details for search engines
+styles.css     design tokens (colors, fonts, spacing) in :root, then every section
+main.js        intro, mobile menu, scroll reveal, Build your shoot estimate, copy-email button
+favicon.svg    stroke flame on warm black (plus favicon-32/48, apple-touch-icon, icon-192/512 PNGs)
+og-image.jpg   1200x630 link-preview image
+netlify.toml   Netlify settings (base directory: flnt/)
+brand/         earlier circle-logo files, kept for reference
 ```
 
-No framework, no build step. Open `index.html` through any static server.
+## Page
 
-## Scenes
+Header · Hero · Work (showreel) · Pricing · Monthly content · Build your shoot · Contact · Footer
 
-| # | Section | The idea |
-|---|---------|----------|
-| — | Film leader | 3-2-1 countdown, then a flash. Click or any key skips it. |
-| 01 | Hero | Giant FLNT, dark until light hits it. Click to throw a small burst of sparks (hero only; the rest of the page stays calm). The wordmark "desqueezes" from 62% to 125% width like anamorphic footage. |
-| 02 | Rack focus | The manifesto starts out of focus and pulls sharp word by word as you scroll. |
-| 03 | The reel | One project at a time, centered like a cinema screen. Scrolling holds on each project, then glides to the next. Letterbox bars close in to 2.39:1. |
-| 04 | Lens dial | Scroll turns a lens barrel: 24 / 35 / 50 / 85 / 135mm, one service per focal length. |
-| 05 | Process | Strike → Kindle → Burn → Glow, lit by a burning fuse. |
-| 06 | Credits | End credits, rolling. |
-| 07 | The slate | The contact form is a clapperboard. "Send" snaps the clapper shut with a clap and a few sparks. |
+## Intro
 
-The HUD runs the whole time: REC light, timecode tied to scroll position, f-stop that changes per
-scene, a scrubber, and the scene name.
+Ember glow, rising sparks, the flame draws itself, the wordmark fades in, then the overlay fades out
+(about 3.5 seconds). Click, tap, any key or a scroll skips it.
 
-## Before launch — replace the placeholders
+- Plays once per browser session (sessionStorage). Add `#intro` to the URL to replay it.
+- Skipped entirely with prefers-reduced-motion, and never shown without JavaScript.
+- Scrolling is locked only while it plays. The inline script in `<head>` releases the lock after
+  6 seconds even if `main.js` fails to load.
 
-- **Social links:** the `href="#"` Instagram / Vimeo / YouTube links in the footer.
-- **Projects:** the five reel frames (Ember Hour, Salt & Iron, …) are placeholder titles over
-  CSS-painted plates. Replace them with real projects. To use real footage, add a
-  `<video muted loop playsinline preload="none" src="…">` inside `.frame-art`; it plays on hover.
-- **Hero reel (optional):** uncomment the `<video class="hero-reel">` line in the hero and point it at a
-  short, muted loop. It plays dimmed behind the wordmark.
-- **Social share image:** add an `og:image` once there's a still worth sharing.
+## Things to update
 
-## Form
-
-The slate posts to Netlify Forms as `flnt-inquiry`. It is the only contact route on the page: no email
-address is published. Submissions show up under **Forms** in the Netlify dashboard, and an email
-notification set up there forwards each one to the inbox. The notification's subject line comes from the
-hidden `subject` field ("New FLNT Films inquiry: <project> from <name>"). Served locally, the form shows
-its "didn't send" message because there is no Netlify to receive it.
+- **Prices**: in the Pricing and Monthly sections of `index.html` and in `PRICES` in `main.js`.
+  Keep the two in step; the estimate is calculated from `main.js`.
+- **Showreel**: replace the `.reel-placeholder` div in `index.html` with a `<video>` or a Vimeo or
+  YouTube `<iframe>`. The comment above it has both snippets. The frame stays 16:9.
+- **Email**: `hello@flntfilms.com` appears in the contact section, its mailto link and `EMAIL` in
+  `main.js`. Every inquiry and estimate is sent there, so it must be a working inbox.
 
 ## Accessibility
 
-- `prefers-reduced-motion` turns off the leader, sparks, grain, pinned scroll scenes and the custom
-  cursor, and lays every section out as plain, readable content.
-- Touch devices get tap-to-strike and no custom cursor.
+Landmarks and skip link, visible focus states, real radio buttons and checkboxes in the estimate,
+live-region announcements for the total and the copy button, and the intro overlay hidden from
+screen readers.

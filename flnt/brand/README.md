@@ -14,7 +14,6 @@
 | `flnt-mark-transparent.png` | The flame mark alone, over footage or any background |
 | `flnt-mark-orange-tile.png` | Profile pictures and app icons |
 
-The site uses `logo-mark.png` (the mark alone) in the nav, and rebuilds the horizontal lockup
-from that mark plus live text so it stays sharp at every size. Favicons and home-screen icons
-(`favicon-32.png`, `favicon-48.png`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`)
-and the link-preview image (`og-image.jpg`) were made from these files.
+These are the earlier circle-flame logo files. The current site uses the stroke-only flame,
+drawn as inline SVG in `index.html` (also `favicon.svg`), and its favicons, home-screen icons and
+link-preview image (`og-image.jpg`) were rendered from that flame.
