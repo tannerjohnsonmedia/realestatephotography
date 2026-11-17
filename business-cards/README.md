@@ -12,7 +12,7 @@
 - Trim size: 3.5 x 2 in (US standard)
 - File size: 3.75 x 2.25 in, which includes a 0.125 in bleed on every side
 - Safe area: all type is at least 0.125 in inside the trim line
-- Fonts: embedded (Archivo, IBM Plex Mono)
+- Fonts: embedded (Archivo, Geist, IBM Plex Mono)
 - Colors: RGB. Printers convert to CMYK, so the orange (#FF5A1F) can print slightly duller.
   Ask for a printed proof if the exact orange matters.
 - Suggested stock: 16 pt or heavier, matte or uncoated, double-sided

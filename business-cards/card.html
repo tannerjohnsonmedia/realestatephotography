@@ -8,7 +8,7 @@
   Page = US business card 3.5 x 2 in + 0.125 in bleed on every side = 3.75 x 2.25 in.
   Trim line is 0.125 in in from the page edge; all type stays at least 0.125 in inside the trim.
 -->
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Geist:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet" />
 <style>
   :root {
     --bg: #0b0907;
@@ -23,6 +23,7 @@
     --safe: 0.25in;          /* bleed + 0.125 in safety margin inside the trim */
 
     --font-display: "Archivo", "Arial Black", sans-serif;
+    --font-body: "Geist", "Helvetica Neue", Arial, sans-serif;
     --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   }
   @page { size: 3.75in 2.25in; margin: 0; }
@@ -71,7 +72,7 @@
     color: var(--ink-muted);
     text-align: right;
   }
-  .contact { display: grid; gap: 0.045in; font: 500 8pt/1.2 var(--font-mono); letter-spacing: 0.02em; }
+  .contact { display: grid; gap: 0.05in; font: 500 8.5pt/1.2 var(--font-body); letter-spacing: 0; }
   .contact .name { font: 800 9.5pt/1 var(--font-display); font-stretch: 115%; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.06in; }
   .rule { width: 0.32in; height: 1.5px; background: var(--ember); margin-bottom: 0.1in; }
 </style>
@@ -97,7 +98,7 @@
       <svg class="flame" viewBox="6 1 36 62" aria-hidden="true">
         <path d="M28 3c-5 9-3 18 3 25c6 7 9 11 9 17a16 16 0 0 1-32 0c0-8 5-14 9-20c0 5 2 9 6 11c-2-8 0-22 5-33z" />
       </svg>
-      <p class="label" style="margin:0">Restaurant video<br />Denver, Colorado</p>
+      <p class="label" style="margin:0">Video production<br />Denver, Colorado</p>
     </div>
     <div></div>
     <div class="contact">
