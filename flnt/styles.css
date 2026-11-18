@@ -216,27 +216,12 @@ html.reveal-ready .reveal.is-in { opacity: 1; transform: none; }
   @keyframes hero-breathe { to { opacity: 0.7; transform: translate(-50%, -50%) scale(0.94); } }
 }
 
-/* Ticker of restaurant subjects */
-.ticker {
-  border-block: 1px solid var(--line);
-  overflow: hidden; white-space: nowrap;
-  padding-block: 18px;
-  font: 500 0.8125rem/1 var(--font-mono); letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--muted);
-}
-.ticker-track { display: inline-flex; }
-.ticker-track span { padding-right: 0.5em; }
-.ticker i { font-style: normal; color: var(--ember); padding: 0 1.2em; }
-@media (prefers-reduced-motion: no-preference) {
-  .ticker-track { animation: ticker 60s linear infinite; }
-  .ticker:hover .ticker-track { animation-play-state: paused; }
-  @keyframes ticker { to { transform: translateX(-50%); } }
-}
-
 /* =========================================================
    Sections
    ========================================================= */
 .section { padding-block: var(--section) 0; }
+/* The hero already ends in generous space, so the first section starts closer */
+.hero + .section { padding-top: clamp(40px, 5vw, 64px); }
 .section:last-of-type { padding-bottom: var(--section); }
 .section-head {
   display: grid;
