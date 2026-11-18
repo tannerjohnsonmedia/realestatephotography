@@ -169,7 +169,9 @@
         <h2 class="display" id="work-title">The reel.</h2>
         <p class="section-intro">Restaurant films shot in Denver. Every project is filmed on location and finished in house.</p>
       </div>
-      <figure class="reveal">
+      <!-- The stage holds the reel on screen while it opens to full width (scroll motion only) -->
+      <div class="reel-stage">
+      <figure class="reel-pin reveal">
         <div class="reel-frame">
           <!--
             SHOWREEL: replace the .reel-placeholder div below with the real video.
@@ -190,6 +192,7 @@
           <span class="label">Denver, Colorado</span>
         </figcaption>
       </figure>
+      </div>
     </div>
   </section>
 
@@ -356,7 +359,8 @@
 
 <footer class="site-footer">
   <div class="wrap">
-    <p>© <span id="year">2026</span> FLNT Films · Denver, Colorado</p>
+    <p class="foot-mark" aria-hidden="true"><span>F</span><span>L</span><span>N</span><span>T</span></p>
+    <p class="foot-line">© <span id="year">2026</span> FLNT Films · Denver, Colorado</p>
   </div>
 </footer>
 

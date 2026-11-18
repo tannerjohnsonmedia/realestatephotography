@@ -37,7 +37,12 @@ never runs, so without it the page is static and fully visible.
 - The hero flame drifts upward and fades as you scroll away.
 - Section headings rise through a slot; pricing, monthly plans, the estimate and contact arrive in order.
 - Monthly dotted leaders draw across; the featured package's ember bar draws in.
-- The showreel frame pushes in slightly as it enters; the play button has a soft pulse.
+- Outline words ("restaurants.", "every month.", "restaurant.") ignite: an ember fill burns across them
+  as you scroll past.
+- The showreel pins as you reach it and opens to the full width of the screen, then the page moves on.
+  The play button has a soft pulse.
+- The Monthly panel opens from an inset card to full width. Prices count up as their list arrives.
+- A giant FLNT closes the page: its letters rise in turn and ignite at the very bottom.
 - The estimate total counts to its new value.
 - The header turns frosted once you scroll, tucks away scrolling down and returns scrolling up.
 

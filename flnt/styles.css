@@ -157,8 +157,42 @@ html.fx:not(.hero-in) .hero-flame { clip-path: inset(100% -25% -10% -25%); }
 html.fx .hero-glow { transition: filter 1.6s ease 0.3s; }
 html.fx:not(.hero-in) .hero-glow { filter: opacity(0); }
 
-/* Showreel: a slow push-in as it scrolls into view (main.js sets --reel-s) */
-html.fx .reel-frame { transform: scale(var(--reel-s, 0.94)); transform-origin: center 60%; }
+/* Showreel: pushes in as it arrives, then pins and opens to the full width of the screen
+   (main.js sets --fh, --reel-s and --reel-p) */
+html.fx .reel-stage::after { content: ""; display: block; height: 70vh; }   /* room to hold the reel while it opens */
+html.fx .reel-pin { position: sticky; top: max(16px, calc(50svh - var(--fh, 0px) / 2)); }
+html.fx .reel-frame {
+  transform: scale(var(--reel-s, 0.94)); transform-origin: center center;
+  border-color: rgba(42, 36, 31, calc(1 - var(--reel-p, 0)));
+}
+html.fx .reel-caption { opacity: calc(1 - var(--reel-p, 0) * 3); }
+
+/* Outline words ignite: an ember fill burns across them as you scroll past
+   (main.js sets --fill from 0% to 115% on each .outline) */
+html.fx .hero .outline .wd-in,
+html.fx .monthly .outline,
+html.fx .contact .outline,
+html.fx .foot-mark span {
+  background-image: linear-gradient(90deg,
+    var(--burn, var(--ember)) 0,
+    var(--burn, var(--ember)) calc(var(--fill, 0%) - 8%),
+    #ffc08a calc(var(--fill, 0%) - 1.5%),
+    transparent var(--fill, 0%));
+  -webkit-background-clip: text; background-clip: text;
+}
+html.fx .monthly .outline { --burn: var(--ember-deep); }
+
+/* Monthly: the light panel opens from an inset card to full width (main.js sets --mp) */
+.monthly { --mx-max: min(7vw, 120px); }
+html.fx .monthly {
+  clip-path: inset(calc((1 - var(--mp, 0)) * 3%) calc((1 - var(--mp, 0)) * var(--mx-max)) round calc((1 - var(--mp, 0)) * 28px));
+}
+
+/* Closing wordmark: letters rise in turn, then ignite (main.js sets --rise and --fill per letter) */
+html.fx .foot-mark span { transform: translateY(calc((1 - var(--rise, 0)) * 105%)); }
+
+/* Counting prices keep a fixed width so nothing shifts */
+.count { display: inline-block; font-variant-numeric: tabular-nums; }
 
 /* =========================================================
    Flame mark and wordmark lockup
@@ -469,8 +503,21 @@ html.fx .reel-frame { transform: scale(var(--reel-s, 0.94)); transform-origin: c
 .contact .actions { margin-top: 28px; }
 .copy-status { font: 400 0.8125rem var(--font-mono); color: var(--muted); min-width: 8ch; }
 
-/* Footer */
-.site-footer p {
+/* Footer: a closing FLNT wordmark, then one line */
+.foot-mark {
+  display: flex; justify-content: space-between;
+  overflow: hidden;                  /* letters rise from below this line */
+  padding-bottom: 0.03em;
+  font: 900 min(24vw, 19rem)/0.8 var(--font-display);
+  font-stretch: 125%;
+  color: var(--ember);
+  user-select: none;
+}
+@supports (-webkit-text-stroke: 1px) {
+  .foot-mark { color: transparent; -webkit-text-stroke: max(1.25px, 0.008em) var(--ember); }
+}
+.foot-mark span { display: block; }
+.site-footer .foot-line {
   border-top: 1px solid var(--line);
   padding-block: 28px 36px;
   font: 400 0.8125rem/1.5 var(--font-mono);
@@ -595,6 +642,8 @@ html.intro-on, html.intro-on body { overflow: hidden; }   /* scroll lock, always
   .b-total .btn { padding: 0 16px; min-height: 46px; }
   .menu li { grid-template-columns: 1fr; grid-template-areas: "name" "price" "desc"; row-gap: 8px; }
   .menu .dots { display: none; }
+  .monthly { --mx-max: 12px; }
+  html.fx .reel-stage::after { height: 35vh; }
   .menu .tag { display: block; margin: 8px 0 0; }
   .hero-art { height: 300px; right: -150px; top: 24%; --art-o: 0.22; }
 }

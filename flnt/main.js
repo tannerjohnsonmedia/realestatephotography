@@ -107,6 +107,28 @@
     if (e.target.closest('a') && links.classList.contains('is-open')) toggle.click();
   });
 
+  /* ---------- Prices count up to their figure ---------- */
+  function countUp(price, delay) {
+    var node = Array.prototype.filter.call(price.childNodes, function (n) { return n.nodeType === 3 && /\d/.test(n.textContent); })[0];
+    if (!node) return;
+    var finalText = node.textContent;
+    var target = parseInt(finalText.replace(/[^\d]/g, ''), 10);
+    var span = document.createElement('span');
+    span.className = 'count';
+    span.textContent = finalText;
+    price.replaceChild(span, node);
+    span.style.minWidth = span.getBoundingClientRect().width + 'px';   // lock the width first
+    span.textContent = '0';
+    setTimeout(function () {
+      var start = performance.now();
+      (function step(now) {
+        var k = Math.min(1, (now - start) / 1100);
+        span.textContent = Math.round(target * (1 - Math.pow(1 - k, 3))).toLocaleString('en-US');
+        if (k < 1) requestAnimationFrame(step); else span.textContent = finalText;
+      })(start);
+    }, delay);
+  }
+
   /* ---------- Scroll reveal ---------- */
   if (motion) {
     // Stagger order for lists that arrive one item at a time
@@ -115,7 +137,10 @@
     });
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+        if (!en.isIntersecting) return;
+        en.target.classList.add('is-in');
+        io.unobserve(en.target);
+        $$('.price', en.target).forEach(function (price, i) { countUp(price, 250 + i * 90); });
       });
     }, { rootMargin: '0px 0px -8% 0px' });
     $$('.reveal').forEach(function (el) { io.observe(el); });
@@ -126,6 +151,13 @@
   var heroEl = $('.hero');
   var heroArt = $('.hero-art');
   var reelFrame = $('.reel-frame');
+  var reelStage = $('.reel-stage');
+  var monthly = $('.monthly');
+  var outlines = $$('.outline');
+  var footMark = $('.foot-mark');
+  var footLetters = $$('.foot-mark span');
+  var clamp01 = function (v) { return Math.min(1, Math.max(0, v)); };
+  var easeInOut = function (t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; };
   var lastY = window.scrollY;
   var ticking = false;
 
@@ -152,11 +184,49 @@
       heroArt.style.setProperty('--po', (1 - Math.min(1, y / hh) * 0.7).toFixed(3));
     }
 
-    // Showreel scales from 0.94 to 1 as it rises into view
-    var r = reelFrame.getBoundingClientRect();
-    if (r.top < vh && r.bottom > 0) {
-      var p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.7)));
-      reelFrame.style.setProperty('--reel-s', (0.94 + 0.06 * p).toFixed(4));
+    // Showreel: 0.94 -> 1 as it arrives, then pinned while it opens to full screen width
+    var fw = reelFrame.offsetWidth, fh = reelFrame.offsetHeight;
+    reelFrame.parentNode.style.setProperty('--fh', fh + 'px');
+    var stage = reelStage.getBoundingClientRect();
+    if (stage.top < vh && stage.bottom > 0) {
+      var pinTop = Math.max(16, vh / 2 - fh / 2);
+      var full = Math.min(document.documentElement.clientWidth / fw, (vh * 0.96) / fh);
+      var hold = reelStage.offsetHeight - reelFrame.parentNode.offsetHeight;
+      var pin = hold > 0 ? clamp01((pinTop - stage.top) / hold) : 0;
+      var open = easeInOut(clamp01(pin / 0.75));
+      var arrive = clamp01((vh - reelFrame.getBoundingClientRect().top) / Math.max(1, vh - pinTop));   // reaches 1 exactly at the pin
+      var s = pin > 0 ? 1 + (full - 1) * open : 0.94 + 0.06 * arrive;
+      reelFrame.style.setProperty('--reel-s', s.toFixed(4));
+      reelFrame.parentNode.style.setProperty('--reel-p', open.toFixed(3));
+    }
+
+    // Outline words ignite as you pass them (the hero's as you scroll away from it)
+    outlines.forEach(function (el) {
+      var p;
+      if (heroEl.contains(el)) p = clamp01(y / (hh * 0.5));
+      else {
+        var o = el.getBoundingClientRect();
+        if (o.top > vh || o.bottom < 0) return;
+        p = clamp01((vh * 0.85 - o.top) / (vh * 0.45));
+      }
+      el.style.setProperty('--fill', (p * 115).toFixed(1) + '%');
+    });
+
+    // Monthly panel opens from an inset card to full width
+    var mr = monthly.getBoundingClientRect();
+    if (mr.top < vh && mr.bottom > 0) monthly.style.setProperty('--mp', clamp01((vh - mr.top) / (vh * 0.75)).toFixed(3));
+
+    // Closing wordmark: letters rise one after another, then burn left to right
+    // (tied to the end of the page, so it always finishes at the very bottom)
+    var fr = footMark.getBoundingClientRect();
+    if (fr.top < vh) {
+      var end = document.documentElement.scrollHeight - vh;
+      var span = Math.max(1, Math.min(end, fr.height * 1.6));
+      var fp = clamp01((y - (end - span)) / span);
+      footLetters.forEach(function (l, i) {
+        l.style.setProperty('--rise', easeInOut(clamp01(fp * 1.8 - i * 0.18)).toFixed(3));
+        l.style.setProperty('--fill', (clamp01(fp * 3.2 - 1.2 - i * 0.3) * 115).toFixed(1) + '%');
+      });
     }
   }
   function requestFrame() { if (!ticking) { ticking = true; requestAnimationFrame(onFrame); } }
