@@ -27,6 +27,20 @@ Ember glow, rising sparks, the flame draws itself, the wordmark fades in, then t
 - Scrolling is locked only while it plays. The inline script in `<head>` releases the lock after
   6 seconds even if `main.js` fails to load.
 
+## Motion
+
+All subtle, CSS transitions plus a little JavaScript, no libraries. Scoped to `html.fx`, which the
+inline `<head>` script adds only when motion is allowed and withdraws after 4 seconds if `main.js`
+never runs, so without it the page is static and fully visible.
+
+- Hero entrance as the intro fades: headline words rise from their line, the flame ignites upward.
+- The hero flame drifts upward and fades as you scroll away.
+- Section headings rise through a slot; pricing, monthly plans, the estimate and contact arrive in order.
+- Monthly dotted leaders draw across; the featured package's ember bar draws in.
+- The showreel frame pushes in slightly as it enters; the play button has a soft pulse.
+- The estimate total counts to its new value.
+- The header turns frosted once you scroll, tucks away scrolling down and returns scrolling up.
+
 ## Things to update
 
 - **Prices**: in the Pricing and Monthly sections of `index.html` and in `PRICES` in `main.js`.

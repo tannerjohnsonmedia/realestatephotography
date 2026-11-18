@@ -1,9 +1,42 @@
-/* FLNT Films: intro, menu, scroll reveal, shoot builder and copy-email. No libraries. */
+/* FLNT Films: intro, hero entrance, menu, scroll motion, shoot builder and copy-email. No libraries. */
 (function () {
   'use strict';
   var root = document.documentElement;
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  // html.fx is added by the inline script in <head> when motion is allowed.
+  var motion = root.classList.contains('fx');
+  root.classList.add('fx-ready');
+
+  /* ---------- Hero entrance ---------- */
+  // Wrap each headline word so it can rise from below its own line.
+  var h1 = $('.hero h1');
+  if (motion && h1) {
+    h1.setAttribute('aria-label', h1.textContent.replace(/\s+/g, ' ').trim());
+    var n = 0;
+    var wrapWords = function (el) {
+      Array.prototype.slice.call(el.childNodes).forEach(function (node) {
+        if (node.nodeType === 1) { wrapWords(node); return; }
+        if (node.nodeType !== 3) return;
+        var frag = document.createDocumentFragment();
+        node.textContent.split(/(\s+)/).forEach(function (part) {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+          var outer = document.createElement('span');
+          var inner = document.createElement('span');
+          outer.className = 'wd'; outer.setAttribute('aria-hidden', 'true');
+          inner.className = 'wd-in'; inner.style.setProperty('--i', n++);
+          inner.textContent = part;
+          outer.appendChild(inner); frag.appendChild(outer);
+        });
+        node.parentNode.replaceChild(frag, node);
+      });
+    };
+    wrapWords(h1);
+  }
+  var heroIn = function () { root.classList.add('hero-in'); };
+  setTimeout(heroIn, 4500);   // failsafe: the hero always ends up visible
 
   /* ---------- Intro ---------- */
   var intro = $('.intro');
@@ -11,6 +44,7 @@
   function release() {
     root.classList.remove('intro-on');
     if (intro) intro.classList.remove('is-playing', 'is-leaving', 'is-skipping');
+    heroIn();
   }
 
   if (intro && root.classList.contains('intro-on')) {
@@ -40,6 +74,7 @@
         clearTimeout(timer);
         if (skipped) intro.classList.add('is-skipping');
         intro.classList.add('is-leaving');
+        heroIn();   // the hero starts arriving as the overlay fades
         setTimeout(release, skipped ? 350 : 600);
         removeEventListener('keydown', skip);
         removeEventListener('wheel', skip);
@@ -56,6 +91,8 @@
     } catch (e) {
       release();
     }
+  } else {
+    setTimeout(heroIn, 80);
   }
 
   /* ---------- Mobile menu ---------- */
@@ -70,10 +107,12 @@
     if (e.target.closest('a') && links.classList.contains('is-open')) toggle.click();
   });
 
-  /* ---------- Scroll reveal (content stays visible if this never runs) ---------- */
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if ('IntersectionObserver' in window && !reduce) {
-    root.classList.add('reveal-ready');
+  /* ---------- Scroll reveal ---------- */
+  if (motion) {
+    // Stagger order for lists that arrive one item at a time
+    $$('[data-stagger]').forEach(function (list) {
+      Array.prototype.slice.call(list.children).forEach(function (child, i) { child.style.setProperty('--i', i); });
+    });
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
@@ -81,6 +120,49 @@
     }, { rootMargin: '0px 0px -8% 0px' });
     $$('.reveal').forEach(function (el) { io.observe(el); });
   }
+
+  /* ---------- Scroll-linked: header, hero flame drift, showreel push-in ---------- */
+  var header = $('.site-header');
+  var heroEl = $('.hero');
+  var heroArt = $('.hero-art');
+  var reelFrame = $('.reel-frame');
+  var lastY = window.scrollY;
+  var ticking = false;
+
+  function onFrame() {
+    ticking = false;
+    var y = window.scrollY;
+    var vh = window.innerHeight;
+
+    // Header: frosted once the page moves; tucks away scrolling down, returns scrolling up
+    header.classList.toggle('is-scrolled', y > 24);
+    if (motion) {
+      if (links.classList.contains('is-open') || y < 200 || y < lastY - 4) header.classList.remove('is-hidden');
+      else if (y > lastY + 4) header.classList.add('is-hidden');
+    }
+    lastY = y;
+
+    if (!motion) return;
+
+    // Hero flame drifts upward like rising heat and fades as you leave the hero.
+    // (Upward, so it never meets the hero's clipped bottom edge.)
+    var hh = heroEl.offsetHeight;
+    if (y < hh + 200) {
+      heroArt.style.setProperty('--py', (Math.min(y, hh) * -0.18).toFixed(1) + 'px');
+      heroArt.style.setProperty('--po', (1 - Math.min(1, y / hh) * 0.7).toFixed(3));
+    }
+
+    // Showreel scales from 0.94 to 1 as it rises into view
+    var r = reelFrame.getBoundingClientRect();
+    if (r.top < vh && r.bottom > 0) {
+      var p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.7)));
+      reelFrame.style.setProperty('--reel-s', (0.94 + 0.06 * p).toFixed(4));
+    }
+  }
+  function requestFrame() { if (!ticking) { ticking = true; requestAnimationFrame(onFrame); } }
+  addEventListener('scroll', requestFrame, { passive: true });
+  addEventListener('resize', requestFrame);
+  onFrame();
 
   /* ---------- Build your shoot ---------- */
   // Prices to confirm: keep in step with the Pricing and Monthly sections in index.html.
@@ -116,6 +198,23 @@
     return { base: base, addons: addons, monthly: monthly };
   }
 
+  // The one-time total counts smoothly to its new value
+  var shownTotal = null;
+  var totalRaf = 0;
+  function showTotal(target) {
+    var el = $('#total-once');
+    if (!motion || shownTotal === null) { shownTotal = target; el.textContent = money(target); return; }
+    var from = shownTotal;
+    var start = performance.now();
+    cancelAnimationFrame(totalRaf);
+    (function step(now) {
+      var k = Math.min(1, (now - start) / 450);
+      shownTotal = Math.round(from + (target - from) * (1 - Math.pow(1 - k, 3)));
+      el.textContent = money(shownTotal);
+      if (k < 1) totalRaf = requestAnimationFrame(step);
+    })(start);
+  }
+
   function render() {
     var st = readState();
     var lines = [];
@@ -125,7 +224,7 @@
     if (extra > 0) { lines.push([extra + ' extra vertical edit' + (extra > 1 ? 's' : ''), extra * PRICES.extraEdit]); once += extra * PRICES.extraEdit; }
     st.addons.forEach(function (k) { var a = PRICES.addon[k]; lines.push([a.name, a.price]); once += a.price; });
 
-    $('#total-once').textContent = money(once);
+    showTotal(once);
 
     var m = PRICES.monthly[st.monthly];
     $('#summary-lines').textContent = lines.map(function (l) { return l[0]; }).concat(m ? [m.name] : []).join(' · ');

@@ -57,6 +57,7 @@
   Plays once per browser session; #intro in the URL forces a replay.
   Skipped entirely with prefers-reduced-motion.
   Failsafe: the overlay and scroll lock are removed after 6 seconds even if main.js never runs.
+  Also switches on the scroll and entrance motion (html.fx) before first paint, so nothing flashes.
 -->
 <script>
   (function () {
@@ -69,6 +70,11 @@
       if (!reduce && (force || !seen)) {
         root.classList.add('intro-on');
         setTimeout(function () { root.classList.remove('intro-on'); }, 6000);
+      }
+      // Scroll and entrance motion. main.js marks fx-ready; if it never does, show everything.
+      if (!reduce && 'IntersectionObserver' in window) {
+        root.classList.add('fx');
+        setTimeout(function () { if (!root.classList.contains('fx-ready')) root.classList.remove('fx'); }, 4000);
       }
     } catch (e) {
       root.classList.remove('intro-on');
@@ -195,7 +201,7 @@
         <h2 class="display" id="pricing-title">Clear prices.</h2>
         <p class="section-intro">One-time projects with a fixed price. Every package includes color grading, licensed music and files sized for your website and social channels.</p>
       </div>
-      <ul class="packages reveal">
+      <ul class="packages reveal" data-stagger>
         <li class="package">
           <div class="package-top"><h3>Social cuts</h3></div>
           <p class="price"><sup>$</sup>900</p>
@@ -244,7 +250,7 @@
         <h2 class="display" id="monthly-title">Fresh reels, <span class="outline">every month.</span></h2>
         <p class="section-intro">A monthly plan keeps your channels current with new reels shot at your restaurant. Plans work best after a signature video, so everything shares the same look.</p>
       </div>
-      <ul class="menu reveal">
+      <ul class="menu reveal" data-stagger>
         <li>
           <h3>Four reels</h3><span class="dots" aria-hidden="true"></span>
           <p class="price"><sup>$</sup>750<small>/ month</small></p>
@@ -277,7 +283,7 @@
         <p class="section-intro">Choose a package, add what you need and send us the estimate.</p>
       </div>
 
-      <form class="builder reveal" id="builder" novalidate>
+      <form class="builder reveal" id="builder" data-stagger novalidate>
         <div class="b-row">
           <p class="b-label" id="pkg-label">Package</p>
           <div class="seg seg-3" role="radiogroup" aria-labelledby="pkg-label">
@@ -330,8 +336,8 @@
   <!-- Contact -->
   <section class="section contact" id="contact" aria-labelledby="contact-title">
     <div class="wrap">
-      <div class="contact-grid reveal">
-        <div>
+      <div class="contact-grid">
+        <div class="reveal" data-stagger>
           <p class="label">Contact</p>
           <h2 class="display" id="contact-title">Tell us about your <span class="outline">restaurant.</span></h2>
           <p class="intro-text">Send a few lines about your restaurant, your timing and what you want the video to do. We reply within one business day.</p>

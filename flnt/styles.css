@@ -39,6 +39,9 @@
   --section: clamp(96px, 11vw, 160px);
   --grid-gap: clamp(16px, 2.2vw, 32px);
 
+  /* Motion */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+
   color-scheme: dark;
 }
 
@@ -106,9 +109,56 @@ button { font: inherit; color: inherit; }
   .outline { color: transparent; -webkit-text-stroke: max(1.25px, 0.022em) var(--ember); }
 }
 
-/* Scroll reveal: only hidden once the script has confirmed it can show them */
-html.reveal-ready .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
-html.reveal-ready .reveal.is-in { opacity: 1; transform: none; }
+/* =========================================================
+   Motion. Every rule here is scoped to html.fx, which the inline script in
+   <head> adds only when motion is allowed (no prefers-reduced-motion) and
+   which is removed again after 4s if main.js never runs. Without .fx the
+   page is static and fully visible.
+   ========================================================= */
+
+/* Generic scroll reveal */
+html.fx .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.9s var(--ease-out); }
+html.fx .reveal.is-in { opacity: 1; transform: none; }
+
+/* Section heads: the label, then the heading rises through a slot, then the intro line */
+html.fx .section-head.reveal { opacity: 1; transform: none; }
+html.fx .section-head > * { transition: opacity 0.7s ease, transform 0.9s var(--ease-out), clip-path 0.9s var(--ease-out); }
+html.fx .section-head > h2 { clip-path: inset(-0.2em -0.2em -0.3em -0.2em); transition-delay: 0.08s; }
+html.fx .section-head > .section-intro { transition-delay: 0.22s; }
+html.fx .section-head:not(.is-in) > .label { opacity: 0; transform: translateX(-12px); }
+html.fx .section-head:not(.is-in) > h2 { clip-path: inset(100% -0.2em -0.3em -0.2em); transform: translateY(0.35em); }
+html.fx .section-head:not(.is-in) > .section-intro { opacity: 0; transform: translateY(14px); }
+
+/* Lists that arrive one item after another (--i is set per child by main.js) */
+html.fx [data-stagger].reveal { opacity: 1; transform: none; }
+html.fx [data-stagger] > * { transition: opacity 0.7s ease, transform 0.85s var(--ease-out); transition-delay: calc(var(--i, 0) * 90ms); }
+html.fx [data-stagger]:not(.is-in) > * { opacity: 0; transform: translateY(24px); }
+
+/* Monthly menu: the dotted leaders draw across; the featured package's ember bar draws in */
+html.fx .menu .dots { transform-origin: left center; transition: transform 1s var(--ease-out); transition-delay: calc(var(--i, 0) * 90ms + 0.3s); }
+html.fx .menu:not(.is-in) .dots { transform: translateY(-0.3em) scaleX(0); }
+html.fx .package.is-featured::before { transform-origin: left center; transition: transform 0.9s var(--ease-out) 0.45s; }
+html.fx .packages:not(.is-in) .package.is-featured::before { transform: scaleX(0); }
+
+/* Hero entrance (main.js adds .hero-in as the intro fades, or straight away without it):
+   headline words rise from below their line, the copy settles in, the flame ignites upward */
+.wd { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.08em 0.06em 0.16em; margin: -0.08em -0.06em -0.16em; }
+.wd-in { display: inline-block; }
+html.fx .wd-in { transition: transform 1s var(--ease-out); transition-delay: calc(var(--i, 0) * 70ms + 0.1s); }
+html.fx:not(.hero-in) .wd-in { transform: translateY(115%); }
+html.fx:not(.hero-in) .hero h1 { opacity: 0; }
+html.fx .hero .label, html.fx .hero .lede, html.fx .hero .actions { transition: opacity 0.9s ease, transform 1s var(--ease-out); }
+html.fx .hero .lede { transition-delay: 0.45s; }
+html.fx .hero .actions { transition-delay: 0.6s; }
+html.fx:not(.hero-in) .hero .label { opacity: 0; transform: translateY(10px); }
+html.fx:not(.hero-in) .hero .lede, html.fx:not(.hero-in) .hero .actions { opacity: 0; transform: translateY(18px); }
+html.fx .hero-flame { clip-path: inset(-10% -25% -10% -25%); transition: clip-path 1.8s var(--ease-out) 0.15s; }
+html.fx:not(.hero-in) .hero-flame { clip-path: inset(100% -25% -10% -25%); }
+html.fx .hero-glow { transition: filter 1.6s ease 0.3s; }
+html.fx:not(.hero-in) .hero-glow { filter: opacity(0); }
+
+/* Showreel: a slow push-in as it scrolls into view (main.js sets --reel-s) */
+html.fx .reel-frame { transform: scale(var(--reel-s, 0.94)); transform-origin: center 60%; }
 
 /* =========================================================
    Flame mark and wordmark lockup
@@ -158,7 +208,18 @@ html.reveal-ready .reveal.is-in { opacity: 1; transform: none; }
 /* =========================================================
    Header
    ========================================================= */
-.site-header { position: relative; z-index: 20; }
+.site-header {
+  position: sticky; top: 0; z-index: 20;
+  transition: transform 0.45s var(--ease-out), background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.site-header.is-scrolled {
+  background: rgba(11, 9, 7, 0.82);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--line);
+}
+.site-header.is-hidden { transform: translateY(-100%); }
+.site-header:focus-within { transform: none; }     /* never hide the nav from keyboard users */
+.section, .monthly { scroll-margin-top: 64px; }      /* anchor jumps clear the header */
 .site-header .wrap {
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
   height: 88px;
@@ -201,7 +262,8 @@ html.reveal-ready .reveal.is-in { opacity: 1; transform: none; }
   position: absolute; z-index: 1; pointer-events: none;
   right: -4vw; top: 50%;
   height: min(640px, 70vh, 44vw); aspect-ratio: 36 / 62;
-  transform: translateY(-50%);
+  transform: translateY(calc(-50% + var(--py, 0px)));
+  opacity: calc(var(--art-o, 1) * var(--po, 1));
 }
 .hero-glow {
   position: absolute; left: 50%; top: 68%;
@@ -255,6 +317,15 @@ html.reveal-ready .reveal.is-in { opacity: 1; transform: none; }
   border: 1.5px solid var(--ember);
   display: grid; place-items: center;
   box-shadow: 0 0 40px rgba(255, 90, 31, 0.25);
+  position: relative;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .play::after {
+    content: ""; position: absolute; inset: -1.5px; border-radius: 50%;
+    border: 1.5px solid var(--ember); opacity: 0;
+    animation: pulse-ring 3.2s ease-out 1s infinite;
+  }
+  @keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.5; } 70%, 100% { transform: scale(1.55); opacity: 0; } }
 }
 .play svg { width: 34%; margin-left: 8%; fill: var(--ember); }
 .reel-caption { display: flex; justify-content: space-between; gap: 16px; margin-top: 16px; flex-wrap: wrap; }
@@ -281,6 +352,8 @@ html.reveal-ready .reveal.is-in { opacity: 1; transform: none; }
 }
 .tag { font: 500 0.6875rem/1 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ember); white-space: nowrap; }
 .price { font: 800 var(--text-price)/1 var(--font-display); font-stretch: 110%; letter-spacing: -0.01em; }
+.package .price { transition: color 0.25s ease; }
+.package:hover .price { color: var(--ember); }
 .price sup { font-size: 0.42em; vertical-align: 0.95em; margin-right: 2px; font-weight: 700; }
 .price small { font: 500 0.875rem var(--font-body); color: var(--muted); letter-spacing: 0; margin-left: 6px; }
 .package .desc { color: var(--muted); }
@@ -370,7 +443,7 @@ html.reveal-ready .reveal.is-in { opacity: 1; transform: none; }
   background: var(--paper); color: var(--ink);
 }
 .b-total .label { color: var(--ink-muted); }
-.b-big { font: 800 clamp(1.75rem, 2.6vw, 2.25rem)/1 var(--font-display); font-stretch: 110%; color: var(--ember-deep); margin-top: 4px; }
+.b-big { font: 800 clamp(1.75rem, 2.6vw, 2.25rem)/1 var(--font-display); font-stretch: 110%; color: var(--ember-deep); margin-top: 4px; font-variant-numeric: tabular-nums; }
 .b-big small { font: 500 0.8125rem var(--font-body); color: var(--ink-muted); margin-left: 6px; white-space: nowrap; }
 .b-monthly { font: 600 0.875rem var(--font-body); margin-top: 6px; }
 .b-lines { color: var(--ink-muted); font-size: 0.875rem; line-height: 1.5; }
@@ -496,7 +569,7 @@ html.intro-on, html.intro-on body { overflow: hidden; }   /* scroll lock, always
   .b-total { grid-template-columns: minmax(0, 1fr) auto; position: sticky; bottom: 0; z-index: 5; box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.45); }
   .b-lines { display: none; }
   .contact-grid > div { grid-column: 1 / -1; }
-  .hero-art { height: 420px; right: -120px; top: 38%; opacity: 0.3; }
+  .hero-art { height: 420px; right: -120px; top: 38%; --art-o: 0.3; }
 }
 @media (max-width: 480px) {
   .site-header .wrap { height: 76px; }
@@ -523,7 +596,7 @@ html.intro-on, html.intro-on body { overflow: hidden; }   /* scroll lock, always
   .menu li { grid-template-columns: 1fr; grid-template-areas: "name" "price" "desc"; row-gap: 8px; }
   .menu .dots { display: none; }
   .menu .tag { display: block; margin: 8px 0 0; }
-  .hero-art { height: 300px; right: -150px; top: 24%; opacity: 0.22; }
+  .hero-art { height: 300px; right: -150px; top: 24%; --art-o: 0.22; }
 }
 
 /* Reduced motion: no intro */
